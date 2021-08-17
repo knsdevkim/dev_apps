@@ -1,0 +1,73 @@
+{% extends 'base/panel.html' %}
+
+{% block icon %}fa-home{% endblock %}
+{% block title %}{{ context_title }}{% endblock %}
+{% block subtitle %}{{ context_title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <a href="{% url 'backend:listview' pathfind='about' %}">
+    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fa-info color-blue"></em>
+                <div>About</div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href="{% url 'backend:listview' pathfind='slideshow' %}">
+    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+        <div class="panel panel-blue panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fa-image color-orange"></em>
+                <div>Slideshow</div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href="{% url 'backend:listview' pathfind='branch' %}">
+    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+        <div class="panel panel-orange panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fa-building color-teal"></em>
+                <div>Branch</div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href="{% url 'backend:listview' pathfind='milestone' %}">
+    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+        <div class="panel panel-red panel-widget ">
+            <div class="row no-padding"><em class="fa fa-xl fa-certificate color-red"></em>
+                <div>Milestone</div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href="{% url 'backend:listview' pathfind='newsevent' %}">
+    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+        <div class="panel panel-red panel-widget ">
+            <div class="row no-padding"><em class="fa fa-xl fa-clone color-orange"></em>
+                <div>News & Events</div>
+            </div>
+        </div>
+    </div>
+    </a>
+    <a href="{% url 'backend:listview' pathfind='careers' %}">
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-red panel-widget ">
+                <div class="row no-padding"><em class="fa fa-xl fa-briefcase color-red"></em>
+                    <div>Careers</div>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href="{% url 'backend:listview' pathfind='feeds' %}">
+        <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+            <div class="panel panel-red panel-widget ">
+                <div class="row no-padding"><em class="fa fa-xl fa-microphone color-blue"></em>
+                    <div>Feeds</div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div><!--/.row-->
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base/panel.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'vendors/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'assets/js/init-scripts/data-table/datatables-init.js' %}"></script>
+
+<script>
+    function pushAction(eval) {
+        document.querySelector('form[data-load-form]').action = eval;
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Records <a href="{% url 'app:createadmin' %}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Add New</a></strong>
+                </div>
+                <div class="card-body">
+                    <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Employee Name</th>
+                                <th>ID Number</th>
+                                <th>Auth Level</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for field in object %}
+                                <tr>
+                                    <td>{% if field.first_name != '' %}{{ field.last_name|upper }}, {{ field.first_name|upper }}{% else %}NOT AVAILABLE{% endif %}</td>
+                                    <td>{% if field.employee_code != '' %}{{ field.employee_code|upper }}{% else %}NOT AVAILABLE{% endif %}</td>
+                                    <td>{% if field.auth_level == 1 %}SUPERUSER{% elif field.auth_level == 2 %}ADMIN{% elif field.auth_level %}TABLET / MOBILE USER{% endif %}</td>
+                                    <td>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <a href="" class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="{% url 'app:updateuser' pk=field.pk %}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="pushAction('{% url 'app:deleteuser' pk=field.pk %}');">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- .animated -->
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Are you sure to remove this user?
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="" data-load-form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Yes</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

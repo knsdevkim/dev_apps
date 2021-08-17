@@ -1,0 +1,59 @@
+{% extends 'base/panelbase.html' %}
+
+{% block css %}
+<style type="text/css">
+  @media print {
+    @page {
+      margin: 0;
+    }
+    .hideprint {
+      display: none;
+    }
+    table {
+      display: block;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block title %}{{ context_title }}{% endblock %}
+{% block subtitle %}{{ context_title }}{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="hideprint">
+  {% csrf_token %}
+  {% for f in form %}
+  <div class="form-group">
+    <label for="{{ f.id_label_tag }}">{{ f.label }}</label>
+    {{ f }}
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-sm btn-primary form-control text-white">Generate Reports</button>
+</form>
+
+<h3>{{ date }}</h3>
+
+<button onclick="window.print();" class="hideprint">Print Report</button>
+
+<table class="table table-striped col-lg-12" style="width:100%">
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Price</th>
+      <th>Qty Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for field in object %}
+      <tr>
+        <td>{{ field.product_name }}</td>
+        <td>{{ field.price }}</td>
+        <td>{{ field.total_qty }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2 class="float-right">Total: {{ context_total_purchase }}</h2>
+<div class="clearfix"></div>
+{% endblock %}

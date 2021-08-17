@@ -1,0 +1,84 @@
+{% extends 'root/admin.html' %}
+
+{% load static %}
+
+{% block page-header %}{{ context_title|upper }}{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/dataTables/dataTables.bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/dataTables/dataTables.responsive.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/dataTables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/dataTables/dataTables.bootstrap.min.js' %}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#data-entry').DataTable({
+                responsive: true
+        });
+    });
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{ context_panel_title|upper }}
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="data-entry">
+                    <thead>
+                        <tr>
+                            {% if context_title == 'evaluation list' %}
+                            <th>CDP Ctrl. No.</th>
+                            <th>Evaluated Person</th>
+                            <th>Line Manager</th>
+                            <th>Evaluator</th>
+                            <th>Date</th>
+                            <th></th>
+                            {% elif context_title == 'training memo list' %}
+                            <th>TM Ctrl. No.</th>
+                            <th>Address To</th>
+                            <th>Date</th>
+                            <th></th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in dataObject %}
+                        <tr>
+                            {% if context_title == 'evaluation list' %}
+                            <td>{{ data.control_no }}</td>
+                            <td>{{ data.evaluated_person }}</td>
+                            <td>{{ data.line_manager }}</td>
+                            <td>{{ data.evaluator }}</td>
+                            <td>{{ data.date }}</td>
+                            <td>
+                                <a href="{% url 'core:evaluation_details' pk=data.pk %}" target="_blank" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-print"></i>
+                                </a>
+                            </td>
+                            {% elif context_title == 'training memo list' %}
+                            <td>{{ data.control_no }}</td>
+                            <td>{{ data.dear }}</td>
+                            <td>{{ data.date }}</td>
+                            <td>
+                                <a href="{% url 'core:trainingmemo_details' pk=data.pk %}" target="_blank" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-print"></i>
+                                </a>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

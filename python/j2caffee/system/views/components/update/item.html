@@ -1,0 +1,13 @@
+{% extends 'base/panelbase.html' %}
+
+{% block title %}{{ context_title }}{% endblock %}
+{% block subtitle %}{{ context_title }}{% endblock %}
+
+{% block content %}
+{% include 'helpers/messages.html' %}
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-sm btn-primary form-control text-white"><i class="fa fa-check"></i> Update Qty</button>
+</form>
+{% endblock %}

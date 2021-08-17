@@ -1,0 +1,119 @@
+<!DOCTYPE html>{% load static %}{% load humanize %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <title>POS | CASHIER SYSTEM</title>
+    {% block css %}{% endblock %}
+</head>
+<body style="margin-top: 30px;">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a href="{% url 'apps:category:categoryList' %}"><i class="fa fa-arrow-left"></i></a> Available Products</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="" method="get">
+                            <input type="search" name="search" id="search" placeholder="Search product ..." class="form-control">
+                            {% if queue == True %}
+                            <span>{{ products|length }} Products result | <a href="{% url 'apps:cashier:cashier' %}"><i class="fa fa-undo"></i> Clear Filter</a></span>
+                            {% endif %}
+                        </form>
+                        <div class="row col-lg-12" style="margin: 5px;">
+                            {% for field in products %}
+                            <div class="col-lg-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><strong>{{ field.name|upper }}</strong></div>
+                                    <div class="panel-body">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <center>
+                                                            <img src="/media/{% if field.image == '' %}sys/food.png{% else %}{{ field.image }}{% endif %}" width="150" height="100" alt="">
+                                                        </center>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Category:</strong></td>
+                                                    <td>{{ field.fk|upper }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Price:</strong></td>
+                                                    <td>{{ field.local_price|intcomma }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Available Stock('s):</strong></td>
+                                                    <td>{{ field.stock }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button class="btn btn-primary" style="float: right"><i class="fa fa-plus"></i> Add Order</button>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <nav aria-label="Page navigation example" style="float: right">
+                        <ul class="pagination">
+                            {% if products.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a></li>
+                            {% endif %}
+                            {% for page in products.paginator.page_range %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                            {% endfor %}
+                            {% if products.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ products.paginator.num_pages }}">>></a></li>
+                            {% endif %}
+                        </ul>
+                        </nav>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Customer Order (Order No.: 000xxxxxx)</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" dir="rtl">
+                                        <strong>Grand Total: 0.00</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <button class="btn btn-primary form-control"><i class="fa fa-check"></i> Checkout Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block bottom_javascript %}{% endblock %}
+</body>
+</html>

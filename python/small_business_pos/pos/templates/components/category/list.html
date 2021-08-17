@@ -1,0 +1,132 @@
+{% extends 'base/main_frame.html' %}
+
+{% block breadcrumb_title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block nav_inventory %}class="active"{% endblock %}
+
+{% block page_button %}
+<button type="button" class="btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#addnewModal"><i class="fa fa-plus"></i> Add New</button>
+{% endblock %}
+
+{% block content %}
+
+<script>
+  function urlDelete(url) {
+    document.querySelector('#formDelete').action = url;
+  }
+</script>
+
+{% include 'helpers/message.html' %}
+
+<div class="col-lg-12">
+    <form action="" method="post" class="form-inline col-lg-3">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="search" class="sr-only">Search product category ...</label>
+            <input type="text" class="form-control" id="search" placeholder="Search product category ...">
+        </div>
+        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+    </form>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Product Category</th>
+                <th>Date Created</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for field in data %}
+          <tr>
+            <td>{{ field.name|upper }}</td>
+            <td>{{ field.date_created }}</td>
+            <td>
+              <ul class="list-inline">
+                <li>
+                  <a href="{% url 'apps:product:productList' category=field.name %}" class="btn btn default"><i class="fa fa-eye"></i> View Products</a>
+                </li>
+                <li>
+                  <a href="" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                </li>
+                <li>
+                  <!-- Button trigger modal -->
+                  <button type="button" onclick="urlDelete('{% url 'apps:category:categoryDelete' pk=field.pk %}')" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </li>
+              </ul>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <nav class="pull-right" aria-label="Page navigation">
+        <ul class="pagination">
+          {% if data.has_previous %}
+          <li>
+            <a href="?page={{ data.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% endif %}
+          {% for page_number in data.page_range %}
+          <li><a href="?page={{ page_number }}">{{ page_number }}</a></li>
+          {% endfor %}
+          {% if data.has_next %}
+          <li>
+            <a href="?page={{ data.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<div id="addnewModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <form action="{% url 'apps:category:categoryCreate' %}" method="post">
+        {% csrf_token %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title">Add New Product Category</h5>
+            </div>
+            <div class="modal-body">
+                <label for="{{ category_form.name.id_for_label }}">{{ category_form.name.label_tag }}</label>
+                {{ category_form.name }}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal -->
+<form action="" method="post" id="formDelete">
+{% csrf_token %}
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This category will be remove permanently and its all products, Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="submit" class="btn btn-danger">Yes, Permanently delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+{% endblock %}

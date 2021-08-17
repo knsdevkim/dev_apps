@@ -1,2 +1,3 @@
-# dev_apps
-All my applications developed
+# APPLICATION DEVELOPED
+
+This is my public view repository where all my works are sharable.

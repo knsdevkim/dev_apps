@@ -1,0 +1,29 @@
+{% extends 'base/loginbase.html' %}
+
+{% block content %}
+{% if next %}
+  <div class="alert alert-danger">You are trying to access some modules which require credentials first.</div>
+{% endif %}
+
+<form action="" method="post">
+  {% csrf_token %}
+
+  {% if form.errors %}
+    {% for key, errors in form.errors.items %}
+      {% for error in errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+
+  <fieldset>
+    {% for f in form %}
+      <div class="form-group">
+        <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+        {{ f }}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-sm btn-primary">Log In</button>
+  </fieldset>
+</form>
+{% endblock %}

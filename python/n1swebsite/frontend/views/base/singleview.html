@@ -1,0 +1,434 @@
+{% if is_maintenance.is_display == False %}
+{% spaceless %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>No. 1 Supplier, Inc. - Article</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Bootstrap News Template - Free HTML Templates" name="keywords">
+        <meta content="Bootstrap News Template - Free HTML Templates" name="description">
+
+        <!-- Favicon -->
+        <link href="{% static 'logo.png' %}" rel="icon">
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'site/lib/slick/slick.css' %}" rel="stylesheet">
+        <link href="{% static 'site/lib/slick/slick-theme.css' %}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'site/css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Brand Start -->
+        <div class="brand">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="b-logo">
+                            <a href="{% url 'website:site' %}">
+                                <img src="{% static 'brandlogo.png' %}" alt="Logo">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-4">
+
+                    </div>
+                    <div class="col-lg-3 col-md-4">
+                        <div class="b-search">
+                            <input type="text" placeholder="Search">
+                            <button><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Brand End -->
+
+        <!-- Nav Bar Start -->
+        <div class="nav-bar">
+            <div class="container">
+                <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                    <a href="#" class="navbar-brand">MENU</a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto">
+                          <a href="{% url 'website:site' %}" class="nav-item nav-link active"><i class="fa fa-home"></i></a>
+                          <a href="{% url 'website:read' pathfind='ourstory' pk=latest_about.pk %}" class="nav-item nav-link">Our Story</a>
+                          <a href="{% url 'website:products' %}" class="nav-item nav-link">Products</a>
+                          <a href="{% url 'website:read' pathfind='branch' pk=latest_branch.pk %}" class="nav-item nav-link">Branches</a>
+                          <a href="{% url 'website:read' pathfind='newsevent' pk=latest_newsevent.pk %}" class="nav-item nav-link">News &amp; Event</a>
+                          <a href="{% url 'website:careers' %}" class="nav-item nav-link">Careers</a>
+                          <a href="{% url 'website:contactus' %}" class="nav-item nav-link">Contact Us</a>
+                          <a href="http://www.bacolodcity.gov.ph/" class="btn btn-primary">Covid Updates</a>
+                        </div>
+                        <div class="social ml-auto">
+                            <a href="https://www.facebook.com/no1supplier"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+          <div class="container">
+              <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'website:site' %}"><i class="fa fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="">Article</a></li>
+                  <li class="breadcrumb-item active" style="text-transform: capitalize;">{{ context_title|safe }}</li>
+              </ul>
+          </div>
+      </div>
+      <!-- Breadcrumb End -->
+
+      <!-- Single News Start-->
+      <div class="single-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="sn-container">
+                        <div class="sn-img">
+                            {% if path == 'video' %}
+                            <video src="/media/{{ object.video }}" controls autoplay muted class="img-fluid" style="width: 100%;"></video>
+                            {% elif path == 'ourstory' %}
+                            <img src="{% static 'execom.jpg' %}" alt="">
+                            {% else %}
+                            <img src="/media/{{ object.image }}" style="height: 350px;" />
+                            {% endif %}
+                        </div>
+                        <div class="sn-content">
+                            <h1 class="sn-title" style="text-transform: capitalize;">{{ object.header }}</h1>
+                            <h1 class="sn-title" style="text-transform: capitalize;">{{ object.title }}</h1>
+                            {% if object.vacants > 0%}
+                            <h5>Vacants: {{ object.vacants }}</h5>
+                            {% endif %}
+                            <h5>{{ object.date }}</h5>
+                            <p>{{ object.content|linebreaks }}</p>
+                            {{ object.description|linebreaks }}
+                            {% if path == 'ourstory' %}
+                              <div class="col">
+                                <div class="col-lg-12">
+                                  <h3>Mission</h3>
+                                  <p>{{ object.mission }}</p>
+                                </div>
+                                <div class="col-lg-12">
+                                  <h3>Vision</h3>
+                                  <p>{{ object.vision }}</p>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="col">
+                                  <div class="col-lg-12">
+                                      <h4>We Serve</h4>
+                                      <img src="{% static 'help.jpg' %}" alt="" class="img-fluid slogan-img">
+                                      <p>We are dedicated to give you the best service as a consumer goods distributor in the islands of Negros and Siquijor.</p>
+                                  </div>
+                                  <div class="col-lg-12">
+                                      <h4>We Deliver</h4>
+                                      <img src="{% static 'deliver.jpg' %}" alt="" class="img-fluid slogan-img">
+                                      <p>Together with our team, we ensure the continuous availability of Nestle Products from the center of Negros to as far as the island of Siquijor.</p>
+                                  </div>
+                                  <div class="col-lg-12">
+                                      <h4>We Help</h4>
+                                      <img src="{% static 'serve.jpg' %}" alt="" class="img-fluid slogan-img">
+                                      <p>We help by ensuring the continuous supply of essential Nestle goods over the islands of Negros and Siquijor.</p>
+                                  </div>
+                              </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sidebar">
+                      <div class="sidebar-widget">
+                        {% if path == 'careers' %}
+                          <h2 class="sw-title">Careers</h2>
+                          <div class="main-news">
+                            <div class="mn-list">
+                                <ul>
+                                    {% for field in careers %}
+                                    <li><a href="{% url 'website:read' pathfind='careers' pk=field.pk %}">{{ field.title }} {% if field.vacants > 0 %}({{ field.vacants }}){% endif %}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div class="sidebar-widget">
+                        {% if related %}
+                          <h2 class="sw-title">Related</h2>
+                          <div class="cat-news">
+                            <div class="row cn-slider">
+                                {% for field in related %}
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                        <center>
+                                          <img src="{% if path != 'video' %}/media/{{ field.image }}{% else %}{% static 'play.png' %}{% endif %}" style="height: 90px;"/>
+                                          <div class="cn-title">
+                                              <a href="{% url 'website:read' pathfind=path pk=field.pk %}">{{ field.title }}</a>
+                                          </div>
+                                        </center>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                      </div>
+                      <div class="sidebar-widget">
+                          <h2 class="sw-title">Featured Products</h2>
+                          <div class="category">
+                            <div class="cat-news">
+                              <div class="row cn-slider">
+                                  <div class="col-md-6">
+                                      <div class="cn-img">
+                                        <center>
+                                          <img src="{% static 'featuredproducts/nido.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                          <!--div class="cn-title">
+                                              <a href="">Lorem ipsum dolor sit</a>
+                                          </div-->
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="cn-img">
+                                        <center>
+                                          <img src="{% static 'featuredproducts/kitkat.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                          <!--div class="cn-title">
+                                              <a href="">Lorem ipsum dolor sit</a>
+                                          </div-->
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="cn-img">
+                                      <center>
+                                        <img src="{% static 'featuredproducts/milo.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                        <!--div class="cn-title">
+                                            <a href="">Lorem ipsum dolor sit</a>
+                                        </div-->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                      <center>
+                                        <img src="{% static 'featuredproducts/cerelac.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                        <!--div class="cn-title">
+                                            <a href="">Lorem ipsum dolor sit</a>
+                                        </div-->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                      <center>
+                                        <img src="{% static 'featuredproducts/maggi.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                        <!--div class="cn-title">
+                                            <a href="">Lorem ipsum dolor sit</a>
+                                        </div-->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                      <center>
+                                        <img src="{% static 'featuredproducts/chuckie.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                        <!--div class="cn-title">
+                                            <a href="">Lorem ipsum dolor sit</a>
+                                        </div-->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                      <center>
+                                        <img src="{% static 'featuredproducts/nestea.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                        <!--div class="cn-title">
+                                            <a href="">Lorem ipsum dolor sit</a>
+                                        </div-->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="cn-img">
+                                      <center>
+                                        <img src="{% static 'featuredproducts/nestlecream.png' %}" style="width: 90px; height: 90px;"/>
+                                      </center>
+                                        <!--div class="cn-title">
+                                            <a href="">Lorem ipsum dolor sit</a>
+                                        </div-->
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                        <div class="sidebar-widget">
+                            <h2 class="sw-title">Nestle Distributor Partner</h2>
+                            <div class="category">
+                                <div class="cat-news">
+                                  <div class="cn-img">
+                                      <img src="{% static 'nestlebrand.png' %}" class="img-fluid" style="height: 130px;"/>
+                                      <div class="cn-title">
+                                          <a href="https://www.nestle.com.ph/brands" target="_blank">Nesle Products</a>
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if path == 'branch' %}
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3921.4471752414734!2d123.00252811435875!3d10.622326392426189!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33aecdeea2b271eb%3A0x3ceb8e99ce94e31!2sNo.1%20Supplier%20Inc.!5e0!3m2!1sen!2sph!4v1602895301178!5m2!1sen!2sph" style="width: 100%;" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Single News End-->
+
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Get in Touch</h3>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker"></i>National Road Brgy. Mansiligan, Bacolod City, Negros Occidental, Philippines</p>
+                            <p><i class="fa fa-envelope"></i>no1supplier@gmail.com</p>
+                            <p><i class="fa fa-phone"></i>‎(034) 458 - 7019</p>
+                            <div class="social">
+                                <a href="https://www.facebook.com/no1supplier"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Useful Links</h3>
+                        <ul>
+                            <li><a href="https://www.nestle.com.ph/brands/">Nestle Products</a></li>
+                            <li><a href="{% url 'website:contactus' %}">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h3 class="title">Quick Links</h3>
+                        <ul>
+                            <li><a href="{% url 'website:read' pathfind='ourstory' pk=latest_about.pk %}">Our Story</a></li>
+                            <li><a href="{% url 'website:read' pathfind='branch' pk=latest_branch.pk %}">Branches</a></li>
+                            <li><a href="{% url 'website:read' pathfind='newsevent' pk=latest_newsevent.pk %}">News &amp; Event</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <div class="newsletter">
+                            <a href="https://www.nestle.com.ph/" target="_blank">
+                                <h4 style="color: #ffffff;">Distributor Partner</h4>
+                                <img src="{% static 'nestle.png' %}" style="width: 250px; height: 150px;" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+        <!-- Footer Menu Start -->
+        <div class="footer-menu">
+            <div class="container">
+                <div class="f-menu">
+                    <a href="">Credits</a>
+                    <a href="">Accessibility help</a>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Menu End -->
+
+        <!-- Footer Bottom Start -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                        <p>Copyright &copy; No. 1 Supplier, Inc. All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Bottom End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'site/lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'site/lib/slick/slick.min.js' %}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{% static 'site/js/main.js' %}"></script>
+    </body>
+</html>
+{% endspaceless %}
+{% else %}
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'logo.png' %}" type="image/x-icon">
+    <title>N1S MAINTENANCE</title>
+    <style>
+        @font-face {
+            font-family: typewcond;
+            src: url({% static 'fonts/typewcond_bold.otf' %});
+        }
+
+        * {
+            font-family: typewcond;
+            font-weight: bolder;
+            font-size: 40px;
+            color: #000000;
+        }
+
+        .container {
+            width: 70%;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body>
+<center>
+    <div class="container">
+        <img src="{% static 'logo.png' %}" alt="" style="width: 150px; height: 150px;">
+        <p>We are now under maintenance, we will ensure to give you the best among the best content for our site. we will right back.</p>
+        <img src="{% static 'maintenance.gif' %}" alt="" style="width: 250px; height: 150px;">
+    </div>
+</center>
+</body>
+</html>
+{% endspaceless %}
+{% endif %}

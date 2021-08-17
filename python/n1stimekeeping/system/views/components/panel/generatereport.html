@@ -1,0 +1,12 @@
+{% extends 'base/panelbase.html' %}
+
+{% block title %}{{ context_title }}{% endblock %}
+{% block sub_title %}{{ context_title }}{% endblock %}
+
+{% block content %}
+    {% for field in object %}
+      {% if field.date.employee == loop.first %}
+        {{ field.date.employee }}
+      {% endif %}
+    {% endfor %}
+{% endblock %}

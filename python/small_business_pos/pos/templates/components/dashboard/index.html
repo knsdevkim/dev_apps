@@ -1,0 +1,14 @@
+{% extends 'base/main_frame.html' %}
+
+{% block breadcrumb_title %}{{ page_name }}{% endblock %}
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block nav_dashboard %}class="active"{% endblock %}
+
+{% block content %}
+<ul>
+    <li>
+        <a href="{% url 'apps:category:categoryList' %}">Inventory</a>
+    </li>
+</ul>
+{% endblock %}

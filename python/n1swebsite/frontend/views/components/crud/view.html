@@ -1,0 +1,420 @@
+{% extends 'base/panel.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'datatables.min.css' %}">
+{% endblock %}
+{% block bottomscript %}
+<script src="{% static 'datatables.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#listtable').DataTable();
+    });
+</script>
+{% endblock %}
+
+{% block icon %}fa-table{% endblock %}
+{% block title %}{{ context_title|safe }}{% endblock %}
+{% block subtitle %}{{ context_title|safe }}{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+{% comment %}
+    Check what context title passes so that we can customize
+    our tables header base on the object data served.
+{% endcomment %}
+
+{% if context_title == 'slideshow' %}
+<script>
+    function setSlideshow() {
+        let form = document.querySelector('#formSlideshow');
+        form.submit()
+    }
+</script>
+
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <button onclick="setSlideshow();" class="btn btn-md btn-primary">Set Slideshow</button>
+    </li>
+    <li class="list-inline-item">
+        <a href="{% url 'backend:createslideshow' %}" class="btn btn-md btn-primary">New</a>
+    </li>
+</ul>
+<hr>
+
+<!--form action="{% url 'backend:setslideshow' %}" method="post" id="formSlideshow"-->
+{% csrf_token %}
+<table id="listtable" class="table">
+    <thead>
+        <th></th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 50px;">
+                <input type="checkbox" name="id" id="id" value="{{ field.id }}" {% if field.status == 'In Use' %}checked{% endif %}>
+            </td>
+            <td style="width: 200px;">
+                <img src="/media/{{ field.image }}" alt="Image" style="width: 250px; height: 200px;">
+            </td>
+            <td style="width: 100px;">{{field.title}}</td>
+            <td style="width: 100px;">{{field.description}}</td>
+            <td style="width: 50px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:updateslideshow' pk=field.id %}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form action="{% url 'backend:deleteslideshow' pk=field.id %}" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif context_title == 'site' %}
+<script>
+    function setSlideshow() {
+        let form = document.querySelector('#formSettings');
+        form.submit()
+    }
+</script>
+
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <button onclick="setSlideshow();" class="btn btn-md btn-primary">Update Settings</button>
+    </li>
+</ul>
+<hr>
+
+<form action="{% url 'backend:setsitesettings' %}" method="post" id="formSettings">
+{% csrf_token %}
+<table id="listtable" class="table">
+    <thead>
+        <th>Display</th>
+        <th>Section</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 50px;">
+                <input type="checkbox" name="id" id="id" value="{{ field.id }}" {% if field.is_display %}checked{% endif %}>
+            </td>
+            <td style="width: 100px; text-transform: capitalize;">{{field.section}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</form>
+{% elif context_title == 'about' %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a href="{% url 'backend:updateabout' pk=object.id %}" class="btn btn-md btn-primary">Modify</a>
+    </li>
+</ul>
+<h1>Header</h1>
+<h3>{{ object.header }}</h3>
+<hr>
+<h1>Content</h1>
+<p>{{ object.content|linebreaks }}</p>
+<hr>
+<h1>Mission</h1>
+<p>{{ object.mission|linebreaks }}</p>
+<hr>
+<h1>Vision</h1>
+<p>{{ object.vision|linebreaks }}</p>
+{% elif context_title == 'branch' %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a href="{% url 'backend:createbranch' %}" class="btn btn-md btn-primary">New</a>
+    </li>
+</ul>
+<hr>
+
+<table id="listtable" class="table">
+    <thead>
+        <th>Image</th>
+        <th>Branch</th>
+        <th>Description</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 200px;">
+                <img src="/media/{{ field.image }}" alt="Image" style="width: 250px; height: 200px;">
+            </td>
+            <td style="width: 100px;">{{field.title}}</td>
+            <td style="width: 100px;">{{field.content|slice:":100"}}<strong>...</strong></td>
+            <td style="width: 100px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:detailsbranch' pk=field.id %}" class="btn btn-md btn-success">
+                            <i class="fa fa-info"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:updatebranch' pk=field.id %}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form action="{% url 'backend:deletebranch' pk=field.id %}" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif context_title == 'milestone' %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a href="{% url 'backend:createmilestone' %}" class="btn btn-md btn-primary">New</a>
+    </li>
+</ul>
+<hr>
+
+<table id="listtable" class="table">
+    <thead>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 200px;">
+                <img src="/media/{{ field.image }}" alt="Image" style="width: 250px; height: 200px;">
+            </td>
+            <td style="width: 100px;">{{field.title}}</td>
+            <td style="width: 100px;">{{field.date}}</td>
+            <td style="width: 100px;">{{field.content|slice:":100"}}<strong>...</strong></td>
+            <td style="width: 100px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:detailsmilestone' pk=field.id %}" class="btn btn-md btn-success">
+                            <i class="fa fa-info"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:updatemilestone' pk=field.id %}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form action="{% url 'backend:deletemilestone' pk=field.id %}" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif context_title == 'newsevent' %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a href="{% url 'backend:createnewsevent' %}" class="btn btn-md btn-primary">New</a>
+    </li>
+</ul>
+<hr>
+
+<table id="listtable" class="table">
+    <thead>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 200px;">
+                <img src="/media/{{ field.image }}" alt="Image" style="width: 250px; height: 200px;">
+            </td>
+            <td style="width: 100px;">{{field.title}}</td>
+            <td style="width: 100px;">{{field.date}}</td>
+            <td style="width: 100px;">{{field.category}}</td>
+            <td style="width: 100px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:detailsnewsevent' pk=field.id %}" class="btn btn-md btn-success">
+                            <i class="fa fa-info"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:updatenewsevent' pk=field.id %}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form action="{% url 'backend:deletenewsevent' pk=field.id %}" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif context_title == 'video' %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a href="{% url 'backend:createvideo' %}" class="btn btn-md btn-primary">New</a>
+    </li>
+</ul>
+<hr>
+
+<table id="listtable" class="table">
+    <thead>
+        <th>Stream Video</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 100px;">
+                <video src="/media/{{ field.video }}" controls controlsList="nodownload" style="width: 500px;"></video>
+            </td>
+            <td style="width: 100px;">{{ field.title|upper }}</td>
+            <td style="width: 100px;">{{ field.date }}</td>
+            <td style="width: 50px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:updatevideo' pk=field.id %}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form action="{% url 'backend:deletevideo' pk=field.id %}" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif context_title == 'careers' %}
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <a href="{% url 'backend:createcareers' %}" class="btn btn-md btn-primary">New</a>
+    </li>
+</ul>
+<hr>
+
+<table id="listtable" class="table">
+    <thead>
+        <th>Image</th>
+        <th>Career Title</th>
+        <th>Description</th>
+        <th>Vacants</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 200px;">
+                <img src="/media/{{ field.image }}" alt="Image" style="width: 250px; height: 200px;">
+            </td>
+            <td style="width: 100px;">{{ field.title|upper }}</td>
+            <td style="width: 100px;">{{ field.description|slice:"0:100" }}</td>
+            <td style="width: 100px;">{{ field.vacants }}</td>
+            <td style="width: 50px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="{% url 'backend:updatecareers' pk=field.id %}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form action="{% url 'backend:deletecareers' pk=field.id %}" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif context_title == 'feeds' %}
+<table id="listtable" class="table">
+    <thead>
+        <th>User Fullname</th>
+        <th>Email</th>
+        <th>Category</th>
+        <th>Message</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        {% for field in object %}
+        <tr>
+            <td style="width: 100px;">{{ field.fullname|upper }}</td>
+            <td style="width: 100px;">{{ field.email }}</td>
+            <td style="width: 100px;">{{ field.category }}</td>
+            <td style="width: 100px;">{{ field.message }}</td>
+            <td style="width: 50px;">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <form action="" method="post" onsubmit="return confirm('Are you sure to remove this?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-md btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

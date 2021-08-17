@@ -1,0 +1,10 @@
+[
+  {
+    "model": "backend.sitesettingsmodel",
+    "pk": 1,
+    "fields": {
+      "section": "Maintenance",
+      "is_display": false
+    }
+  }
+]

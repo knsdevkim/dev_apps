@@ -1,0 +1,21 @@
+{% extends 'base/panel.html' %}
+
+{% block icon %}fa-table{% endblock %}
+{% block title %}{{ context_title|safe }}{% endblock %}
+{% block subtitle %}{{ context_title|safe }}{% endblock %}
+
+{% block content %}
+
+{% if object.image %}
+<img src="/media/{{ object.image }}" alt="Image" style="width: 100%; height: 300px;">
+{% endif %}
+
+<h1 style="text-transform: uppercase;">{{ object.title }}</h1>
+
+<hr>
+
+<h3>{{ object.date }}</h3>
+
+{{ object.content|linebreaks }}
+
+{% endblock %}

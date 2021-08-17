@@ -1,0 +1,24 @@
+{% extends 'base/panel.html' %}
+
+{% block linkstatus1 %}class="active"{% endblock %}
+
+{% block icon %}fa-edit{% endblock %}
+{% block title %}{{ context_title|safe }}{% endblock %}
+{% block subtitle %}{{ context_title|safe }}{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {{ form.as_p }}
+    
+    <button type="submit" class="btn btn-md btn-primary form-control">{{ context_button_label }}</button>
+</form>
+{% endblock %}
