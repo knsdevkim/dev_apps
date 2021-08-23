@@ -1,0 +1,104 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_newsevents %}blue-text text-accent-4 bold{% endblock %}
+
+{% block content %}
+<!-- CONTENT -->
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+    </script>
+
+
+<div class="container">
+
+    <h6 class="h6-page-header blue-text text-accent-4"><b>News and Events</b> | Operations Summit</h6><br><br>
+    <div class="event-content" style="top:10px;">
+        <div class="row">
+          <!-- START ARTICLE -->
+            {% for article in articles %}
+            <div class="col s8 news-and-events-info">
+                    <div class="col-content news-info">
+                      <div class="carousel carousel-slider" id="demo-carousel-auto" data-indicators="true">
+                        {% for image in article.web.all %}
+                          <a class="carousel-item" href="javascript:void(0);"><img src="/media/{{ image.filename }}"></a>
+                        {% endfor %}
+                    </div>
+
+                  
+                    <h4>{{ article.title }}</h4>
+                    <span><i class="tiny material-icons access-time">date_range</i>{{ article.date_posted }}</span>
+                    <span><i class="tiny material-icons location-on">location_on</i>{{ article.location }}</span>
+
+                    <p>
+                        {{ article.description }}
+                    </p>
+
+                    {% if article.video != None and article.video != 'N/A' %}
+                      <video src="/media/{{ article.video }}" controls width="100%"></video>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <!-- END -->
+
+            <div class="col s4 news-and-events-other">
+              <div class="col-content">
+                  <h6><b>Other News & Events</b></h6>
+
+                  <ul class="collection">
+                    {% for oa in other_articles %}
+                      <li class="collection-item avatar">
+                        <img src="/media/{% for image in oa.web.all %}{% if forloop.first %}{{ image.filename }}{% endif %}{% endfor %}" alt="" class="circle">
+                        <span class="title"><b><a href="{% url 'website:website_newsevents_read' id=oa.pk %}" class="blue-text text-accent-4">{{ oa.title }}</a></b></span>
+                        <p>{{ oa.date_posted }}<br>
+                          {{ oa.location }}
+                        </p>
+                        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+              </div>
+          </div>
+        </div>     
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $('.next').click(function(){
+            $('.carousel').carousel('next')
+        });
+
+    });
+
+</script>
+{% endblock %}

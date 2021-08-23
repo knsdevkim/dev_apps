@@ -1,0 +1,74 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_np %}blue-text text-accent-4 bold{% endblock %}
+
+{% block css %}
+<style>
+    @media screen and ( max-width: 1260px ) {
+        .service-header{
+            margin-top: 200px !important;
+        }
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- CONTENT -->
+<div class="container">
+    <div class="center-align">
+        <h1 class="blue-text text-accent-4 home-services"> <b>Nestle Professionals</b></h1>
+        <h4 class="service-h6" style="margin-top: -60px;"><b>NESTLE PROFESSIONAL</b></h4>
+        <p>Nestlé Professional is committed to providing the finest ingredients, operational knowledge, <br>
+            and uncompromised support to food service operations. We're in the business of helping your business succeed.
+        </p>
+    </div>
+
+    <div class="card center">
+        <div class="card-content">
+            <img class="img-responsive" src="{% static 'pages/image/Alegria.jpeg' %}" width="60%" alt="">
+        <h4 class="blue-text text-accent-4"><b>Nestle Alegria</b></h4>
+        <p>When it comes to coffee, more than anything else, patrons are looking for freshness and consistency, 
+            and many coffee systems don’t deliver. But change is brewing. NESCAFÉ® Alegria is a fresh departure 
+            from those pots of filtered coffee that sit on burners, getting bitter and stale. It’s brewed to order, 
+            so it’s always fresh and tastes great. You’ll save time and labor—and you’ll save money, too, because 
+            there’s never any wasted coffee or used grounds to dispose of. Our broad selection of dispensers, formats, 
+            and blends offer efficient, easy-to-use options for any operation. NESCAFÉ® Alegria makes great black coffee 
+            foolproof—and gives you an easy way to add a variety of popular specialty coffee drinks to your menu. 
+            And, because it’s backed by Nestlé Professional Beverages, the largest sales and service network in the country, 
+            you can count on 24/7 peace of mind. NESCAFÉ® Alegria. It’s more than smart business. It’s Smart Coffee Made Simple.</p>
+        </div>
+    </div>
+
+    <div class="card center">
+        <div class="card-content">
+            <img class="img-responsive" src="{% static 'pages/image/bower.jpg' %}" width="60%" alt="">
+            <h4 class="blue-text text-accent-4"><b>Bower</b></h4>
+            <p>For those willing to learn and work hard, Nestlé offers a good opportunity through Business on Wheels (Bow). - BOW involves 
+                selling Nestlé products, such as Nescafe 3-in-1 (all variants), Bear Brand Sterilized 200ml, Coffee-mate 6g & 500g, Milo 20g, 
+                Nescafé Classic 2g & 100g, Nestea 45g, Chuckie 250ml, Maggi Magic Sarap 8g, Maggi Magic Sinigang, and Maggi Magic Sabaw 
+                (all flavors) using a tricycle. - BOW guarantees a viable profit as long as the Bowers are able to manage their expenses. 
+                Of course, the harder they work, the more they earn. Initial stocks. As a Bower, you don't need to invest much except 
+                for the initial stocks to be purchased from Nestlé distributors in your area.</p>
+        </div>
+    </div>
+
+    <div class="card center">
+        <div class="card-content">
+            <img class="img-responsive" src="{% static 'pages/image/np_nestea.jpeg' %}" alt="">
+            <h4 class="blue-text text-accent-4"><b>Nestle Dispenser</b></h4>
+            <p>Our beverage systems offer you an easy and convenient way to serve consistently great tasting coffee, creamer, and 
+                refreshing beverages that delight your guests. We are committed to providing you with beverage systems that are innovative 
+                and reliable to meet the front-of-house and back-of-house needs of your operation. We recognize that quality service is a 
+                cornerstone of any foodservice operation. That’s why all of our beverage systems are backed by our Nestlé Beverage System 
+                Service Network - A team of knowledgeable technicians who ensure that your systems are maintained to the highest standards 
+                that you would expect. For more information on our beverage systems, or to submit a service request, please contact us.</p>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

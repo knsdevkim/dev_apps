@@ -1,0 +1,173 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_newsevents %}blue-text text-accent-4 bold{% endblock %}
+
+{% block content %}
+<!-- CONTENT -->
+   
+<div class="center-align products-header">
+    <h1 class="products-h1"> <b>News and Events</b></h1>
+    <h4 class="service-h6" style="margin-top: -60px;"><b>NEWS AND EVENTS</b></h4>
+    <p>What’s happening here at N1S? Explore our latest news and stories here. </p>
+</div>
+
+<div class="container" style="width: 80%;">
+    <div class="row">
+        <div class="col s8 upcoming-col">
+            <div class="col-content">
+                <div class="more-upcoming-events">
+                    <p class="white-text p-upcoming-events"> <b>Upcoming Events</b> </p>
+                    <hr>
+
+                    {% comment %}
+                    {% if upcoming_events.type == 'news_and_events' %}
+                    <div class="row">
+                        <div class="col s1 upcoming-date">
+                            <div class="col-content center">
+                                <h4 class="blue-text text-accent-4 events-h4-date"> <b>{{ upcoming_events.date_posted|date:"d" }}</b> </h4>
+                                <h6>{{ upcoming_events.date_posted|date:"M" }}</h6>
+                            </div>
+                        </div>
+
+                        <div class="col s11 upcoming-desc">
+                            <div class="col-content">
+                                <p> <b>{{ upcoming_events.title }}</b> </p>
+                                <p class="grey-text events-date">When: {{ upcoming_events.date_posted|date:"l" }} - {{ upcoming_events.date_posted }}</p>
+                                <!-- <p class="grey-text events-place">Where: Don Salvador Benedicto</p> -->
+                                <p class="events-desc">{{ upcoming_events.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <h5>No upcoming events to show.</h5>
+                    {% endif %}
+                    {% endcomment %}
+                    <h5>No upcoming events to show.</h5>
+                    <hr>
+                </div>
+                
+
+                <div class="latest-news-and-events" style="margin-bottom: -20px;">
+
+                    <div class="row">
+                        <div class="col s8 div-latest-news">
+                            <div class="col-content">
+                                <p class="white-text p-latest-news"> <b>Latest News & Events</b> </p>
+                            </div>
+                        </div>
+
+                        <div class="searh-news col s4">
+                            <div class="col-content"> 
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input id="search" type="text" name="search" class="validate">
+                                            <label for="search"><i class=" material-icons sort-icon">sort</i> Search</label>
+                                          </div>
+                                    </div>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                
+                {% if isFilter == True %}
+                    <a href="{% url 'website:website_newsevents' %}">Search for "{{ queue }}" total of {{ count_result }} result. Click here to clear.</a>
+                {% endif %}
+
+                {% for feeds in page_obj %}
+                    <div class="row">
+                        <div class="col s5 latest-img">
+                            <div class="col-content">
+                                <img class="events-img" src="/media/{% for image in feeds.web.all %}{% if forloop.first %}{{ image.filename }}{% endif %}{% endfor %}" width="330">
+                            </div>
+                        </div>
+
+                        <div class="col s7 latest-img">
+                            <div class="col-content">
+                                <h5><b>{{ feeds.title }}</b></h5>
+                                <span class="grey-text span-place">{{ feeds.location }}</span> 
+                                <span class="right grey-text span-date">{{ feeds.date_posted }}</span>
+                                <p>{{ feeds.description|slice:":250" }}</p>
+                                <span class="span-more-details-btn news-a"><a href="{% url 'website:website_newsevents_read' id=feeds.pk %}" class="blue-text text-accent-4">more details</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                {% endfor %}
+                
+
+                <div>
+                    <ul class="pagination right">
+                        {% if page_obj.has_previous %}
+                        <li class="waves-effect"><a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a></li>
+                        <li class="waves-effect"><a href="?page=1">First</a></li>
+                        {% endif %}
+                        <li class="waves-effect">{{ page_obj.number }} - {{ page_obj.paginator.num_pages }}</li>
+                        {% if page_obj.has_next %}
+                        <li class="waves-effect"><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+                        <li class="waves-effect"><a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col s4 commercial-col">
+            <div class="col-content">
+                <p class="white-text p-hidden"> <b>HIDDEN TEXT</b> </p>
+                    <hr class="commercial-hr">
+
+                <div class="div-commercials">
+                    <p class="white-text p-commercials"> <b>Commercials</b> </p>
+                    
+                    <div class="box-commercial">
+                        <div class="events-commercials">
+                            <h6 class="blue-text text-accent-4"> <b>Pag-ibig Nestle 100 Years PH</b> </h6>
+                            <iframe width="100%" height="250" class="responsive-video" src="https://www.youtube.com/embed/ffQf0ztguzs" 
+                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                            <!-- <video class="responsive-video" controls>
+                                <source src="video/nestle-100-years.mp4" type="video/mp4">
+                            </video> -->
+                            <img src="icons/video-icon.png" alt="">
+                        </div>
+
+                        <div class="events-commercials">
+                            <h6 class="blue-text text-accent-4"> <b>Babangon Tayo with NESCAFÉ | NESCAFÉ Philippines
+                            </b> </h6>
+                            <iframe width="100%" height="250" src="https://www.youtube.com/embed/WEOyI6QtjkE" title="YouTube video player" 
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                            <p>Helping thousands of Filipino coffee farmers since 2008. Kapeng Pilipino para sa Pilipino. 
+
+                                ASC No. N049P022820N</p>
+                            <img src="icons/video-icon.png" alt="">
+                        </div>
+
+                        <div class="events-commercials">
+                            <h6 class="blue-text text-accent-4"> <b>Pag-ibig Nestle 100 Years PH</b> </h6>
+                            <img src="{% static 'pages/image/commercial_image.jpg' %}" width="100%" alt="">
+                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing 
+                                do eiusmod. </p> -->
+                            <img src="{% static 'pages/image/commercial-image.jpg' %}" alt="">
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

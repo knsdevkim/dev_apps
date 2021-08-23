@@ -1,0 +1,129 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_products %}blue-text text-accent-4 bold{% endblock %}
+
+{% block content %}
+<style>
+    @media only screen and (max-width: 540px){
+    .products-content{
+        margin-top: -50px !important;
+    }
+}
+</style>
+<!-- CONTENT -->
+<div class="container products-content">
+    <div class="center-align products-header">
+        <h1 class="products-h1"> <b>Products</b></h1>
+        <h4 class="service-h6" style="margin-top: -60px;"><b>OUR FEATURED PRODUCTS</b></h4>
+        <p>Everyone needs great quality food. Listed below are a few brands that we distribute to Negros and Siquijor.  </p>
+    </div>
+
+    <div class="row" style="margin-top: -100px;">
+        <div class="col s3 product-col zoom-in">
+            <div class="col-content" >
+                <a href="https://www.nestle.com/brands/allbrands/nescafe">
+                    <img class="product-brand" src="{% static 'pages/image/products/nescafe.png' %}" width="220">
+                </a>
+            </div>
+        </div>
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com/brands/allbrands/coffee-mate">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/Coffee.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/bear-brand">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/bearbrand.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/nestle-cream">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/nestle-cream.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+    </div>
+
+
+    <div class="row">
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/Maggi">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/Maggie.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/milo">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/milo.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/nestle-milks">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/milks.png' %}" width="220">
+                </a>
+            </div>
+        </div>
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/nestea">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/nestea.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+    </div>
+
+
+
+    <div class="row">
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/cerelac">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/cerelac.png' %}" width="220">
+                </a>
+            </div>
+        </div>
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/Kitkat">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/Kitkat.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/Gerber">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/Gerben.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+
+        <div class="col s3 product-col">
+            <div class="col-content" >
+                <a href="https://www.nestle.com.ph/brands/allbrands/nido">
+                    <img class="product-brand zoom-in" src="{% static 'pages/image/products/Nido.png' %}" width="220">
+                </a>
+            </div>
+        </div>  
+    </div>
+</div>
+{% endblock %}

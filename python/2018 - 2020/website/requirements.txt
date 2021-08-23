@@ -1,0 +1,4 @@
+Pillow
+Django==3.2.4
+mysqlclient
+django-truncate

@@ -1,0 +1,84 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_careers %}blue-text text-accent-4 bold{% endblock %}
+
+{% block css %}
+<style>
+    .careers-dept-list{
+        border: 1px solid grey;
+        padding: 20px;
+        height: 300px;
+        margin-bottom: 50px;
+        border-radius: 5%;
+    }
+
+    .collection{
+        border: none;
+    }
+
+    .bullet-list .collection-item { list-style-type:disc;}
+    ul:not(.browser-default) {
+    padding-left: 25px;
+    }  
+
+    .collection .collection-item{
+        border-bottom: none !important;
+    }
+
+    .card-content{
+      height: 180px !important;
+    }
+
+    @media only screen and (max-width: 540px){
+    .card-content{
+      height: 220px !important;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- CONTENT -->
+<div class="container" style="margin-top: 50px;">
+    <div class="center-align">
+        <h1 class="blue-text text-accent-4 home-services"> <b>{{ department.title }}</b></h1>
+        <h6 class="service-h6" ><b>{{ department.title }}</b></h6>
+        <img src="/media/{{ department.icon }}" width="70" alt="">
+        <p class="center-align"> 
+          {{ department.description }}
+        </p>
+    </div>
+
+    
+{% if department.departments.all != None %}
+    <div class="row" style="margin-top: -50px;">
+        {% for available in department.departments.all %}
+          {% if available.is_available %}
+          <div class="col s12 m6"> 
+            <div class="card grey lighten-4">
+              <div class="card-content white-text">
+                <span class="grey-text">No. 1 Supplier, Inc.</span> <br>
+                <span class="card-title black-text"><b>{{ available.title }}</b></span>
+                <p class="black-text">
+                  {{ available.description }}
+                </p>
+              </div>
+              <div class="card-action">
+                <a class="blue-text text-accent-4" href="{% url 'website:website_careers_filter' filter='position' id=available.pk %}"><b>View Job Description</b></a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="row">
+        <center>
+          <h1>No available position.</h1>
+        </center>
+    </div>
+{% endif %}
+</div>
+{% endblock %}

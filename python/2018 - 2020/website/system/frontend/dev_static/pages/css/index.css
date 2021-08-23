@@ -1,0 +1,1295 @@
+html{
+    font-family: Helvetica Neue;
+}
+/* RESPONSIVE CSS */
+
+@media only screen and (max-width: 740px){
+    .bs-details{
+        width: 100% !important;
+        margin-top: 20px;
+    }
+}
+@media only screen and (max-width: 1260px){
+
+    .flickity-page-dots .dot {
+        width: 12px !important;
+        height: 12px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .flickity-prev-next-button {
+        width: 50px !important;
+        height: 50px !important;
+        background: transparent;
+        margin-top: 15px !important;
+      }
+
+    .header-fixed{
+        margin-top: -5px !important;
+    }
+
+    #header1{
+        font-size: 10px;
+        
+        /* text-align: center;
+        justify-content: center;
+        margin: 0px !important; */
+    }
+    
+    .bs-details{
+        width: 100% !important;
+    }
+
+    .careers-dept-content{
+        width: 50% !important;
+    }
+
+    .bs-image{
+        width: 130%;
+        margin-top: 50px;
+    }
+
+    #header1{
+        font-size: 10px;
+        left: 20px;
+        /* text-align: center;
+        justify-content: center;
+        margin: 0px !important; */
+    }
+    .bantay-serbisyo-col1{
+        width: 100% !important;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+    }
+
+    .bantay-serbisyo-col2{
+        width: 80% !important;
+    }
+    .covid-update-btn{
+    width: 100%;
+    height: auto; 
+    margin: 0 !important;
+    }
+    .slideshow{
+        width: 100%;
+        position: relative;
+        top: 50px !important;
+        padding: 0px !important;
+    }
+
+    /* .header-fixed{
+        margin-bottom: 120px !important;
+    } */
+
+    .search-input{
+        width: 60% !important;
+    }
+
+    .button-col{
+        top: 0px !important;
+        right: 0px !important;
+    }
+
+    .upcoming-col{
+        width: 100% !important;
+    }
+
+    .commercial-col{
+        width: 100% !important;
+    }
+    
+    .responsive-video{
+        width: 100% !important;
+    }
+
+    .commercial-hr{
+        display: none;
+    }
+    
+    #header1{
+        margin-left: 0px !important;
+        justify-content: center;
+    }
+    #search_icon{
+    visibility: hidden;
+    display: none;
+    }
+    
+    .service-content{
+    width: 100% !important;
+    margin-bottom: 50px;
+    }
+    
+    .about-us-pic{
+    margin: 0px !important;
+    width: 100%;
+    padding: 0px 30px 50px 30px;
+    }
+    
+    #about-us-desc{
+    text-align: center;
+    padding: 10px;
+    }
+    
+    .abt-us-container{  
+    background-color: #fff;
+    margin-top: 0px !important;
+    }
+    
+    .branches{
+    width: 100% !important;
+    margin-bottom: 80px;
+    justify-content: center;
+    text-align: center;
+    
+    }
+    
+    #footericons{
+    width: 100%;
+    margin-bottom: 20px;
+    padding-top: 50px;
+    }
+    
+    #footer-link{
+    width: 50%;
+    margin-bottom: 50px;
+    
+    }
+    
+    #footer-content{
+    background-image: url(image/map1.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    }
+    
+    .footer-hr{
+    display: none;
+    }
+    
+    .branch-hr{
+    display: none;
+    }
+    
+    .pandemic-title{
+    width: 100%;
+    }
+
+    #customize-footer{
+        background-size: 100% 100%;
+    }
+    
+    .pandemic-col{
+    width: 100% !important;
+    margin-bottom: 50px;
+    }
+
+
+
+    
+    .bs-container{
+    background-image: none !important;
+    }
+    
+    .bantay-serbisyo{
+    width: 100% !important;
+    box-shadow: 5px 5px 5px 5px #888888;
+    margin: 0 !important;
+    }
+    
+    .prod-row{
+    width: 50% !important;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px !important;
+    }
+    
+    .brand{
+    display: inline !important;
+    }
+    
+    .before-icons{
+    display: none !important;
+    }
+
+    @media only screen and (max-width: 420px){
+    .prod-row{
+    width: 100% !important;
+    margin-top: 40px !important;
+    }
+    #footer-link{
+    width: 100%;
+    margin-bottom: 50px;
+    background-image: url(image/map.png);
+    }
+
+    .upcoming-date{
+        width: 100% !important;
+        text-align: left;
+    }
+
+    .upcoming-desc{
+        width: 100% !important;
+    }
+    }
+        
+}
+
+@media only screen and (max-width: 520px){
+    .home-bs-img, .home-bs-title, .home-bs-desc{
+        width: 100% !important;
+        text-align: center !important;
+        margin: 0 !important;
+    }
+
+    .home-bs-left-border{
+        display: none;
+    }
+
+    .bantay-serbisyo{
+        margin: 0px !important;
+    }
+
+    career-col-checklist, .careers-check-list{
+        width:100% !important;
+    }
+    
+}
+/* END OF RESPONSIVE CSS */
+
+.slideshow{
+    width: 100%;
+    margin-top: 150px !important;
+}
+
+.service-header{
+    margin-bottom: 100px;
+    margin-top: 200px;
+}
+
+.service-h6{
+    margin-top: -50px;
+}
+.pandemic-img{
+    margin-top: 100px !important;
+}
+#header1{
+    margin-left: 90px;
+}
+
+.view-all-products-btn{
+    padding: 20px;
+    border: none;
+    background-color: white;
+    margin-top: 50px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%); 
+}
+
+#about-us-desc{
+    padding: 20px;
+}
+
+.wehelp, .weserve, .wedeliver {
+    border: 1px solid #EAF4FE; 
+    padding: 30px;
+    height: 350px;
+}
+
+.abt-us-container{
+    margin-top: 100px; 
+    background-color: #F8F8F8; 
+    padding: 100px 0px 100px 0px;
+}
+
+.about-us-pic{
+    margin-left: -50px; 
+    margin-right: 25px;
+}
+
+.pandemic-container{
+    margin-top: 100px !important; 
+    margin-bottom: 200px !important;
+}
+
+.pandemic-title{
+    margin-bottom: 80px;
+}
+
+.pandemic-adaptation, .home-services, .products-h1{
+    text-align: center; 
+    opacity: 0.1;
+}
+
+.home-navigate{
+    border: none;
+    background-color: #EAF4FE;
+    border-radius: 50%;
+}
+
+.pandemic-h6{
+    margin-top: -50px;
+}
+
+.bs-container{
+    background-position: center; 
+    background-size: 100%; 
+    background-repeat: no-repeat; 
+    height: 600px;
+    margin-top: -70px !important;
+}
+
+.bantay-serbisyo{
+    width: 55%; 
+    background-color: white; 
+    padding: 50px; 
+    margin-left: 4%;
+    margin-top: 5%;
+}
+
+.bs-call{
+    vertical-align: middle;
+}
+
+.img-customer{
+    margin-top: 30px;
+}
+
+.cc-border{
+    border-bottom: 1px solid blue;
+}
+
+.home-bs-left-border{
+    border-left: 4px solid blue; 
+    height: 80px;
+}
+
+.chckbox-label{
+    font-size: 11px !important; 
+    line-height: 1.3;
+}
+
+.brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home-product-brand{
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%); 
+    padding: 50px 30px 50px 30px;
+}
+
+.n1s-branch{
+    background-color: #F8F8F8; 
+    margin-top: 200px;
+}
+
+.branch-title{
+    padding-top: 150px;
+}
+
+.branch-row{
+    padding-bottom: 150px;
+}
+
+.branch-hr{
+    border-bottom: 4px solid blue; 
+    margin-top: 20px;
+}
+
+#customize-footer{
+   position: relative;
+   top: 120px;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+    background-image: url(../image/map.png) !important; 
+    height: auto; 
+    padding-top: 100px;
+}
+
+.footer-hr{
+    border-top: 8px solid blue; 
+    /*
+    KIM
+    -> width: 1200px;
+    Note: I change to -> width: 100%;
+    */
+    width: 100%; 
+    /* 
+    KIM 
+    -> to center the horizontal line in footer.
+    margin-left: -100px; */ 
+    margin-bottom: 50px;
+}
+
+#footer-row{
+    padding: 0px 0px 30px 0px;
+}
+
+#footericons{
+display: flex; align-items: center;
+}
+
+#ftricons{
+display: inline-flex;
+vertical-align: middle;
+font-size: 40px;
+color: blue;
+}
+
+
+.customize-nav{
+  height: 0;
+  margin-bottom: 140px;
+  position:relative;
+  z-index: 9999;
+  top: 0;
+}
+
+.header-row{
+    border-bottom: 1px solid #EAF4FE;
+
+}
+
+.li-header-icons{
+    padding: 0px 8px 0px 8px; 
+    border-right: 1px solid #EAF4FE; 
+    border-left: 1px solid #EAF4FE;
+}
+
+.span-email, .span-call{
+    text-transform: lowercase; 
+    padding: 10px 8px 0px 8px;
+}
+
+.covid-update-btn{
+    border: none; 
+    padding: 18px; 
+    margin-left: -100px;
+}
+
+.button-col{
+    position: relative;
+    top: -10px;
+    right: 150px;
+}
+
+.n1s-logo{
+    margin-left: 75px;
+    margin-top: -15px;
+    -moz-margin-start: -850px;
+}
+
+.customize-burger{
+    margin-left: 170px;
+}
+/* END OF HOMEPAGE */
+
+/* CAREERS */
+
+.careers-p-legacy-title {
+    background-color: #fcba03;
+    margin: 0px auto;
+    width: 10%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    font-weight: bolder;
+    color: #fff;
+    font-size: 70%;
+    text-align: center;
+}
+
+.map-pin{
+    vertical-align: middle;
+}
+
+.careers {
+    position: relative;
+    top: 20px;
+}
+
+.careers-h1-header {
+    font-weight: bolder;
+    opacity: 0.1;
+}
+
+.job-form-content{
+    padding-bottom: 50px;
+}
+
+
+.close-modal-btn{
+    padding: 40px;
+}
+
+.careers-h6-header {
+    font-weight: bolder;
+    line-height: 110%;
+    margin-top: -53px;
+    text-transform: uppercase;
+}
+
+.careers-btn-apply-now {
+    background-color: #2962FF !important;
+}
+
+.careers-h4-header, 
+.careers-blue-color {
+    color: #2962FF !important;
+}
+
+.careers-p-why-join-us {
+    text-align: justify;
+    font-size: 80%;
+}
+
+.career-collage, .career-job-position{
+    margin-top: 50px;
+}  
+
+.career-job-position{
+    margin-bottom: 200px !important;
+}
+
+.why-join-us, .want-to-join{
+    margin-top: 50px;
+}
+
+.careers-check-list{
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.career-position{
+    padding: 20px; 
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 20%), 0 6px 6px 0 rgb(0 0 0 / 19%);
+    height: 500px;
+}
+@media only screen and (max-width: 992px){
+    .n1s-logo{
+        margin: 0 !important;
+    }
+}
+@media only screen and (max-width: 1000px){
+
+    /* nav, .header-fixed{
+        position: relative !important;
+    } */
+    .flickity-prev-next-button {
+        margin-top: -10px !important;
+    }
+    
+    .header-fixed{
+        margin-top: -5px !important;
+    }
+
+    #header1{
+        font-size: 10px;
+        left: 20px;
+        /* text-align: center;
+        justify-content: center;
+        margin: 0px !important; */
+    }
+    #customize-footer{
+        background-image: none !important;
+    }
+
+    .careers-p-legacy-title{
+        text-align: center;
+        width: 25%;
+    }
+
+    .about-mtp-p{
+        border: none !important;
+    }
+
+    .career-col-checklist{
+        width:50% !important;
+        text-align: center !important;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .empty-col{
+        display: none;
+    }
+    /* .n1s-logo{
+        justify-content: center !important;
+        text-align: center;
+        align-items: center;
+        margin: 0 !important;
+    } */
+
+    .news-and-events-info, .news-and-events-other{
+        width: 100% !important;
+    }
+
+    .news-and-events-other{
+        margin-top: 100px;
+    }
+
+    /*ABOUT US RESPONSIVE*/
+.about-content-1, .about-content-1-img, .about-us-vision-mission-img{
+    width: 100% !important;
+    text-align: center !important;
+}
+.about-vision-mission{
+    width: 100% !important;
+    text-align: center;
+}
+
+.about-section-h4{
+    font-weight: bold;
+}
+.about-us-h1{
+    margin-top: 100px !important;
+}
+/* .about-section-p{
+    font-size: 10vw !important;
+} */
+.about-mtp-content{
+    width: 100% !important;   
+    text-align: center;
+}
+.about-mtp-p{
+    border-left: none;
+    margin-top: -8% !important;
+}
+.about-mtp-img{
+    width: 100% !important;
+    text-align: center;
+}
+.about-executives{
+    width: 50% !important;
+}
+.about-executives-img{
+    margin: 0 auto;
+}
+/*END OF ABOUT US RESPONSIVE*/
+
+}
+
+@media only screen and (max-width: 670px){
+    .career-jobposition{
+        width: 100% !important;
+    }
+
+    .branches-details{
+        width: 50% !important;
+    }
+}
+
+/* END OF CAREERS */
+
+
+
+
+
+/* PRODUCTS */
+
+.products-header{
+    margin-bottom: 100px;
+
+}
+
+.products-h1{
+    text-align: center; 
+    color: #2046f5; 
+    opacity: 0.1;
+}
+
+.products-h6{
+    margin-top: -53px;
+}
+
+.product-brand{
+    padding: 50px 20px 50px 20px; 
+    margin: 50px 0px 50px 0px; 
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%); 
+}
+
+
+/* PRODUCT PAGE RESPONSIVE */
+
+
+@media only screen and (max-width: 1270px) {
+
+.product-col{
+    width: 50% !important;
+    margin: 0 !important;
+    text-align: center;
+}
+
+}
+
+
+/* END OF PRODUCT PAGE RESPONSIVE */
+
+
+/* END OF PRODUCTS */
+
+
+/* CONTACT US */
+#contact-get-in-touch{
+    margin-top: 30px;
+}
+
+.contact-illustration{
+    margin-top: 50px;
+}
+
+#contact-details{
+    margin-top: 50px;
+}
+
+.contact-illustration{
+    margin-bottom: 80px;
+}
+
+#textarea1{
+    height: 80px;
+}
+
+#contact-fill-up-the-form{
+    margin-top: 5px;
+    margin-bottom: 100px;
+}
+
+@media only screen and (max-width: 1290px){
+    #contact-get-in-touch{
+        width: 100%;
+        align-self: center;
+       
+    }
+
+    #contact-fill-up-the-form{
+        width: 100%;
+    }
+
+    .branches-map{
+        width: 100% !important;
+    }
+
+    .branches-details{
+        width: 33.33% !important;
+        display: block;
+    }
+}
+/* END OF CONTACT US */
+
+
+
+
+/* NEWS AND EVENTS */
+
+.more-upcoming-events{
+    margin-bottom: 50px;
+}
+
+.row-upcoming{
+    margin-bottom: 20px;
+}
+
+.p-upcoming-events, .p-latest-news{
+    padding: 10px; 
+    background-color: blue; 
+    width: 33%;
+    
+}
+
+.access-time, .location-on{
+    vertical-align: middle;
+}
+
+.news-info{
+    padding: 40px;
+    border: 1px solid #C6C5C5;
+    margin-top: 15px;
+}
+
+.p-latest-news{
+    width: 50%;
+}
+
+.events-h4-date{
+    margin-bottom: -10px;
+}
+
+.events-date, .events-place, .events-desc{
+    margin-top: -15px;
+}
+
+.events-img{
+    margin-top: 20px;
+}
+
+.span-place, .span-date, .span-more-details-btn{
+    font-size: 12px;
+}
+
+.a-more-details{
+    color: blue;
+}
+
+.div-commercials{
+    box-shadow: 0 0 rgb(0 0 0 / 10%), 0 6px 12px 0 rgb(0 0 0 / 10%);
+    padding: 20px 0px 10px 0px;
+}
+
+.p-commercials{
+    padding: 10px; 
+    background-color: blue; 
+    width: 38%; 
+    margin-bottom: 40px;
+}
+
+.box-commercial{
+    padding: 0px 20px 0px 20px;
+}
+
+.events-commercials{
+    margin-bottom: 50px;
+}
+
+.p-hidden{
+    padding: 10px; 
+    background-color: blue; 
+    width: 100%; 
+    visibility: hidden;
+}
+
+.event-content{
+    margin-bottom: 200px;
+}
+
+@media only screen and (max-width: 1465px){
+    .search-input{
+        width: 60% !important;
+    }
+}
+
+
+@media only screen and (max-width: 1440px){
+
+    .events-img{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 800px){
+    .n1s-logo{
+        margin: 0 !important;
+        width: 50px;
+    }
+
+    .header-fixed{
+        margin-top: -5px !important;
+    }
+
+    /* #header1{
+        font-size: 10px;
+        left: 20px;
+    } */
+
+    .hamburger-logo{
+        margin-left: 20px;
+        width: 100px;
+        margin-top: 20px;
+    }
+
+    .n1s-header-logo{
+        margin-top: -20px;
+    }
+    .p-upcoming-events{
+        width: 100% !important;
+    }
+
+    .div-latest-news, .p-latest-news, .searh-news{
+        width: 100% !important;
+    }
+
+    .search-input{
+        width: 85% !important;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .upcoming-date{
+        width: 100% !important;
+    }
+    .search-input{
+        width: 80% !important;
+    }
+
+    .product-col{
+        width: 100% !important;
+        margin: 0 !important;
+        text-align: center;
+    }
+
+    .about-executives{
+        width: 100% !important;
+    }
+
+    .bcd-bs, .duma-bs{
+        width: 100% !important;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+}
+
+/* END OF NEWS AND EVENTS */
+
+/*ABOUT US*/
+
+.about-us-h1{
+    text-align: center; 
+    color: #2046f5; 
+    opacity: 0.1;
+}
+.mission-vision{
+    margin-bottom: 150px !important;
+}
+
+.about-executive-container{
+    margin-top: 200px !important;
+}
+
+.about-executive-title{
+    margin-bottom: 100px !important;
+}
+
+.about-section-h5{
+    margin-top: -53px;
+}
+.about-section-h4{
+    font-weight: bold;
+
+}
+
+.about-executives-content{
+    padding: 20px 10px 20px 10px !important;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 5%), 0 6px 20px 0 rgb(0 0 0 / 5%); 
+    height: 320px !important;
+    border-radius: 3%;
+    background-image: url(../image/execom3.png) !important; 
+    background-position: bottom !important; 
+    background-repeat: no-repeat !important; 
+    background-size: contain !important;
+}
+
+.about-section-h6{
+    font-style: italic;
+    font-weight: 700;
+}
+
+.about-video{
+    margin-bottom: 150px;
+    margin-top: -50px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 50%); 
+    width: 80%;
+}
+
+.about-us-info{
+    margin-bottom: 120px !important;
+}
+.about-us-vision-mission-img{
+    margin-top: 50px;
+}
+
+.about-mtp-p{
+    border-left: 4px solid blue;
+    padding-left: 20px;
+    margin-top: 1%;
+}
+.about-executives{
+    margin-bottom: 50px;
+    position: relative;
+    width: 100%;
+
+}
+
+/* .executive-position{
+    font-style: italic;
+} */
+
+.about-location-on{
+    vertical-align: middle;
+    margin-bottom: 3px;
+}
+
+.about-have-any-questions{
+    margin-bottom: 200px !important;
+}
+
+.about-mtp-position{
+    font-style: italic;
+    margin-top: -2%;
+    margin-bottom: 10%;
+}
+
+.about-mtp-name{
+    padding-left: 20px; 
+    font-weight: bold;
+}
+
+
+.internal-pandemic-content {
+    margin: 80px 0px 300px 0px;
+}
+
+.internal-branches-content{
+    margin-top: 60px;
+    margin-bottom: 300px;
+}
+
+.h6-page-header{
+    margin-top: 200px !important;
+    margin-left: 10px;
+}
+
+
+
+/*END OF ABOUT US*/
+
+
+/* SLIDER */
+.slider {
+    height: auto !important;
+}
+.slick-slide {
+  margin: 0px 20px;
+}
+
+.slick-slide img {
+  width: 100%;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}
+
+.slick-active {
+  opacity: 1;
+}
+
+.slick-current {
+  opacity: 1;
+}
+/* END OF SLIDER */
+
+/*image animation */
+.pandemic-col {
+    position: relative;
+    width: 50%;
+  }
+
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: white;
+  }
+  
+  .pandemic-col:hover .overlay {
+    opacity: .8;
+  }
+  
+  .text {
+    color: black;
+    font-size: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+.zoom-out, .zoom-in{
+    transition: transform .2s;
+}
+.zoom-out:hover{
+    transform: scale(.8);
+}
+
+.zoom-in:hover{
+    transform: scale(1.2);
+}
+  /*end of image animation*/
+
+
+  .btn-floating:hover{
+    background-color: #eee !important;
+}
+
+.navigation {
+    position: relative; 
+    top: -20px; 
+    width: 100%; 
+    padding-top: 20px; 
+    padding-bottom: 20px; 
+    height: 90px;
+}
+
+.header-fixed {
+    width: auto;
+}
+
+
+@media only screen and (max-width: 650px) {
+    .careers-dept-content{
+        width: 100% !important;
+    }
+
+    .careers-dept-list{
+        height: 80% !important;
+    }
+}
+
+@media only screen and (max-width: 540px){
+    .n1s-content-ui {
+        position: relative;
+        top: 170px !important;
+    }
+    .navigation {
+        height: 50px !important;
+    }
+    .n1s-menu {
+        margin-top: -30px;
+    }
+    .flexslider .slides li img {
+        height: 15vh;
+    }
+    .mobile-logo{
+        width:70px;
+        margin-left: 18px;
+    }
+    .bs-image{
+        width: 130% !important;
+    }
+
+    #customize-footer{
+        background-image: none !important;
+    }
+
+    #footericons{
+        margin-top: -50px !important;
+    }
+
+    #footer-link{
+        width: 50% !important;
+    }
+
+    #footer-link-3{
+        width: 100% !important;
+    }
+
+    .bantay-serbisyo-section{
+        margin-top: -180px !important;
+    }
+
+    .products-section{
+        margin-top: -100px !important;
+    }
+
+    .pandemic-img-1{
+        width: 80% !important;
+    }
+
+    .n1s-logo{
+        margin: 0 !important;
+        width: 50px;
+    }
+
+    .header-fixed{
+        margin-top: -5px !important;
+    }
+
+    /* #header1{
+        font-size: 10px;
+        left: 20px;
+    } */
+
+    .hamburger-logo{
+        margin-left: 20px;
+        width: 100px;
+        margin-top: 20px;
+    }
+
+    .n1s-header-logo{
+        margin-top: -20px;
+    }
+
+    .latest-img{
+        width: 100% !important;
+    }
+
+    .careers-img1{
+        width: 80% !important;
+    }
+
+    .career-col-checklist, .job-res, .job-qua, 
+    .branches-details, .btn-apply-covid, .job-img{
+        width: 100% !important;
+    }
+
+    .careers-check-list{
+        text-align: center;
+    }
+
+    .js-flickity{
+        margin-bottom: -100px !important;
+    }
+    .slick-slide img {
+        width: 130% !important;
+      }
+}
+
+/*carousel next and prev button */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: 0px auto;
+    height: 0px auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  .event_image{
+      width: 100%;
+      height: 100%;
+  }
+  @media only screen and (max-width: 400px){
+    .slick-slide img {
+        width: 180% !important;
+      }
+  }

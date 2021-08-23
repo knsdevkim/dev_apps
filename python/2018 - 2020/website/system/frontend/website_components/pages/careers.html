@@ -1,0 +1,239 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_careers %}blue-text text-accent-4 bold{% endblock %}
+
+{% block css %}
+<style>
+    .view-job-post{
+        margin-top: 30px;
+        margin-right: 10px;
+    }
+
+    .careers-dept-list{
+        border: 1px solid grey;
+        padding: 20px;
+        height: 350px;
+        margin-bottom: 50px;
+        border-radius: 5%;
+    }
+
+    .careers-job-title:hover{
+        color: black !important;
+    }
+
+    @media only screen and (max-width: 540px){
+    .careers-content{
+        margin-top: 110px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+ <!-- CONTENT -->
+
+<!-- CAREERS - JOIN THE TEAM -->
+<div class="center-align products-header careers-content">
+    <h1 class="products-h1"> <b>Careers</b></h1>
+    <h4 class="service-h6" style="margin-top: -60px;"><b>CAREERS</b></h4>
+    <h4 class="careers-h4-header"><b>Join The Team</b></h4>
+    <button data-target="applymodal" class="btn applymodal modal-trigger careers-btn-apply-now"><b>APPLY NOW</b></button>
+    <p>Whether you have years of experience or just graduated, there is a job opportunity for you at N1S! Search and Apply for Jobs here. 
+    </p>
+
+    <div class="container" style="margin-top: -50px;">
+        <img class="career-collage responsive-img" src="{% static 'pages/image/careers/career-collage.png' %}" alt="">
+    </div>    
+    
+</div>
+
+<!-- WHY JOIN US -->
+<div class="container why-join-us">
+    <p class="careers-p-legacy-title">BENEFITS</p>
+    <h4 class="center"><b>Why Join Us</b></h4>
+    <div class="row">
+        <div class="col s4 career-col-checklist">
+            <div class="col-content">
+                <div class="careers-check-list">
+                    <h5>Fast growing company <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>N1S has more than 350 employees, serving over 20,000 customers and counting. </p>
+                </div>
+
+                <div class="careers-check-list">
+                    <h5>Career Development  <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>Collaborate with different people and teams. Find what suits you best!</p>
+                </div>
+
+                <div class="careers-check-list">
+                    <h5>Our Product Portfolio <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>We distribute many brands and products, from global icons to our local favorites. </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s4 career-col-checklist">
+            <div class="col-content">
+                <div class="careers-check-list">
+                    <h5>Our Benefits and Perks  <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>We offer many different opportunities, incentives, and rewards to our loyal employees. </p>
+                </div>
+
+                <div class="careers-check-list">
+                    <h5>Become a Leader <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>We value our employees and we offer opportunities to those who deserve it.  </p>
+                </div>
+
+                <div class="careers-check-list">
+                    <h5>Learning and Development Opportunities <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>Here at N1S, we value learning. We aim to become better versions of ourselves.  </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s4 career-col-checklist">
+            <div class="col-content">
+                <div class="careers-check-list">
+                    <h5>Vibrant and Collaborative Work Environment  <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>We value collaboration and community here at N1S. </p>
+                </div>
+
+                <div class="careers-check-list">
+                    <h5>Employee Engagement Events  <i class="blue-text text-accent-4 material-icons">check_circle</i> </h5>
+                    <p>We work hard and we play hard. We celebrate milestones and we organize fun for every employee! Come and join us here at N1S! </p>
+                </div>
+
+                <div class="careers-check-list careers-img">
+                    <img class="img-responsive careers-img1" src="{% static 'pages/image/careers/career2.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- WANT TO JOIN NO. 1 SUPPLIER -->
+<div class="container">
+    <div class="want-to-join">
+        <p class="careers-p-legacy-title">DEPARTMENTS</p>
+        <h4 class="center"><b>Want to Join No. 1 Supplier?</b></h4>
+        <p class="center">Together, let’s make N1S lead the way in providing exceptional Customer Service beyond compare! </p>
+        <br><br>
+        <div class="row">
+            {% for data in departments_object %}
+                <div class="col s4 careers-dept-content">
+                    <div class="col-content careers-dept-list">
+                        <img src="/media/{{ data.icon }}" width="50" alt="">
+                        <h6 class="blue-text"><a href="{% url 'website:website_careers_filter' filter='jobs' id=data.pk %}" class="careers-job-title"><b>{{ data.title }}</b></a></h6>
+                        <p> {{ data.description|safe|slice:":500" }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>
+<!-- END OF CONTENT -->
+
+{% if isApplicationActive == True %}
+<script>
+    M.toast(
+        {
+            html: 'Your application has been submitted. We will get back to you, Thank you.',
+            displayLength: 5000
+        }
+    )
+</script>
+{% endif %}
+
+<!-- APPLY MODAL -->
+
+<!-- Modal Structure -->
+<div id="applymodal" class="modal" style="max-height: calc(80vh - 125px); margin-top: 100px; z-index: 99999;">
+    <div class="close-modal-btn">
+        <a href="javascript:void(0);" class="modal-close right">
+            <i class="small material-icons">clear</i>
+        </a>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.type }}
+        <div class="job-form-content"> 
+            <div class="modal-content">    
+                <center>
+                    <h4 class="blue-text text-accent-4"><b>JOB APPLY FORM</b></h4>
+                </center>
+                
+                    <div class="row">
+                        <div class="col s12">
+                            <h6 class="justify center"><b>Join Number 1 Supplier Inc.</b></h6>
+                
+                            <p class="center">Thanks for your interest in our company. Please fill out the form as completely as possible.
+                                If we think your qualifications match an open position, we will contact you.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form.firstname }}
+                            <label>First Name</label>  
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form.lastname }}
+                            <label>Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            {{ form.email }}
+                            <label>Email</label> 
+                        </div>
+                        <div class="input-field col s6">
+                            {{ form.mobile }}
+                            <label>Mobile / Tell. No.</label>  
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.position }}
+                            <label>Available Position</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            {{ form.message }}
+                            <label>Message ...</label>
+                        </div>
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col s6">
+                            <form action="#">
+                                <div class="file-field input-field">
+                                    <div class="btn blue accent-4">
+                                    <span>Resume</span>
+                                    {{ form.filename }}
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Upload your resume here">
+                                    </div>
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+                    <div class="progress" style="display: none;">
+                        <div class="indeterminate"></div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" value="APPLY" onclick="document.querySelector('.progress').style.display='block';" class="btn blue accent-4 right">
+                    </div>
+            </div>
+        </form>
+    </div>
+    
+</div>
+<!-- END OF APPLY MODAL -->
+{% endblock %}

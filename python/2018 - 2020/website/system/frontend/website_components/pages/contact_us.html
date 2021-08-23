@@ -1,0 +1,207 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_contactus %}blue-text text-accent-4 bold{% endblock %}
+
+{% block css %}
+<style>
+    .bcd-map:hover, .duma-map:hover, .siqi-map:hover{
+        text-decoration: underline;
+    }
+
+    .bcd-map:focus, .duma-map:focus, .siqi-map:focus{
+        color: black !important;
+    }
+
+    @media only screen and (max-width: 540px){
+        .contact-illustration{
+            width: 100% !important;
+        }
+
+        #contact-get-in-touch{
+            margin-top: 1px !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- CONTENT -->
+<div class="container">
+<form method="post">
+    {% csrf_token %}
+    {{ form.type }}
+    <div class="row">
+        <div class="col s5" id="contact-get-in-touch">
+            <div class="col-content">
+                <h3> <b>Get In Touch</b> </h3>
+                <h6>We would like to hear from you. <br> 
+                    Just fill up this form and we’ll get in touch with you. <br>
+                    Thank you and have a great day!</h6>
+
+                <div class="row" id="contact-details">
+                    <div class="col s1">
+                        <i class="material-icons blue-text text-accent-4">location_on</i>
+                    </div>
+                    <div class="col s11">
+                        <span>National Road Brgy. Mansiligan, <br>
+                            Bacolod City, <br>
+                            Negros Occidental, Philippines</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s1">
+                        <i class="material-icons blue-text text-accent-4">phone</i>
+                    </div>
+                    <div class="col s11">
+                        <span>‎(034) 458 - 7019 <br>
+                            no1supplier@gmail.com</span>
+                    </div>
+                </div>
+
+                <img class="contact-illustration" src="{% static 'pages/image/contact-page/illus.png' %}" width="400">
+            </div>
+        </div>
+        <div class="col s7" id="contact-fill-up-the-form" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 50px;">
+            <div class="col-content">
+                <h5><b>Fill Up The Form</b></h5>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                {{ form.firstname }}
+                                <label>First Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                {{ form.lastname }}
+                                <label>Last Name</label>
+                            </div>
+                        </div>
+                
+                        <div class="row">
+                            <div class="input-field col s12">
+                                {{ form.email }}
+                                <label>Email Address</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="input-field col s12">
+                                    {{ form.concern }}
+                                    <label>Category</label>
+                                </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="input-field col s12">
+                                {{ form.message }}
+                                <label>Message</label>
+                                </div>
+                        </div>
+
+                        <div class="progress" style="display: none;">
+                            <div class="indeterminate"></div>
+                        </div>
+
+                        <button type="submit" onclick="document.querySelector('.progress').style.display='block';" class="btn blue accent-4 right">Send</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+
+<div class="container" >
+    <div class="row" id="contact-us-map-branch">
+        <div class="col s8 branches-map" >
+            <div class="col-content" style="height: 100%;">
+                <div data-content-1>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12997.64359104682!2d123.00664174730817!3d10.623107151727856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3ceb8e99ce94e31!2sNo.1%20Supplier%20Inc.!5e1!3m2!1sen!2sph!4v1624081252254!5m2!1sen!2sph" 
+                    width="100%" style="border:0; height: 43vh;" allowfullscreen="" loading="lazy"></iframe>
+                    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3921.444470978848!2d123.00267121540271!3d10.622537064918538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33aecdeea2b271eb%3A0x3ceb8e99ce94e31!2sNo.1%20Supplier%20Inc.!5e0!3m2!1sen!2sph!4v1623909045389!5m2!1sen!2sph" 
+                    width="100%" style="border:0; height: 43vh;" allowfullscreen="" loading="lazy"></iframe> -->
+                </div>
+                <div data-content-2 style="display:none;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10265.210823134392!2d123.27546699999998!3d9.326636999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2dd94a82f5f65c19!2sNo.%201%20Supplier%20Inc.!5e1!3m2!1sen!2sph!4v1624081339070!5m2!1sen!2sph" 
+                    width="100%" style="border:0; height: 43vh;" allowfullscreen="" loading="lazy"></iframe>
+                    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3937.07477827531!2d123.27327851539907!3d9.326642086822604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33ab6f2144424533%3A0x2dd94a82f5f65c19!2sNo.%201%20Supplier%20Inc.!5e0!3m2!1sen!2sph!4v1623717433626!5m2!1sen!2sph" 
+                    width="100%" style="border:0; height: 43vh;" allowfullscreen="" loading="lazy"></iframe> -->
+                </div>
+                <div data-content-3 style="display:none;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5128.5095653460585!2d123.45900231539909!3d9.197494288858156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMTEnNTEuMCJOIDEyM8KwMjcnNDAuMyJF!5e1!3m2!1sen!2sph!4v1624081752147!5m2!1sen!2sph" 
+                    width="100%" style="border:0; height: 43vh;" allowfullscreen="" loading="lazy"></iframe>
+                    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3938.522482122071!2d123.45901731539892!3d9.197473288858447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMTEnNTAuOSJOIDEyM8KwMjcnNDAuMyJF!5e0!3m2!1sen!2sph!4v1623727062904!5m2!1sen!2sph" 
+                    width="100%" style="border:0; height: 43vh;" allowfullscreen="" loading="lazy"></iframe> -->
+                </div>
+            </div>
+        </div>
+        <div class="col s4 branches-details">
+            <div class="col-content map-branch-details">
+                <div>
+                    <a href="javascript:void(0);" onclick="currentTabActive(1);" class="bcd-map blue-text text-accent-4"><h5><b>Bacolod City</b></h5></a>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">call</i> (034) 458 - 7019</span><br>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">email</i> no1supplier@gmail.com</span><br>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">map</i> National Road, Brgy. Mansilingan Bacolod City, Negros Occidental 6100</span>
+                </div>
+            </div>
+        </div>
+        <div class="col s4 branches-details">
+            <div class="col-content map-branch-details">
+                <div>
+                    <a href="javascript:void(0);" onclick="currentTabActive(2);" class="duma-map blue-text text-accent-4"><h5><b>Dumaguete City</b></h5></a>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">call</i> (035) 421 - 1254</span><br>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">email</i> no1supplier@gmail.com</span><br>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">map</i> Roleda Compound Lower Camanjac, Dumaguete City Negros Oriental 6200</span>
+                </div>
+            </div>
+        </div>
+        <div class="col s4 branches-details">
+            <div class="col-content map-branch-details">
+                <div>
+                    <a href="javascript:void(0);" onclick="currentTabActive(3);" class="siqi-map blue-text text-accent-4"><h5><b>Siquijor City</b></h5></a>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">call</i> (035) 480 - 9028</span><br>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">email</i> no1supplier@gmail.com</span><br>
+                    <span><i class="tiny material-icons blue-text text-accent-4" style="vertical-align: middle;">map</i> Wendel Chan Compound Brgy. Pulang - Yuta, Siquijor</span>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function currentTabActive( v ) {
+        const content1 = document.querySelector("div[data-content-1]");
+        const content2 = document.querySelector("div[data-content-2]");
+        const content3 = document.querySelector("div[data-content-3]");
+
+        if ( v == 1 ) {
+            content1.style.display = "block";
+            content2.style.display = "none";
+            content3.style.display = "none";
+        } else if ( v == 2 ) {
+            content1.style.display = "none";
+            content2.style.display = "block";
+            content3.style.display = "none";
+        } else if ( v == 3 ) {
+            content1.style.display = "none";
+            content2.style.display = "none";
+            content3.style.display = "block";
+        } else {
+            console.error("Invalid value.");
+        }
+    }
+</script>
+
+{% if isApplicationActive == True %}
+<script>
+    M.toast(
+        {
+            html: 'Successfully send. Thank you.',
+            displayLength: 5000
+        }
+    )
+</script>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,272 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block nav_active_about %}blue-text text-accent-4 bold{% endblock %}
+
+{% block content %}
+
+<style>
+    @media only screen and (max-width: 540px){
+    /* .service-header{
+        margin-top: 110px !important;
+    } */
+
+    .about-us-info, .mission-vision, .mtp-details{
+        margin-top: -50px !important; 
+    }
+}
+</style>
+
+<!-- CONTENT -->
+<div class="center-align">
+    <h1 class="blue-text text-accent-4 home-services"> <b>Number 1 Supplier Inc.</b></h1>
+    <h4 class="service-h6" style="margin-top: -60px;"><b>NUMBER 1 SUPPLIER INC.</b></h4>
+    <p>Number 1 Supplier, or N1S is the exclusive distributor-partner of Nestle in Negros and Siquijor.<br>  
+        Formerly known as Island Merchants Corporation, N1S started its operations 20 years ago.<br> 
+        As a Nestle distributor, the company consistently provides visibility, availability, logistics, 
+        understanding, and excellence.
+    </p>
+</div>
+
+<div class="container" style="margin-top: 70px;">
+    <center><video class="about-video responsive-video" src="{% static 'pages/videos/about_us.mp4' %}" width="70%" frameborder="0" allowfullscreen controls autoplay muted loop></video></center>
+</div>
+<!--About Us Content -->      
+<div class="container row about-us-info" style="margin-top: -80px;">
+    <div class="col s5 about-content-1-img">
+        <img class="responsive-img center" src="{% static 'pages/image/about_1.png' %}">
+    </div>
+
+    <div class="col s7 about-content-1">
+        <h4 class="about-section-h4">Good business should know <br> every step of growth. That's <br> why we are here.</h4>
+        <h6 class="about-section-h6 grey-text">About Us</h6>
+        <p class="about-section-p grey-text" style="font-size: 15px;">N1S’s offices and warehouses are situated in Bacolod, Dumaguete, 
+            and Siquijor. Its area coverage spans 1,219 barangays, 38 municipalities, 19 cities, with a 
+            population of around 4.3 million. To date, N1S has more than 350 employees, serving over 20,000 
+            customers and counting. Our goal is to ensure N1S remains to be the FMCG distributor of choice in 
+            Negros, Dumaguete, and Siquijor. 
+        </p>
+        
+    </div>
+</div>
+<!--End of About Us content-->
+
+<!--Vision Mission-->
+<div class="container row mission-vision" style="margin-top: -50px;">
+    <div class="about-vision-mission col s6">
+        <h4 class="about-section-h4">OUR MISSION</h4>
+        <p class="about-section-p">To ensure continuous availability and visibility of Nestle Products in the most sustainable
+            and profitable manner, beneficial to No. 1 Supplier Inc., Nestle Philippines Inc. and trade partners. To ensure continuous
+            development of our people with the right mindset and competencies that follow the effective management standards and discipline
+            to achieve sustainable desired results.
+        </p>
+        
+        <h4 class="about-section-h4">OUR VISION</h4>
+        <p class="about-section-p">To be the most preferred consumer goods distributor in the islands of Negros and Siquijor.</p>
+    </div>
+
+    <div class="about-us-vision-mission-img col s6 center" id="about-vision-mission">
+        <img class="responsive-img" src="{% static 'pages/image/about-us-birdseye.png' %}">
+    </div>
+</div>
+<!--End of Vision Mission-->
+
+<!--About MTP-->
+<div class="container row mtp-details" style="margin-top: -50px;">
+    <div class="col s4 about-mtp-img" style="vertical-align: middle;">
+        <img class="responsive-img"  src="{% static 'pages/image/mtp4.png' %}">
+    </div>
+
+    <div class="col s8 about-mtp-content">
+        <h4 class="about-mtp-name">Manuel T. Parroco</h4> <br>
+        <!-- <h6 class="about-mtp-position" style="padding-left: 20px;">CEO & President</h6> -->
+        <p class="about-mtp-p">Our President and CEO, Manuel T. Parroco leads our executive committee. 
+            Prior to N1S, Manuel T. Parroco was also the President and CEO of Island Merchants Corporation.
+                Previous to his work here at N1S and IMC, Manuel was the Senior Vice President of the Food Services 
+                Division of Nestle Philippines Inc. Manuel earned his MBA from the University of Negros Occidental 
+                and earned his Bachelor’s Degree from the University of La Salle.
+                He also completed a program for Executive Development at IMD Switzerland. With years of experience, Manuel T. Parroco leads Number 1 Supplier 
+                to success. 
+            </p>
+    </div>
+</div>
+<!--End of About MTP-->
+
+<!--Meet Our Executives-->
+<div class="container about-executive-container" style="margin-top: -50px;">
+    <div class="col s8 about-executive-title">
+        <h5 class="about-section-h5 center"><b>Meet Our Executives</b></h5>
+        <p class="about-section-p center">The day-to-day management of N1S is taken care of by our 
+            Executive Committee. <br>These designated executives manage diverse parts of our business. 
+            Each executive can be found below with their specified job description. 
+        </p>
+    </div>
+</div>
+
+<!--row 1-->
+<div class="container row">
+    <div class="about-executives-img">
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/ARNEL.png' %}" width="150">
+                <br><br>
+                <span>
+                    <b>ARNEL BONGHANOY</b> <br>
+                    <span class="executive-position grey-text">Operations Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+
+                <!-- <img src="image/execom2.png" alt="" style=" max-width: 100%;  display: block;"> -->
+            </div>
+            
+        </div>
+
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/SHIELA.png' %}" width="150">
+                <br><br>
+                <span>
+                    <b>SHIELA GOMEZ</b> <br>
+                    <span class="executive-position grey-text">Chief Finance Officer</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/ERIC.png' %}" width="150">
+                <br><br>
+                <span>
+                    <b>ERIC VICENTINO</b> <br>
+                    <span class="executive-position grey-text">Supply Chain Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img" src="{% static 'pages/image/executives/JULIE.png' %}" width="150">
+                <br><br>
+                <span>
+                    <b>JULIE ANN ESPORTUNO</b> <br>
+                    <span class="executive-position grey-text">Human Resource Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of row 1-->
+
+<!--row 2-->
+<div class="container row">
+    <div class="about-executives-img">
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img" src="{% static 'pages/image/executives/CARLA.png' %}" width="150"><br><br>
+                
+                <span>
+                    <b>CARLA PROSPERO</b> <br>
+                    <span class="executive-position grey-text">Business Transition Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+            </div>
+        </div>
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/REYGIN.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>REYGIN OQUIANA</b> <br>
+                    <span class="executive-position grey-text">Nestle Professional Operations Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+            </div>
+        </div> 
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/ANDREW.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>ANDREW JOSEPH MARIE MONTELIBANO</b> <br>
+                    <span class="executive-position grey-text">IT Champ</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Bacolod</span>
+                </span>
+            </div>
+        </div>
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/EMMAN.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>EMMANUEL BARILLO</b> <br>
+                    <span class="executive-position grey-text">Operations Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Dumaguete</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- row 3 -->
+
+<div class="container row">
+    <div class="about-executives-img">
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/JELLY.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>JELLY JOY TRUMATA</b> <br>
+                    <span class="executive-position grey-text">Accounting Finance Officer</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Dumaguete</span>
+                </span>
+            </div>
+        </div>
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/JANREL.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>JANREL CALIPAY</b> <br>
+                    <span class="executive-position grey-text">Supply Chain Manager</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Dumaguete</span>
+                </span>
+            </div>
+        </div>
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/BRYAN.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>BRYAN BAUTISTA</b> <br>
+                    <span class="executive-position grey-text">Human Resource Officer</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Dumaguete</span>
+                </span>
+            </div>
+        </div>
+        <div class="col s3 about-executives zoom-in">
+            <div class="col-content center about-executives-content">
+                <img class="responsive-img center" src="{% static 'pages/image/executives/LEONARDO.png' %}" width="150">
+                <br><br>
+                
+                <span>
+                    <b>LEONARDO RENDON</b> <br>
+                    <span class="executive-position grey-text">IT Champ</span> <br>
+                    <span><i class="tiny material-icons about-location-on">location_on</i>Dumaguete</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of row 3 -->
+{% endblock %}

@@ -1,0 +1,336 @@
+{% extends 'website_components/base/index.html' %}
+
+{% load static %}
+
+{% block top_js %}
+<script src="{% static 'pages/flexslider/js/jquery.flexslider.js' %}"></script>
+{% endblock %}
+
+{% block nav_active_index %}blue-text text-accent-4 bold{% endblock %}
+
+{% block css %}
+<link type="text/css" rel="stylesheet" href="{% static 'pages/flexslider/css/flexslider.css' %}">
+<style>
+.contact-us-link:hover{
+    color: blue !important;
+}
+{% endblock %}
+
+{% block content %}
+
+<!-- CONTENT -->
+
+
+<!-- HOMEPAGE -->
+<div class="flexslider">
+<ul class="slides">
+    <li>
+        <img src="{% static 'pages/image/slideshow.png' %}" width="100%">
+    </li>
+    <li>
+        <img src="{% static 'pages/image/s1.jpg' %}" width="100%">
+    </li>
+    <li>
+        <img src="{% static 'pages/image/s2.jpg' %}" width="100%">
+    </li>
+    <li>
+        <img src="{% static 'pages/image/s3.jpg' %}" width="100%">
+    </li>
+    <li>
+        <img src="{% static 'pages/image/s4.jpg' %}" width="100%">    
+    </li>
+</ul>
+</div>
+
+
+<!-- SERVICES -->
+<div class="container" style="margin-bottom: -50px; margin-top: -120px;">
+    <div class="center-align service-header">
+        <h1 class="blue-text text-accent-4 home-services"> <b>Services</b></h1>
+        <h4 class="service-h6" style="margin-top: -60px;"><b>SERVICES</b></h4>
+        <p>Everyone deserves a great service in Negros and Siquijor. We need Number 1 Supplier!
+        </p>
+    </div>
+        
+    <div class="row home-service-three" style="margin: -50px;">
+        <div class="col s4 service-content">
+            <div class="col-content center-align wehelp">
+                <img class="responsive-img" src="{% static 'pages/image/help.png' %}" width="120" alt="">
+                <h6> <b>We Help</b> </h6>
+                <p>We help our customers here at N1S. Customer Service is a core value of every organization. 
+                    It is the key to business longevity and the heart of a satisfied customer.
+                </p>
+            </div>
+        </div>
+
+        <div class="col s4 service-content">
+            <div class="col-content center-align weserve">
+                <img class="responsive-img" src="{% static 'pages/image/serve.png' %}" width="120" alt="">
+                <h6><b>We Serve</b></h6>
+                <p>We serve our customers. We at N1S must continuously be reminded of highlighting Customer 
+                    Service in our day-to-day communications.
+                </p>
+            </div> 
+        </div>
+
+        <div class="col s4 service-content">
+            <div class="col-content center-align wedeliver">
+                <img class="responsive-img" src="{% static 'pages/image/deliver.png' %}" width="120" alt="">
+                <h6><b>We Deliver</b></h6>
+                <p>We deliver the best to our customers. Our goal is to ensure N1S remains to be the FMCG 
+                    distributor of choice in Negros, Dumaguete, and Siquijor.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- PANDEMIC SECTION -->
+<div class="container pandemic-img">
+    <center>
+        <img class="img-responsive pandemic-img-1" src="{% static 'pages/image/pandemic-illus.png' %}" width="50%" alt="">
+    </center>
+</div>
+<div class="container pandemic-container">
+    <div class="center-align pandemic-title">
+        <h1 class="blue-text text-accent-4 pandemic-adaptation"> <b>Pandemic Adaptation</b></h1>
+        <h4 class="service-h6" style="margin-top: -60px;"><b>PANDEMIC ADAPTATION</b></h4>
+        <p>In this new normal, service quality can make or break a company as customers immediately demand <br>
+            accurate information, efficient processes, and reliable support.
+        </p>
+    </div>
+
+    <div class="row" style="text-align: center;">
+        <div class="col s4 pandemic-col">
+            <div class="col-content">
+                <img class="responsive-img" src="{% static 'pages/image/pan-1.jpg' %}" style="height: 250px;" alt="">
+                <div class="overlay">
+                    <div class="text"><b>N1S follows all social distancing measures and other government-mandated restrictions. 
+                    </b></div>
+                </div>
+                <!-- <a class="black-text" href="#"> <b>READ MORE</b> </a> -->
+            </div>
+        </div>
+
+        <div class="col s4 pandemic-col">
+            <div class="col-content">
+                <img class="responsive-img" src="{% static 'pages/image/pan-3.JPG' %}" style="height: 250px;" alt="">
+                <div class="overlay">
+                    <div class="text"><b>All office employees wear proper protective gear in order to stay safe from the COVID-19 
+                        pandemic. 
+                    </b></div>
+                </div>
+                <!-- <a class="black-text" href="#"> <b>READ MORE</b> </a> -->
+            </div>
+        </div>
+
+        <div class="col s4 pandemic-col">
+            <div class="col-content">
+                <img class="responsive-img" src="{% static 'pages/image/pan-2.JPG' %}" style="height: 250px;" alt="">
+                <div class="overlay">
+                    <div class="text"><b>Being frontliners in the pandemic, we follow proper protocols in order to keep our 
+                        customers safe. 
+                    </b></div>
+                </div>
+                <!-- <a class="black-text" href="#"> <b>READ MORE</b> </a> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- BANTAY SERBISYO -->
+
+<div class="container bantay-serbisyo-section" style="margin-top: -100px;" >
+    <div class="row">
+        <div class="col s6 bantay-serbisyo-col1">
+            <div class="col-content">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="col-content">
+                            <img src="{% static 'pages/image/customercare.png' %}" alt="">
+                            <h4><b>Bantay Serbisyo Support</b></h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col s6 bs-details">
+                                    <div class="col-content">
+                                        <i class="tiny material-icons about-location-on blue-text text-accent-4">location_on</i> <b>Bacolod</b> <br>
+                                        <i class="tiny material-icons about-location-on red-text">call</i> Smart: 0998-8434-330 <br>
+                                        <i class="tiny material-icons about-location-on red-text">call</i> Globe: 0917-8501-530 <br>
+                                        <i class="tiny material-icons about-location-on red-text">call</i> Sun:   0925-8664-958 <br> <br>
+                                        <i class="tiny material-icons about-location-on blue-text text-accent-4">location_on</i> <b>Dumaguete</b> <br>
+                                        <i class="tiny material-icons about-location-on red-text">call</i> Smart: 0919-0719-064
+                                    </div>
+                                </div>
+                                <div class="col s12" style="margin-top: 30px;">
+                                    <div class="col-content">
+                                        <h6>Here at N1S, we value our customers and our Bantay Serbisyo hotline is here to support 
+                                            our customers. 
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s6 bantay-serbisyo-col2">
+            <div class="col-content">
+                <img class="img-responsive bs-image" src="{% static 'pages/image/bsserbisyo.png' %}" width="100%" alt="" >
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- PRODUCTS -->
+<div class="container products-section" style="padding: 10px; margin-top: -130px;">
+    <div class="center-align service-header">
+        <h1 class="products-h1"> <b>Products</b></h1>
+        <h4 class="service-h6" style="margin-top: -60px;"><b>OUR FEATURED PRODUCTS</b></h4>
+        <p>Everyone needs great quality food. Listed below are a few brands that we distribute to 
+            Negros and Siquijor. 
+        </p>
+    </div>
+
+    <div class="">
+        <section class="regular slider">
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/nescafe"><img class="zoom-out" src="{% static 'pages/image/products/nescafe.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/coffee-mate"><img class="zoom-out" src="{% static 'pages/image//products/Coffee.png' %}"></a>
+                </div>
+            </div>
+            <div> 
+                <div>
+                    <a href="https://www.nestle.com.ph/brands/allbrands/bear-brand"><img class="zoom-out" src="{% static 'pages/image/products/bearbrand.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com.ph/brands/allbrands/nestle-cream"><img class="zoom-out" src="{% static 'pages/image/products/nestle-cream.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/Maggi"><img class="zoom-out" src="{% static 'pages/image/products/Maggie.png' %}"></a>
+                </div>
+            </div>
+            
+
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/milo"><img class="zoom-out" src="{% static 'pages/image/products/milo.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com.ph/brands/allbrands/nestle-milks"><img class="zoom-out" src="{% static 'pages/image/products/milks.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/nestea"><img class="zoom-out" src="{% static 'pages/image/products/nestea.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/cerelac"><img class="zoom-out" src="{% static 'pages/image/products/cerelac.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com.ph/brands/allbrands/Kitkat"><img class="zoom-out" src="{% static 'pages/image/products/Kitkat.png' %}"></a>
+                </div>
+            </div>
+
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/gerber"><img class="zoom-out" src="{% static 'pages/image/products/Gerben.png' %}"></a>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <a href="https://www.nestle.com/brands/allbrands/nido"><img class="zoom-out" src="{% static 'pages/image/products/Nido.png' %}"></a>
+                </div>
+            </div>
+            </section>
+            <br><br><br>
+            <div class="center">
+            <a href="{%url 'website:website_products'%}" class="view-all-products-btn black-text">VIEW ALL PRODUCTS</a>
+            </div>
+    </div>
+</div>
+
+<!-- BRANCHES -->
+
+<div class="n1s-branch" style="margin-top: -100px;">
+    <div class="center-align service-header branch-title">
+        <h4 class="service-h6" ><b>OUR BRANCHES</b></h4>
+        <p>N1S is serving Supermarkets, Groceries, Sari-Sari Stores, FMCG Retailers and Foodservice Outlets, <br>
+            in Negros Occidental, Negros Oriental and Siquijor.
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="row branch-row">
+            <div class="col s4 branches">
+                <div class="col-content" >
+                    <img class="zoom-in" src="{% static 'pages/image/bcd.png' %}" width="300" alt="" ><br>
+                    
+                    <span>
+                        <b> <a href="{%url 'website:website_contact_us'%}#contact-us-map-branch" target="_blank" class="black-text contact-us-link">BACOLOD</a> </b> <br><br>
+                        National Road, Brgy. Mansilingan <br>
+                        Bacolod City, <br>
+                        Negros Occidental 6100<br>
+                        <b>(034) 458 - 7019</b>
+                        </span>
+                    <div class="branch-hr"></div>
+                </div>
+            </div>
+            <div class="col s4 branches">
+                <div class="col-content">
+                    <img class="zoom-in" src="{% static 'pages/image/duma.png' %}" width="300" alt=""> <br>
+                    <span> <b><a href="{%url 'website:website_contact_us'%}#contact-us-map-branch" target="_blank" class="black-text contact-us-link">DUMAGUETE</a></b> </span> <br><br>
+                    <span>Roleda Compound <br>
+                        Lower Camanjac, Dumaguete City <br>
+                        Negros Oriental 6200<br>
+                        <b>(035) 421 - 1254</b>
+                        </span>
+                    <div class="branch-hr"></div>
+                </div>
+            </div>
+            <div class="col s4 branches">
+                <div class="col-content">
+                    <img class="zoom-in" src="{% static 'pages/image/siqui.png' %}" width="300" alt=""> <br>
+                    <span> <b><a href="{%url 'website:website_contact_us'%}#contact-us-map-branch" target="_blank" class="black-text contact-us-link">SIQUIJOR</a></b> </span> <br><br>
+                    <span>Wendel Chan Compound   <br>
+                        Brgy. Pulang - Yuta,  <br>
+                        Siquijor	<br>
+                        <b>(035) 480 - 9028</b>
+                        </span>
+                    <div class="branch-hr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if request.session.isInfoNeedToShow == True %}
+<script>
+    var toastHTML = '<span>We use cookies to personalise content, to provide more user experience and to analyse our traffic. <a href="https://www.kaspersky.com/resource-center/definitions/cookies" target="_blank">Learn more</a></span>'
+    toastHTML += '<button onclick="dismissInfo();" class="btn-flat toast-action">Ok</button>';
+    M.toast({html: toastHTML, displayLength: 60000});
+    function dismissInfo() {
+        M.Toast.dismissAll();
+    }
+</script>
+{% endif %}
+{% endblock %}

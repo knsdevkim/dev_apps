@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}
+- Create Web Content Entry ({{ form_title|safe }})
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            {% include 'helpers/message.html' %}
+            <h4 class="card-title">Create Web Content Entry</h4>
+            <p class="card-description">{{ form_title|safe }}</p>
+
+            <form method="post" {% if is_file_require %}enctype="multipart/form-data"{% endif %}>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    
+                    <div class="form-group">
+                        {% if 'Type' != field.label and 'Media token' != field.label and 'Department' != field.label and 'Jobposition' != field.label %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% endif %}
+                        
+                        {{ field }}
+                        
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <small class="form-text text-danger"><i class="ti-info-alt"></i> {{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                
+                {% endfor %}
+                <button type="submit" class="btn btn-md btn-primary float-right">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

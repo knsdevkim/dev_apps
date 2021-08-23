@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="{% static 'pages/css/materialize.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'pages/css/materialize.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/slick/slick-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/css/flickity.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'pages/css/index.css' %}">
+    <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="/media/sys/logo.png" />
+    <script type="text/javascript" src="{% static 'pages/js/materialize.min.js' %}"></script>
+    <script src="{% static 'pages/js/jquery.2.js' %}"></script>
+    <script src="{% static 'pages/slick/slick.js' %}"></script>
+    <!-- <script src="{% static 'pages/js/flickity.pkgd.min.js' %}"></script> -->
+    <script src="{% static 'pages/js/index.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <title>No. 1 Supplier, Inc.</title>
+
+    {% block top_js %}{% endblock %}
+</head>
+
+{% block css %}{% endblock %}
+
+<style>
+    @media only screen and (max-width: 540px){
+        #header1{
+            display: none !important;
+        }
+
+        .button-col {
+            margin-top: -2px !important;
+        }
+
+        .n1s-menu {
+            margin-top: -13px !important;
+        }
+    }
+
+    .n1s-content-ui {
+        position: relative;
+        top: 150px;
+    }
+
+</style>
+<body>
+    <nav class="nav white customize-nav" style="position: fixed; top: 0; right: 0;">
+        <div class="row s12 white header-row">
+            <ul class="tabs tabs-transparent col s10" id="header1">
+                <li class="tab"><i class="material-icons blue-text text-accent-4 li-header-icons">mail_outline</i></li>
+                <li class="tab blue-text text-accent-4"><span class="span-email">no1supplier@gmail.com</span></li>
+                <li class="tab"><i class="material-icons blue-text text-accent-4 li-header-icons">call</i></li>
+                <li class="tab blue-text text-accent-4"><span class="span-call">(034) 458 - 7019</span></li>
+            </ul>
+
+            <div class="button-col">
+                    <script>
+                        const covidURL = () => {
+                            location.href = "https://www.worldometers.info/coronavirus/";
+                        }
+                    </script>
+                    <button onclick="covidURL();" class="red white-text covid-update-btn" style="cursor: pointer;">COVID UPDATES</button>
+            </div>
+        </div>
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger black-text"><i class="material-icons n1s-menu">menu</i></a>
+        <div class="white header-fixed navigation">
+            <a href="{% url 'website:website_index' %}" class="brand-logo n1s-logo">
+                <img class="responsive-img n1s-header-logo" src="{% static 'pages/image/logo.png' %}" width="90" alt="">
+            </a>
+            
+            <ul id="nav-mobile" class="left hide-on-med-and-down customize-burger white">
+                <li><a class="{% block nav_active_index %}black-text{% endblock %}" href="{% url 'website:website_index' %}">Home</a></li>
+                <li><a class="{% block nav_active_about %}black-text{% endblock %}" href="{% url 'website:website_about_us' %}">About us</a></li>
+                <li><a class="{% block nav_active_products %}black-text{% endblock %}" href="{% url 'website:website_products' %}">Products</a></li>
+                <li><a class="{% block nav_active_newsevents %}black-text{% endblock %}" href="{% url 'website:website_newsevents' %}">News & Events</a></li>
+                <li><a class="{% block nav_active_careers %}black-text{% endblock %}" href="{% url 'website:website_careers' %}">Careers</a></li>
+                <li><a class="{% block nav_active_contactus %}black-text{% endblock %}" href="{% url 'website:website_contact_us' %}">Contact us</a></li>
+                <li><a class="{% block nav_active_np %}black-text{% endblock %}" href="{% url 'website:website_nestleprofessionals' %}" > Nestle Professional</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!--hamburger-->
+    <ul class="sidenav white" id="mobile-nav" style="z-index: 9999;">
+        <img class="responsive-img hamburger-logo" src="{% static 'pages/image/brandlogo.png' %}" style="width: 200px !important; margin-left: 25px; margin-top: 30px;">
+        <li><a class="black-text" href="{% url 'website:website_index' %}">Home</a></li>
+        <li><a class="black-text" href="{% url 'website:website_about_us' %}">About us</a></li>
+        <li><a class="black-text" href="{% url 'website:website_products' %}">Products</a></li>
+        <li><a class="black-text" href="{% url 'website:website_newsevents' %}">News & Events</a></li>
+        <li><a class="black-text" href="{% url 'website:website_careers' %}">Careers</a></li>
+        <li><a class="black-text" href="{% url 'website:website_contact_us' %}">Contact us</a></li>
+    </ul>
+    <!--hamburger-->
+
+    <div class="n1s-content-ui">
+    {% block content %}{% endblock %}
+    </div>
+
+    <div class="fixed-action-btn">
+        <a href="https://www.instagram.com/no1supplier/" target="_blank" class="btn-floating btn-large white">
+            <img src="{% static 'pages/icons/instagram.png' %}" width="30" alt="" style="vertical-align: middle;">
+        </a> <br><br>
+        <a href="https://www.facebook.com/no1supplier" target="_blank" class="btn-floating btn-large white">
+            <img src="{% static 'pages/icons/facebook.png' %}" width="30" alt="" style="vertical-align: middle;">
+            </a>
+            <div class="floating-button-spacer" style="margin-bottom: 130%;"></div>
+        <!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>
+window.fbAsyncInit = function() {
+  FB.init({
+    xfbml            : true,
+    version          : 'v11.0'
+  });
+};
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Your Chat Plugin code -->
+<div class="fb-customerchat"
+  attribution="install_email"
+  page_id="327820807736869">
+</div>
+    </div>
+
+<div id="customize-footer">
+    <div class="container" id="footer-content">
+        <div class="row">
+            <div class="col s4" id="footericons">
+                <i class="material-icons" id="ftricons">mail_outline</i> <span id="txt1"><b> Email Address</b> <br> no1supplier@gmail.com</span>
+            </div>
+            <div class="col s5" id="footericons">
+                <i class="material-icons" id="ftricons">map</i> <span id="txt1"><b> Office Address</b> <br> National Road, Mansilingan, Bacolod City</span>
+            </div>
+        </div>
+
+        <hr class="footer-hr">
+
+
+        <div class="row" id="footer-row">
+                
+            <div class="col s3" id="footer-link">
+                <span id="f-links"><b class="blue-text text-accent-4">//</b> <b>Useful Links</b>  </span><br><br>
+                <a class="black-text" href="{%url 'website:website_products'%}">Nestle Product</a>   <br><br>
+                <a class="black-text" href="{%url 'website:website_careers'%}">Careers</a>  <br><br>
+                <a class="black-text" href="{%url 'website:website_contact_us'%}">Contact us</a> 
+            </div>
+
+            <div class="col s4" id="footer-link">
+                <span id="f-links"><b class="blue-text text-accent-4">//</b> <b>Quick Links</b>  </span><br><br>
+                <a class="black-text" href="{%url 'website:website_about_us'%}">About us</a>   <br><br>
+                <!-- <a class="black-text" href="">Branches</a>  <br><br> -->
+                <a class="black-text" href="{%url 'website:website_newsevents'%}">News and Events</a> 
+            </div>
+
+            <div class="col s5" id="footer-link-3">
+                <span id="f-links"><b class="blue-text text-accent-4">//</b> <b>Distributor Partner</b>  </span><br>
+                <a href="https://www.nestle.com/">
+                    <img src="{% static 'pages/image/nestle.png' %}" width="200" alt="">
+                </a>  
+            </div>
+
+        </div>
+
+    </div>
+
+    
+</div>
+</body>
+</html>

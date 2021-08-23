@@ -1,0 +1,234 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'backend/DataTables/datatables.min.css' %}"/>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'backend/DataTables/datatables.min.js' %}"></script>
+
+<script>
+    $('#data').DataTable({
+        responsive: true
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ token_view|safe }}</h4>
+            {% if token_view != 'applicant' and token_view != 'contact us' and token_view != 'analysis' %}
+            <a href="{% if token_view == 'newsevents' %}
+            {% url 'apps:createnewsevents' %}
+            {% elif token_view == 'department' %}
+            {% url 'apps:createdepartment' %}
+            {% elif token_view == 'jobposition' %}
+            {% url 'apps:createjobposition' department_id=department_id %}
+            {% elif token_view == 'jobqualification' %}
+            {% url 'apps:createjobqualification' jobposition_id=jobposition_id %}
+            {% elif token_view == 'media' %}
+            {% url 'apps:uploadcontentmedia' slug=slug token=token %}
+            {% endif %}" class="btn btn-sm btn-primary"><i class="ti-plus"></i> Add New</a>
+            {% endif %}
+            <hr>
+
+            <table class="table" id="data" width="100%">
+            {% if token_view == 'newsevents' %}
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in object %}
+                        {% if data.type == 'news_and_events' %}
+                        <tr>
+                            <td>{{ data.title }}</td>
+                            <td>{{ data.location }}</td>
+                            <td style="white-space: normal !important; word-wrap: break-word;">{{ data.description }}</td>
+                            <td>
+                                <a href="{% url 'apps:medialistview' slug=slug token_id=data.pk token=data.media_token %}" class="btn btn-primary"><i class="ti-paint-roller"></i> View Media</a>
+                                <form action="{% url 'apps:deletenewsevents' pk=data.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger"><i class="ti-trash"></i></button>
+                                </form>
+                                <a href="{% url 'apps:updatenewsevents' pk=data.pk %}" class="btn btn-primary"><i class="ti-pencil"></i></a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            {% elif token_view == 'department' %}
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Description</th>
+                        <th>Job Position</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for data in object %}
+                    <tr>
+                        <td>{{ data.title }}</td>
+                        <td style="white-space: normal !important; word-wrap: break-word;">{{ data.description }}</td>
+                        <td><a href="{% url 'apps:jobpositionlistview' slug='jobposition' id=data.pk %}" class="btn btn-success">View Jobs</a></td>
+                        <td>
+                            <form action="{% url 'apps:deletedepartment' pk=data.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"><i class="ti-trash"></i></button>
+                            </form>
+                            <a href="{% url 'apps:updatedepartment' pk=data.pk %}" class="btn btn-primary"><i class="ti-pencil"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% elif token_view == 'jobposition' %}
+                <thead>
+                    <tr>
+                        <th>Availability</th>
+                        <th>Department</th>
+                        <th>Job Position</th>
+                        <th>Description</th>
+                        <th>Qualification</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for data in object %}
+                    <tr>
+                        <td>
+                            {% if data.is_available %}
+                                <a href="{% url 'apps:updatejobvisibility' slug=slug parent_id=department_id visibility='hide' pk=data.pk %}" class="btn btn-warning"> Make it Hide</a>
+                            {% else %}
+                                <a href="{% url 'apps:updatejobvisibility' slug=slug parent_id=department_id visibility='show' pk=data.pk %}" class="btn btn-success"> Make it Visible</a>
+                            {% endif %}
+                        </td>
+                        <td>{{ data.department.title }}</td>
+                        <td>{{ data.title }}</td>
+                        <td style="white-space: normal !important; word-wrap: break-word;">{{ data.description }}</td>
+                        <td><a href="{% url 'apps:jobqualificationlistview' slug='jobqualification' id=data.pk %}" class="btn btn-success">View Qualification</a></td>
+                        <td>
+                            <a href="{% url 'apps:medialistview' slug=slug token_id=data.pk token=data.media_token %}" class="btn btn-primary"><i class="ti-paint-roller"></i> View Media</a>
+                            <form action="{% url 'apps:deletejobposition' pk=data.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"><i class="ti-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% elif token_view == 'jobqualification' %}
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for data in object %}
+                    <tr>
+                        <td>{{ data.title }}</td>
+                        <td>{{ data.content_type }}</td>
+                        <td>
+                            <form action="{% url 'apps:deletejobqualification' pk=data.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"><i class="ti-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% elif token_view == 'media' %}
+                <thead>
+                    <tr>
+                        <th>Media</th>
+                        <th>File Name</th>
+                        <th>Date Uploaded</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for data in object %}
+                    <tr>
+                        <td><img src="/media/{{ data.filename }}" alt="" width="150px" height="150px"></td>
+                        <td>{{ data.filename }}</td>
+                        <td>{{ data.date_uploaded }}</td>
+                        <td>
+                            <form action="{% url 'apps:deletemedia' pk=data.pk %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger"><i class="ti-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% elif token_view == 'applicant' or token_view == 'contact us' %}
+                <thead>
+                    <tr>
+                        <th>Fullname</th>
+                        <th>Email</th>
+                        {% if token_view == 'applicant' %}
+                        <th>Mobile</th>
+                        <th>Applicant Position</th>
+                        <th>CV</th>
+                        {% elif token_view == 'contact us' %}
+                        <th>Concern</th>
+                        {% endif %}
+                        <th>Date Posted</th>
+                        <th>Message</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for data in object %}
+                    <tr>
+                        <td>{{ data.firstname }}, {{ data.lastname }}</td>
+                        <td>{{ data.email }}</td>
+                        {% if token_view == 'applicant' %}
+                        <td>{{ data.mobile }}</td>
+                        <td>{{ data.position }}</td>
+                        <td><a href="/media/{{data.filename}}">CV FILE</a></td>
+                        {% elif token_view == 'contact us' %}
+                        <td>{{ data.concern }}</td>
+                        {% endif %}
+                        <td>{{ data.date_posted }}</td>
+                        <td style="white-space: normal !important; word-wrap: break-word;">{{ data.message }}</td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% elif token_view == 'analysis' %}
+                <thead>
+                    <tr>
+                        <th>User IP</th>
+                        <th>Date</th>
+                        <th>No. of Visit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for data in object %}
+                    <tr>
+                        <td>{{ data.user_ip }}</td>
+                        <td>{{ data.date_visited }}</td>
+                        <td>{{ data.visit_count }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% endif %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
