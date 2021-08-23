@@ -1,0 +1,46 @@
+{% extends 'base/panel.html' %}
+
+{% block content %}
+<table class="table table-responsive">
+    <tr>
+        <td style="width: 100%; background-color:#000000; color: #ffffff;" colspan="3">Customer Name:</td>
+    </tr>
+    <tr>
+        <td colspan="3">{{ object.customer|upper }}</td>
+    </tr>
+    <tr>
+        <td style="width: 100%; background-color:#000000; color: #ffffff;" colspan="3">Address:</td>
+    </tr>
+    <tr>
+        <td colspan="3">{{ object.address|upper }}</td>
+    </tr>
+    <tr>
+        <td style="width: 50%; background-color:#000000; color: #ffffff;">GTM:</td>
+        <td style="width: 50%; background-color:#000000; color: #ffffff;" colspan="2">Salesperson:</td>
+    </tr>
+    <tr>
+        <td>{{ object.gtm|upper }}</td>
+        <td colspan="2">{{ object.salesperson|upper }}</td>
+    </tr>
+    <tr>
+        <td style="width: 30%; background-color:#000000; color: #ffffff;">Channel:</td>
+        <td style="width: 30%; background-color:#000000; color: #ffffff;">Freq:</td>
+        <td style="width: 30%; background-color:#000000; color: #ffffff;">Odd / Even:</td>
+    </tr>
+    <tr>
+        <td>{{ object.channel }}</td>
+        <td>{{ object.freq }}</td>
+        <td>{{ object.odd_even }}</td>
+    </tr>
+    <tr>
+        <td style="width: 30%; background-color:#000000; color: #ffffff;">AVE NPS.:</td>
+        <td style="width: 30%; background-color:#000000; color: #ffffff;">C-TERM:</td>
+        <td style="width: 30%; background-color:#000000; color: #ffffff;">C-LIMIT:</td>
+    </tr>
+    <tr>
+        <td>{{ object.ave_nps }}</td>
+        <td>{{ object.cterm }}</td>
+        <td>{{ object.climit }}</td>
+    </tr>
+</table>
+{% endblock %}

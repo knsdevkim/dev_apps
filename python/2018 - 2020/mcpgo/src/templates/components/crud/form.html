@@ -1,0 +1,27 @@
+{% extends 'base/panel.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% include 'helpers/message.html' %}
+
+<form action="" method="post" {{ context_enctype|safe }}>
+    {% csrf_token %}
+    {% include 'helpers/form.html' %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-md btn-primary form-control" data-backdrop="static" data-toggle="modal" data-target="#load">{{ context_button_title }}</button>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="load" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+        <img src="{% static 'loading.gif' %}" alt="LOADING" style="width: 100px; height: 100px;" /> Please wait . . .
+    </div>
+    </div>
+</div>
+</div>
+{% endblock %}
