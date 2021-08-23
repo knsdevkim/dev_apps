@@ -1,0 +1,207 @@
+<!DOCTYPE html>{% load static %}{% load humanize %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>CERTIFICATE OF REGISTRATION</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'icons/css/all.min.css' %}">
+
+        <style>
+            .td-vehicle-label{
+                width: 160px;
+            }
+        
+            @page{
+                size: auto;
+                margin: 10px;
+            }
+            .print-logo{
+                width: 50%;
+            }
+        </style>
+    </head>
+    <style>
+        .td-vehicle-label{
+            width: 160px;
+        }
+    
+        @page{
+            size: auto;
+            margin: 10px;
+        }
+
+        .print-logo{
+            width: 20%;
+        }
+    </style>
+    <body onload="window.print();">
+        <center><img class="print-logo" src="{% static 'image/brandlogo.png' %}"></center>
+
+            <hr>
+
+            <!-- TABLE 1 -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="5"><h4><b><center>Certificate of Registration</center></b></h4></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="">Field Office</label><br>
+                            <span><b>{{ data.field_office|text_capitalize }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">CR NO.</label><br>
+                            <span><b class="text-danger">{{ data.cr_no|upper }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">DATE</label><br>
+                            <span><b>{{ data.date }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">MV FILE NO.</label><br>
+                            <span><b>{{ data.mvfile_no|upper }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">PLATE NO.</label><br>
+                            <span><b>{{ data.plate_no|upper }}</b></span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="">ENGINE NO.</label><br>
+                            <span><b>{{ data.engine_no|upper }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">CHASSIS NO.</label><br>
+                            <span><b>{{ data.chassis_no|upper }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">DENOMINATION</label><br>
+                            <span><b>{{ data.denomination|upper }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">PISTON DISPLACEMENT</label><br>
+                            <span><b>{{ data.piston_displacement|upper }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">NO. OF CYLINDERS</label><br>
+                            <span><b>{{ data.no_cyclender|upper }}</b></span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="">FUEL</label><br>
+                            <span><b>{{ data.fuel_type|upper }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">MAKE</label><br>
+                            <span><b>{{ data.make|upper }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">SERIES</label><br>
+                            <span><b>{{ data.series|upper }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">BODY TYPE</label><br>
+                            <span><b>{{ data.body_type|upper }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">BODY NO.</label><br>
+                            <span><b>{{ data.body_no|upper }}</b></span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label for="">YEAR MODEL</label><br>
+                            <span><b>{{ data.year_model }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">GROSS WT.</label><br>
+                            <span><b>{{ data.gross_weight }}</b></span>
+                        </td>
+    
+                        <td>
+                            <label for="">NET WT.</label><br>
+                            <span><b>{{ data.net_weight }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">SHIPPING WT.</label><br>
+                            <span><b>{{ data.shipping_weight }}</b></span>
+                        </td>
+
+                        <td>
+                            <label for="">NET CAPACITY</label><br>
+                            <span><b>{{ data.net_capacity|intcomma }}</b></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- END OF TABLE 1 -->
+
+            <!-- TABLE 2 -->
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    <tr>
+                        <td>COMPLETE OWNERS NAME</td>
+                        <th>{{ data.owner|text_capitalize }}</th>
+                    </tr>
+
+                    <tr>
+                        <td>TELEPHONE NO. / CONTACT DETAILS</td>
+                        <th>{{ data.contact_no }}</th>
+                    </tr>
+
+                    <tr>
+                        <td>COMPLETE ADDRESS (No., Street, City/Municipality, Province)</td>
+                        <th>{{ data.address|text_capitalize }}</th>
+                    </tr>
+
+                    <tr>
+                        <td>ENCUMBERED TO</td>
+                        <th>{{ data.encumbered|text_capitalize }}</th>
+                    </tr>
+
+                    <tr>
+                        <td>DETAILS OF FIRST REGISTRATION</td>
+                        <th>{{ data.details_f_registration|text_capitalize }}</th>
+                    </tr>
+
+                    <tr>
+                        <td>AMOUNT</td>
+                        <th><b class="text-danger">&#8369; {{ data.amount|intcomma }}</b></th>
+                    </tr>
+
+                    
+                </tbody>
+
+            </table>
+    </body>
+
+    
+</html>

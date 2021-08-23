@@ -1,0 +1,155 @@
+<!-- Modal 1-->
+<div class="modal fade" id="or-modal-content" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="or-modal-Title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="or-modal-content">OR NO. <b class="text-danger"><span data-load-or="or_no"></span></b></h5>
+            <button type="button" class="btn-close btn btn-sm btn-default" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+            </div>
+            <div class="modal-body p-5">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="">FIELD OFFICE CODE</label><br>
+                        <span><b data-load-or="fieldcode">...</b></span>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <label for="">DATE</label><br>
+                        <span><b data-load-or="date">...</b></span>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <label for="">RECEIVED FROM (Last Name, First Name, MI)</label><br>
+                        <span><b data-load-or="receivefrom">...</b></span>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-sm-12">
+                        <label for="">ADDRESS (No., Street, City, Municipality, Province, Zip Code)</label><br>
+                        <span><b data-load-or="address">...</b></span>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6 class="text-danger"><b>PAYMENT DETAILS</b></h6>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label for="">Transaction:</label><br>
+                                        <span><b data-load-or="transaction"></b></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-sm-12">
+                                        <label for="">Posted:</label><br>
+                                        <span><b data-load-or="posted_date">...</b></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-sm-12">
+                                        <label for="">PRIVATE:</label><br>
+                                        <span><b data-load-or="private">...</b></span>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2">
+                                    <div class="col-sm-12">
+                                        <label for="">File No.:</label><br>
+                                        <span><b data-load-or="file">...</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 class="text-danger"><b>BREAKDOWN OF PAYMENT</b></h6>
+                                <div class="table-wrapper">
+                                    <div class="table-scroll">
+                                        <table class="table" data-load-orbp>
+                                            <thead>
+                                                <tr>
+                                                    <th><span class="text">Item</span></th>
+                                                    <th><span class="text">Qty</span></th>
+                                                    <th><span class="text">Cost</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr id="orbp_tr" style="display:none;">
+                                                    <td colspan="3"><center>NO BREAKDOWN PAYMENTS</center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <h5 class="mt-5"><b>TOTAL AMOUNT PAID: &#8369; 10,427.18</b></h5> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="" target="_blank" class="btn btn-primary" data-load-modal-or-print>Print</a>
+                <a href="" class="btn btn-outline-secondary" data-load-modal-or>Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 2 -->
+<div class="modal fade" id="add-or-modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">ADD OFFICIAL RECEIPT</h5>
+            </div>
+            <form action="{% url 'apps:vehicle:vehicleOrCreate' %}" method="post" class="form-group">
+            <div class="modal-body">
+                {% csrf_token %}
+                <input type="hidden" name="fk" value="{{ pk }}">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="{{ or_form.date.id_for_label }}">{{ or_form.date.label }}</label>
+                        {{ or_form.date }}   
+                        {% if or_form.date.help_text %}
+                        <small class="form-text text-muted">{{ or_form.date.help_text }}</small>
+                        {% endif %}
+
+                        {% if or_form.date.errors %}
+                            {% for error in or_form.date.errors %}
+                            <small class="alert-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="{{ or_form.or_no.id_for_label }}">{{ or_form.or_no.label }}</label>
+                        {{ or_form.or_no }}
+                        {% if or_form.or_no.help_text %}
+                        <small class="form-text text-muted">{{ or_form.or_no.help_text }}</small>
+                        {% endif %}
+
+                        {% if or_form.or_no.errors %}
+                            {% for error in or_form.or_no.errors %}
+                            <small class="alert-danger">{{ error }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

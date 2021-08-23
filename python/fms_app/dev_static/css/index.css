@@ -1,0 +1,206 @@
+html, body{
+    height: 100%;
+}
+
+html, body, th, td, tr{
+    font-size: .9rem !important;
+}
+
+tr, td{
+    vertical-align: middle;
+}
+
+
+/* VEHICLE LIST */
+.index-p-college{
+    font-size: 0.8rem !important;
+}
+
+.border-end{
+    background-color: #01467A !important;
+}
+
+.index-a-list{
+    padding-left: 30px !important;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-decoration: none !important;
+    background-color: #01467A !important;
+    color: white !important;
+}
+
+.customized-card{
+    margin-top: 20px !important;
+}
+
+.customized-card-1{
+    height: 32rem !important;
+}
+
+.index-row-2{
+    margin-top: 30px !important;
+}
+
+.index-td-date{
+    width: 8rem !important;
+}
+
+.index-td-actions{
+    width: 3rem !important;
+    text-align: center !important;
+}
+
+.del-btn{
+    font-size: .7rem !important;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #F1F3F5;
+    color: #878191;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.dropdown-btn {
+    display: block;
+}
+
+.dropdown-container {
+    display: none;
+    padding-left: 46px !important;
+}
+
+.index-dropdown-a{
+    text-decoration: none !important;
+    background-color: #01467A !important;
+    color: white !important;
+    display: block;
+    margin-bottom: 10px;
+    margin-left: -11px;
+}
+    
+/* .vehicle-list-content{
+    padding-left: 25px !important;
+} */
+
+.btn-add-vehicle{
+    float: right !important;
+}
+
+
+/* LOGIN */
+.n1s-img{
+    background: white;
+    border-radius: 30px;
+    box-shadow: 12px 12px 22px;
+}
+.login img{
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    height: 100%;
+    width: 100%;
+}
+.inp{
+    height: 50px;
+    width: 70%;
+    border: none;
+    outline: none;
+    border-radius: 100px; 
+    box-shadow: -1px 1px 20px -11px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -1px 1px 20px -11px rgba(0,0,0,0.75);   
+    -moz-box-shadow: -1px 1px 20px -11px rgba(0,0,0,0.75);   
+}
+.btn-login{
+    width: 100%;
+}
+
+
+
+
+/* DROP IMAGE */
+.box {
+    position: relative;
+    background: #ffffff;
+    width: 100%;
+  }
+   
+  .box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
+    border-bottom: 1px solid #f4f4f4;
+    margin-bottom: 10px;
+  }
+   
+  .box-tools {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+   
+  .dropzone-wrapper {
+    border: 2px dashed #91b0b3;
+    color: #92b0b3;
+    position: relative;
+    height: 150px;
+  }
+   
+  .dropzone-desc {
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    width: 40%;
+    top: 50px;
+    font-size: 16px;
+  }
+   
+  .dropzone,
+  .dropzone:focus {
+    position: absolute;
+    outline: none !important;
+    width: 100%;
+    height: 150px;
+    cursor: pointer;
+    opacity: 0;
+  }
+   
+  .dropzone-wrapper:hover,
+  .dropzone-wrapper.dragover {
+    background: #ecf0f5;
+  }
+   
+  .preview-zone {
+    text-align: center;
+  }
+   
+  .preview-zone .box {
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+
+
+ /* DRIVER AND VEHICLE VIEW  */
+.driver-muted-td, .vehicel-muted-td{
+    width: 200px;
+    padding-left: 50px !important;
+    text-align: right;
+}
+
+.driver-a-list, .vehicle-a-list{
+    text-decoration: none;
+    padding: 6px;
+}
+
+.driver-active, .vehicle-active{
+    background-color: #BFE6FF !important;
+    font-weight: 300;
+}

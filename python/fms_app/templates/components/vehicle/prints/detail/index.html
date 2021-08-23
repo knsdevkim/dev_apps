@@ -1,0 +1,127 @@
+<!DOCTYPE html>{% load static %}{% load humanize %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>VEHICLE DETAILS</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'icons/css/all.min.css' %}">
+    </head>
+    <style>
+        .td-vehicle-label{
+            width: 160px;
+        }
+    
+        @page{
+            size: auto;
+            margin: 10px;
+        }
+        .print-logo{
+            width: 20%;
+        }
+        .td-vehicle-label{
+            font-weight: bold;
+        }
+    </style>
+    <body onload="window.print();">
+        <center> <img class="print-logo" src="{% static 'image/brandlogo.png' %}"></center>
+
+            <hr>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="5"><h4><b><center>Vehicle Details</center></b></h4></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Vehicle Name: </td>
+                    <td>{{ data.vehicle_name|text_capitalize }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Vehicle Type: </td>
+                    <td>{{ data.vehicle_type|text_capitalize }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Ownership: </td>
+                    <td>{{ data.ownership|text_capitalize }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Area of Coverage: </td>
+                    <td>{{ data.area_coverage|text_capitalize }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Position: </td>
+                    <td>{{ data.position_assign|text_capitalize }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Case Capacity: </td>
+                    <td>{{ data.case_capacity|intcomma }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Date Received: </td>
+                    <td>{{ data.date_receive }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Date Acquire: </td>
+                    <td>{{ data.date_aquire }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Origin (place): </td>
+                    <td>{{ data.origin|text_capitalize }}</td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Acquisition Cost: </td>
+                    <td>&#x20B1; {{ data.aquisition_cost|intcomma }} </td>
+                </tr>
+                <tr>
+                    <td class="td-vehicle-label text-secondary">Useful Life (in mos): </td>
+                    <td>60</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+
+        <table class="table table-striped table-bordered mt-4">
+            <tr>
+                <td class="td-vehicle-label text-secondary">Monthly Depreciation </td>
+                <td>&#x20B1; {{ data.monthly_depreciation|intcomma }} </td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Yearly Depreciation </td>
+                <td>&#x20B1; {{ data.yearly_depreciation|intcomma }} </td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Age in Months </td>
+                <td>{{ data.age_month }}</td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Age in Years </td>
+                <td>{{ data.age_year }}</td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Accumulated Depreciation </td>
+                <td>&#x20B1; {{ data.accumulated_depreciation|intcomma }} </td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Book Value </td>
+                <td>&#x20B1;  {{ data.book_value }}  </td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Repair & Maintenance Cost </td>
+                <td>&#x20B1;  0.00 </td>
+            </tr>
+            <tr>
+                <td class="td-vehicle-label text-secondary">Cost to Repair Ratio</td>
+                <td>0%</td>
+            </tr>
+        </table>
+
+    </body>
+</html>

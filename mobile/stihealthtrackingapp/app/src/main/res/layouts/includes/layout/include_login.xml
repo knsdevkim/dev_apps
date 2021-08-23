@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layoutlogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STI H-TRACKING"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@color/colorD"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tvmessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorH"
+            android:textStyle="bold"
+            android:background="@color/colorD"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Membership Account:"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorD" />
+
+        <EditText
+            android:id="@+id/etusername"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorD"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password:"
+            android:textAlignment="viewStart"
+            android:gravity="start"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorD" />
+
+        <EditText
+            android:id="@+id/etpassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorD"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btnlogin"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="log in"
+            android:layout_gravity="end" />
+
+    </LinearLayout>
+
+</RelativeLayout>

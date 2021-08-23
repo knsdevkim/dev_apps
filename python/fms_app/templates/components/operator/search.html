@@ -1,0 +1,119 @@
+{% extends 'base/panel_frame.html' %}
+
+{% block nav_operator %}fms-active{% endblock %}
+
+{% block content %}
+<script>
+    let func_data_remove = (val) => {
+        const _d = document;
+
+        _d.querySelector('form[data-delete-form]').action = val;
+    }
+</script>
+
+{% include 'helpers/message.html' %}
+
+<div class="mt-3">
+    <a class="btn-add-vehicle btn btn-success" href="{% url 'apps:operator:operatorCreate' %}"> <i class="fa fa-plus"></i> Add Operator</a>
+    <h4>Search result for operator ({{ request.GET.search_type|upper }}): "{{ request.GET.q }}"</h4>
+</div>
+
+<hr>
+
+<div>
+    <form action="{% url 'apps:operator:operatorSearch' %}" class="form-group">
+        <input type="hidden" name="search_type" value="{{ request.GET.search_type }}">
+        <div class="row">
+            <div class="col-sm-3">
+                <input type="search" class="form-control" name="q" autocomplete="off" placeholder="Search Name, Employee #, and Area of Coverage">
+            </div>
+            <div class="col-sm-7">
+                <button type="submit" class="btn btn-primary mx-sm-2"><i class="fa fa-search"></i> Search</button>
+            </div>
+            <small class="text-muted">{% if 'q' in request.GET and request.method == 'GET' %}{{ data|length }} filters applied for drivers and helpers | <a href="{% url 'apps:operator:operatorList' %}"><i class="fa fa-arrow-left"></i> Return</a>{% endif %}</small>
+        </div>
+    </form>
+
+    <hr>
+
+    <div>
+        <span>0 selected:</span>
+        <button class="btn btn-outline-secondary mx-sm-2 disabled"> <i class="fa fa-archive"></i> Archive</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
+
+    <table class="table mt-4">
+        <caption>List of Operator Searched.</caption>
+        <thead>
+        <tr>
+            <th scope="col">
+                <input type="checkbox" name="" id="selectall">
+            </th>
+            <th scope="col">Employee No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Details</th>
+            <th scope="col">Classification</th>
+            <th scope="col">Area of Coverage</th>
+            <th scope="col">Current Vehicle Assignment</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for field in data %}
+            <tr>
+                <th scope="row">
+                    <input type="checkbox" name="" id="">
+                </th>
+                <td>{{ field.employee_id|upper }}</td>
+                <td>
+                    <img src="/media/{% if field.media.all|length > 0 %}{% for media_inuse in field.media.all %}{% if media_inuse.status == 'active' %}{{ media_inuse.media_file }}{% endif %}{% endfor %}{% else %}extras/no_image.png{% endif %}" width="50" height="50" alt="" style="border-radius: 50%;">
+                    <span>{{ field.firstname|upper }} {{ field.middlename|upper|slice:':1' }}. {{ field.lastname|upper }}</span>
+                </td>
+                <td>
+                    <a href="mailto:{{ field.email }}" style="text-decoration: none;">{{ field.email }}</a><br>
+                    <span>{{ field.contact_no }}</span>
+                </td>
+                <td>{{ field.operator_type|upper }}</td>
+                <td><i class="fa fa-circle text-success"></i> Unassigned</td>
+                <td>N/A</td>
+                <td>
+                    <a href="{% url 'apps:operator:operatorDetail' pk=field.pk %}" class="btn btn-light"><i class="fa fa-eye"></i></a>
+                    <a href="{% url 'apps:operator:operatorUpdate' pk=field.pk %}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                    <button type="button" onclick="func_data_remove('{% url "apps:operator:operatorDelete" pk=field.pk %}');" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8" align="center">NO DATA</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        
+    </script>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#selectall').click(function() {
+            if ($(this).is(':checked')) {
+                $('th input').attr('checked', true);
+            } else {
+                $('th input').attr('checked', false);
+            }
+        });
+    });
+</script>
+
+{% include 'helpers/modals.html' %}
+
+{% endblock %}

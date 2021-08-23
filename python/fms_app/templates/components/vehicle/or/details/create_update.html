@@ -1,0 +1,275 @@
+{% extends 'base/panel_frame.html' %}
+
+{% block nav_vehicle %}fms-active{% endblock %}
+
+{% block content %}
+<script>
+    let func_data_remove = (val) => {
+        const _d = document;
+
+        _d.querySelector('form[data-delete-form]').action = val;
+    }
+</script>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'apps:vehicle:vehicleDetails' pk=data.fk.pk %}"><i class="fa fa-arrow-left"></i> Back</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><b>OR: {{ data.or_no }}</b></li>
+    </ol>
+</nav>
+
+{% include 'helpers/message.html' %}
+
+{{ or_form.non_field_errors }}
+
+<div class="card">
+    <div class="card-body">
+        <form action="" method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-sm-6">
+                    <h6 class="mt-3"><b>Official Receipt Details</b></h6>
+                    <div style="padding-left: 30px;">
+
+                        <div class="form-group row mt-3">
+                            <label class="col-sm-2 col-form-label" for="{{ or_form.or_no.id_for_label }}">{{ or_form.or_no.label }}</label>
+                            <div class="col-sm-10">
+                                {{ or_form.or_no }}
+
+                                {% if or_form.or_no.help_text %}
+                                <small class="form-text text-muted">{{ or_form.or_no.help_text }}</small>
+                                {% endif %}
+
+                                {% if or_form.or_no.errors %}
+                                {% for error in or_form.or_no.errors %}
+                                <small class="alert-danger">{{ error }}</small>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-3">
+                            <label class="col-sm-2 col-form-label" for="{{ or_form.field_office.id_for_label }}">{{ or_form.field_office.label }}</label>
+                            <div class="col-sm-10">
+                                {{ or_form.field_office }}
+
+                                {% if or_form.field_office.help_text %}
+                                <small class="form-text text-muted">{{ or_form.field_office.help_text }}</small>
+                                {% endif %}
+
+                                {% if or_form.field_office.errors %}
+                                {% for error in or_form.field_office.errors %}
+                                <small class="alert-danger">{{ error }}</small>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+    
+                        <div class="form-group row mt-3">
+                            <label class="col-sm-2 col-form-label" for="{{ or_form.field_office_code.id_for_label }}">{{ or_form.field_office_code.label }}</label>
+                            <div class="col-sm-10">
+                                {{ or_form.field_office_code }}
+
+                                {% if or_form.field_office_code.help_text %}
+                                <small class="form-text text-muted">{{ or_form.field_office_code.help_text }}</small>
+                                {% endif %}
+
+                                {% if or_form.field_office_code.errors %}
+                                {% for error in or_form.field_office_code.errors %}
+                                <small class="alert-danger">{{ error }}</small>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+    
+                        <div class="form-group row mt-3">
+                            <label class="col-sm-2 col-form-label" for="{{ or_form.date.id_for_label }}">{{ or_form.date.label }}</label>
+                            <div class="col-sm-10">
+                                {{ or_form.date }}
+
+                                {% if or_form.date.help_text %}
+                                <small class="form-text text-muted">{{ or_form.date.help_text }}</small>
+                                {% endif %}
+
+                                {% if or_form.date.errors %}
+                                {% for error in or_form.date.errors %}
+                                <small class="alert-danger">{{ error }}</small>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+    
+                        <div class="form-group row mt-3">
+                            <label class="col-sm-2 col-form-label" for="{{ or_form.receive_from.id_for_label }}">{{ or_form.receive_from.label }}</label>
+                            <div class="col-sm-10">
+                                {{ or_form.receive_from }}
+
+                                {% if or_form.receive_from.help_text %}
+                                <small class="form-text text-muted">{{ or_form.receive_from.help_text }}</small>
+                                {% endif %}
+
+                                {% if or_form.receive_from.errors %}
+                                {% for error in or_form.receive_from.errors %}
+                                <small class="alert-danger">{{ error }}</small>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+    
+                        <div class="form-group row mt-3">
+                            <label class="col-sm-2 col-form-label" for="{{ or_form.address.id_for_label }}">{{ or_form.address.label }}</label>
+                            <div class="col-sm-10">
+                                {{ or_form.address }}
+
+                                {% if or_form.address.help_text %}
+                                <small class="form-text text-muted">{{ or_form.address.help_text }}</small>
+                                {% endif %}
+
+                                {% if or_form.address.errors %}
+                                {% for error in or_form.address.errors %}
+                                <small class="alert-danger">{{ error }}</small>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="mt-5">
+                        <h6><b>Payment Details</b></h6>
+    
+                        <div style="padding-left: 30px;">
+                            <div class="form-group row mt-3">
+                                <label class="col-sm-2 col-form-label" for="{{ or_form.transaction_no.id_for_label }}">{{ or_form.transaction_no.label }}</label>
+                                <div class="col-sm-10">
+                                    {{ or_form.transaction_no }}
+    
+                                    {% if or_form.transaction_no.help_text %}
+                                    <small class="form-text text-muted">{{ or_form.transaction_no.help_text }}</small>
+                                    {% endif %}
+    
+                                    {% if or_form.transaction_no.errors %}
+                                    {% for error in or_form.transaction_no.errors %}
+                                    <small class="alert-danger">{{ error }}</small>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+    
+                            <div class="form-group row mt-3">
+                                <label class="col-sm-2 col-form-label" for="{{ or_form.posted_date.id_for_label }}">{{ or_form.posted_date.label }}</label>
+                                <div class="col-sm-10">
+                                    {{ or_form.posted_date }}
+    
+                                    {% if or_form.posted_date.help_text %}
+                                    <small class="form-text text-muted">{{ or_form.posted_date.help_text }}</small>
+                                    {% endif %}
+    
+                                    {% if or_form.posted_date.errors %}
+                                    {% for error in or_form.posted_date.errors %}
+                                    <small class="alert-danger">{{ error }}</small>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+    
+                            <div class="form-group row mt-3">
+                                <label class="col-sm-2 col-form-label" for="{{ or_form.private.id_for_label }}">{{ or_form.private.label }}</label>
+                                <div class="col-sm-10">
+                                    {{ or_form.private }}
+    
+                                    {% if or_form.private.help_text %}
+                                    <small class="form-text text-muted">{{ or_form.private.help_text }}</small>
+                                    {% endif %}
+    
+                                    {% if or_form.private.errors %}
+                                    {% for error in or_form.private.errors %}
+                                    <small class="alert-danger">{{ error }}</small>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+    
+                            <div class="form-group row mt-3">
+                                <label class="col-sm-2 col-form-label" for="{{ or_form.file_no.id_for_label }}">{{ or_form.file_no.label }}</label>
+                                <div class="col-sm-10">
+                                    {{ or_form.file_no }}
+    
+                                    {% if or_form.file_no.help_text %}
+                                    <small class="form-text text-muted">{{ or_form.file_no.help_text }}</small>
+                                    {% endif %}
+    
+                                    {% if or_form.file_no.errors %}
+                                    {% for error in or_form.file_no.errors %}
+                                    <small class="alert-danger">{{ error }}</small>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-sm-6">
+                    <h6 class="mt-3"><b>Payment Breakdown</b></h6>
+                    <div class="card mt-3">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Qty</th>
+                                    <th>Cost</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for field in data.fk_orbp_rn.all %}
+                                    <tr>
+                                        <td>{{ field.description }}</td>
+                                        <td>{{ field.qty }}</td>
+                                        <td>{{ field.cost }}</td>
+                                        <td>
+                                            <button type="button" onclick="func_data_remove('{% url "apps:vehicle:vehicleOrBpDelete" return_pk=data.pk pk=field.pk %}');" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4">
+                                        <center>
+                                            NO BREAKDOWN PAYMENT ADDED
+                                        </center>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div data-input-collection></div>
+                                </div>
+                                <div class="mt-3">
+                                    <button type="button" onclick="createInputElement();" class="btn btn-primary">Add Payment Breakdown</button>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="mt-4" style="float: right;">
+                <button type="submit" class="btn btn-primary mb" data-bs-toggle="modal" data-bs-target="#loaderModal">Save Changes</button>
+            </div>
+        </form>
+    </div>
+    
+</div>
+
+{% include 'helpers/modals.html' %}
+
+{% endblock %}

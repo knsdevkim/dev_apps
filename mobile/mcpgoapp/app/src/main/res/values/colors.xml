@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorA">#313782</color>
+    <color name="colorB">#2c3496</color>
+    <color name="colorC">#233e6e</color>
+    <color name="colorD">#384c70</color>
+    <color name="colorE">#FFFFFF</color>
+    <color name="colorF">#000000</color>
+    <color name="colorG">#cc2c21</color>
+    <color name="colorH">#7aebff</color>
+    <color name="colorI">#107525</color>
+    <color name="colorJ">#7a7461</color>
+</resources>

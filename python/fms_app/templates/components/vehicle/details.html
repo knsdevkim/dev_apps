@@ -1,0 +1,1558 @@
+{% extends 'base/panel_frame.html' %}
+
+{% block nav_vehicle %}fms-active{% endblock %}
+
+{% load humanize %}
+
+{% block top_js %}
+<script>
+    function fetchVehicleOr(fetch_url) {
+        fetch(fetch_url)
+            .then( response => {
+                if(response.status == 200) {
+                    return response.json();
+                }
+            }).then( data => {
+                document.querySelector('span[data-load-or="or_no"]').innerHTML = data.or_no.toUpperCase();
+                document.querySelector('b[data-load-or="fieldcode"]').innerHTML = data.field_office_code.toUpperCase();
+                document.querySelector('b[data-load-or="date"]').innerHTML = data.date.toUpperCase();
+                document.querySelector('b[data-load-or="transaction"]').innerHTML = data.transaction_no.toUpperCase();
+                document.querySelector('b[data-load-or="receivefrom"]').innerHTML = data.receive_from.toUpperCase();
+                document.querySelector('b[data-load-or="address"]').innerHTML = data.address.toUpperCase();
+                document.querySelector('b[data-load-or="posted_date"]').innerHTML = data.posted_date.toUpperCase();
+                document.querySelector('b[data-load-or="private"]').innerHTML = data.private.toUpperCase();
+                document.querySelector('b[data-load-or="file"]').innerHTML = data.file_no.toUpperCase();
+                
+                let i = 0, fk_orbp_rn = data.fk_orbp_rn;
+                let table = document.querySelector('table[data-load-orbp] tbody');
+
+                if(fk_orbp_rn.length > 0) {
+                    for(i; i < fk_orbp_rn.length; i++) {
+                        let tr = document.createElement('tr');
+                        let bp_description = document.createElement('td');
+                        let bp_qty         = document.createElement('td');
+                        let bp_cost        = document.createElement('td');
+
+                        bp_description.setAttribute('style', 'font-weight: bolder;')
+
+                        bp_description.textContent = fk_orbp_rn[i].description.toUpperCase();
+                        bp_qty.textContent = 'x' + fk_orbp_rn[i].qty;
+                        bp_cost.textContent = fk_orbp_rn[i].cost;
+
+                        tr.appendChild(bp_description);
+                        tr.appendChild(bp_qty);
+                        tr.appendChild(bp_cost);
+
+                        table.appendChild(tr);
+                    }
+                } else {
+                    document.querySelector('#orbp_tr').style.display = "table-row";
+                }
+            }).catch( error => {
+                console.error(error);
+            });
+    }
+</script>
+{% endblock %}
+
+{% block css %}
+<style>
+
+    .accordion-button {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    }
+
+    .td-vehicle-label{
+        width: 160px;
+    }
+    .borderless td, .borderless th {
+        border: none;
+    }
+
+    .table-wrapper {
+        position:relative;
+    }
+
+    .table-scroll {
+        max-height:150px;
+        overflow:auto;  
+        margin-top:20px;
+    }
+
+    .table-wrapper table {
+        width:100%;
+
+    }
+
+    .table-wrapper table * {
+        color:black;
+    }
+
+    .table-wrapper table thead th .text {
+        position:absolute;   
+        top:-15px;
+        z-index:2;
+        height:20px;
+        width:35%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<script>
+    function initializeOrPk(e, p) {
+        document.querySelector('a[data-load-modal-or]').href = e;
+        document.querySelector('a[data-load-modal-or-print]').href = p;
+    }
+</script>
+
+<script>
+    let func_data_remove = (val) => {
+        const _d = document;
+
+        _d.querySelector('form[data-delete-form]').action = val;
+    }
+</script>
+
+{% include 'helpers/message.html' %}
+
+<div class="mt-1">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'apps:vehicle:vehicleList' %}" style="text-decoration: none;"><i class="fa fa-arrow-left text-grey" style="vertical-align: middle;"></i> Vehicle List</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{ object.vehicle_name|text_capitalize }}</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="mt-4">
+    <table class="table borderless">
+        <tr>
+            <td style="width: 100px;"><img src="/media/{% if data.media.all|length > 0 %}{% for media_inuse in data.media.all %}{% if media_inuse.status == 'active' %}{{ media_inuse.media_file }}{% endif %}{% endfor %}{% else %}extras/no_image.png{% endif %}" width="90" alt="" style="border-radius: 10%;"></td>
+            <td style="vertical-align: top;">
+                <div class="mx-2">
+                    <h4>{{ data.vehicle_name|text_capitalize }}</h4>
+                    <span>{{ data.vehicle_type|upper }}</span>
+                    <i class="m-1 fa fa-circle" style="font-size: 5px; vertical-align: middle;"></i>
+                    <span data-bs-toggle="tooltip" data-bs-html="true" title="Plate Number" style="cursor:help;">{{ data.fk_cr_rn.plate_no|upper }}</span><br>
+                    <script>
+                        $(document).ready(function(){
+                            $('[data-bs-toggle="tooltip"]').tooltip();
+                        });
+                    </script>
+                    <span class="m-1">
+                        {% if data.status == 'active' %}
+                        <i class="fa fa-circle text-success" style="font-size: 10px; vertical-align: middle;"></i> Active
+                        {% elif data.status == 'in active' %}
+                        <i class="fa fa-circle text-grey" style="font-size: 10px; vertical-align: middle;"></i> In Active
+                        {% elif data.status == 'maintenance' %}
+                        <i class="fa fa-circle text-warning" style="font-size: 10px; vertical-align: middle;"></i> Maintenance
+                        {% elif data.status == 'out of service' %}
+                        <i class="fa fa-circle text-danger" style="font-size: 10px; vertical-align: middle;"></i> Out of Service
+                        {% endif %}
+                    </span>
+                </div>
+            </td>
+            <td style="float: right;">
+                <a href="{% url 'apps:vehicle:vehicleDetailsUpdate' pk=data.pk %}" class="btn btn-primary"> <i class="fas fa-pencil-alt"></i> Edit vehicle</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="row mt-4" style="border-top: 1px solid #D3D9DB;">
+    <div class="col-sm-2 mt-3" >
+        <div class="list-group list-group-flush">
+            <a class="list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-overview vehicle-active" href="javascript:void(0);">
+                    <table>
+                        <tr>
+                            <td style="width: 150px;"><i class="fas fa-address-card"></i> Vehicle Overview</td>
+                        </tr>
+                    </table>
+            </a>
+
+            <a class="list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-photos" href="#">
+                <table>
+                    <tr>
+                        <td style="width: 200px;"> <span><i class="fas fa-images"></i> Photos</span></td>
+                        <td><span class="badge bg-light text-dark">{{ data.media.all|length }}</span></td>
+                    </tr>
+                </table>
+            </a>
+
+            <a class="list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-documents" href="#">
+                <table>
+                    <tr>
+                        <td style="width: 200px;"> <i class="fas fa-file-alt"></i> Documents</td>
+                        <td><span class="badge bg-light text-dark">{{ data.document.all|length }}</span></td>
+                    </tr>
+                </table>
+            </a>
+
+            <hr>
+
+            <a class="list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-issues" href="#">
+                <table>
+                    <tr>
+                        <td style="width: 200px;">Issues</td>
+                        <td><span class="badge bg-light text-dark">0</span></td>
+                    </tr>
+                </table>
+            </a>
+
+            <a class="list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-reminders" href="#">
+                <table>
+                    <tr>
+                        <td style="width: 200px;">Reminders</td>
+                        <td><span class="badge bg-light text-dark">0</span></td>
+                    </tr>
+                </table>
+            </a>
+
+            <a class=" list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-assignment" href="#">
+                <table>
+                    <tr>
+                        <td style="width: 200px;"> Assignment History</td>
+                    </tr>
+                </table>
+            </a>
+
+            <a class=" list-group-item-action list-group-item-light vehicle-a-list btn btn-vehicle-location" href="#">
+                <table>
+                    <tr>
+                        <td style="width: 200px;"> Location History</td>
+                    </tr>
+                </table>
+            </a>
+            
+        </div>
+    </div>
+
+    <!-- VEHICLE OVERVIEW TAB -->
+    <div class="col-sm-10 vehicle-overview-content">
+        <nav class="mt-3">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-vehicle-info-tab" data-toggle="tab" href="#nav-vehicle-info" role="tab" aria-controls="nav-vehicle-info" aria-selected="true"><b>Vehicle Details</b></a>
+              <a class="nav-item nav-link" id="nav-cr-or-tab" data-toggle="tab" href="#nav-cr-or" role="tab" aria-controls="nav-cr-or" aria-selected="false"><b>CR & OR</b></a>
+              <a class="nav-item nav-link" id="nav-unassigned-tab" data-toggle="tab" href="#nav-unassigned" role="tab" aria-controls="nav-unassigned" aria-selected="false">Lifecycle</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-vehicle-info" role="tabpanel" aria-labelledby="nav-vehicle-info-tab">
+                <div class="row mt-4">
+                    <div class="col-sm-6">
+                        <div class="card shadow-sm bg-body rounded">
+                            <div class="card-header bg-white">
+                                <b>Vehicle details</b>
+                                <a href="{% url 'apps:vehicle:vehiclePrint' print_for='detail' pk=pk %}" target="_blank" class="float-end btn btn-sm btn-primary"><i class="bi bi-printer"></i> Print</a>
+                            </div>
+                            <div class="card-body">
+                                <table>
+                            <tbody>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Vehicle Name: </td>
+                                    <td> <b>{{ data.vehicle_name|upper }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Vehicle Type: </td>
+                                    <td>{{ data.vehicle_type|upper }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Ownership: </td>
+                                    <td>{{ data.ownership|upper }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Area of Coverage: </td>
+                                    <td>{{ data.area_coverage|upper }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Position Assign: </td>
+                                    <td>{{ data.position_assign|upper }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Case Capacity: </td>
+                                    <td>{{ data.case_capacity|intcomma }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Date Received: </td>
+                                    <td>{{ data.date_receive }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Date Acquire: </td>
+                                    <td>{{ data.date_acquired }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Origin (place): </td>
+                                    <td>{{ data.origin|upper }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Acquisition Cost: </td>
+                                    <td>&#x20B1; {{ data.aquisition_cost|intcomma }} </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-vehicle-label text-secondary">Useful Life (in mos): </td>
+                                    <td>{{ data.useful_life_month }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                                <hr>
+
+                                <table>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Monthly Depreciation </td>
+                                        <td>&#x20B1; {{ data.monthly_depreciation|intcomma }} </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Yearly Depreciation </td>
+                                        <td>&#x20B1; {{ data.yearly_depreciation|intcomma }} </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Age in Months </td>
+                                        <td>{{ data.age_month|floatformat:2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Age in Years </td>
+                                        <td>{{ data.age_year|floatformat:2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Accumulated Depreciation </td>
+                                        <td>&#x20B1; {{ data.accumulated_depreciation|floatformat:2|intcomma }} </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Book Value </td>
+                                        <td>&#x20B1;  {{ data.book_value|floatformat:2|intcomma }}  </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Repair & Maintenance Cost </td>
+                                        <td>&#x20B1;  0.00  </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-vehicle-label text-secondary">Cost to Repair Ratio</td>
+                                        <td>0%</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3 shadow-sm bg-body rounded">
+                            <div class="card-header bg-white">
+                                <b>Location</b>
+                                <small class="text-muted">National Road, Bacolod, 6100 Negros Occidental</small>
+                            </div>
+                            <div class="card-body">
+                                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3921.444470978857!2d123.00267121540271!3d10.622537064918538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33aecdeea2b271eb%3A0x3ceb8e99ce94e31!2sNo.1%20Supplier%20Inc.!5e0!3m2!1sen!2sph!4v1627108677257!5m2!1sen!2sph" 
+                                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="card shadow-sm bg-body rounded">
+                            <div class="card-header bg-white">
+                                <b>Open Issues</b>
+                                <a href="./add-issue.html" class="float-end btn btn-outline-secondary btn-sm text-dark"> <i class="fas fa-plus"></i> Add issue</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <center>
+                                            <span class="fs-2 text-primary">0</span> <br>
+                                            <span class="text-muted">Open</span>
+                                        </center>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <center>
+                                            <span class="fs-2 text-danger">0</span> <br>
+                                            <span class="text-muted">Overdue</span>
+                                        </center>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <center>
+                                            <span class="fs-2 text-success">0</span> <br>
+                                            <span class="text-muted">Resolved</span>
+                                        </center>
+                                    </div>
+                                </div>
+                                <hr>
+                                <!-- <table class="table borderless">
+                                    <tr>
+                                        <td>
+                                            <a href="#" class="text-decoration-none">1 <i class="bi bi-dot"></i> Headlight Socket</a><br>
+                                            <small class="text-muted">Reported 9 days ago by Gem Montalbo</small><br>
+                                            <span class="text-muted">Headlight socket is out</span>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div class="btn-group dropstart">
+                                                <button type="button" class="btn btn-light btn-sm issues-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><button  class="dropdown-item"> <i class="fas fa-wrench text-muted"></i> Resolve issue</button></li>
+                                                    <li class="px-2"><hr class="dropdown-divider"></li>
+                                                    <li><a href="" class="dropdown-item"><i class="fas fa-times-circle text-muted"></i> Close issue</a></li>
+                                                    <li class="px-2"><hr class="dropdown-divider"></li>
+                                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <a href="#" class="text-decoration-none">2 <i class="bi bi-dot"></i> Relay Socket</a><br>
+                                            <small class="text-muted">Reported 9 days ago by Gem Montalbo</small><br>
+                                            <span class="text-muted">Relay socket is out</span>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div class="btn-group dropstart">
+                                                <button type="button" class="btn btn-light btn-sm issues-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><button  class="dropdown-item"> <i class="fas fa-wrench text-muted"></i> Resolve issue</button></li>
+                                                    <li class="px-2"><hr class="dropdown-divider"></li>
+                                                    <li><a href="" class="dropdown-item"><i class="fas fa-times-circle text-muted"></i> Close issue</a></li>
+                                                    <li class="px-2"><hr class="dropdown-divider"></li>
+                                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table> -->
+                            </div>
+                        </div>
+
+                        <div class="card mt-3 shadow-sm bg-body rounded">
+                            <div class="card-header bg-white">
+                                <b>Service Reminders</b>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <center>
+                                            <span class="fs-2">0</span><br>
+                                            <span>Overdue</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <center>
+                                            <span class="fs-2 text-warning">0</span><br>
+                                            <span>Due Soon</span>
+                                        </center>
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <!-- <table class="table">
+                                    <tr>
+                                        <td>
+                                            <span class="text-warning">Engine Oil & Filter Replacement</span><br>
+                                            <small class="text-muted">Every 6 month(s) or 10,000 miles</small><br>
+                                            <small class="text-warning" style="cursor: help;">Due: 3 months from now</small>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <div class="btn-group dropstart">
+                                                <button type="button" class="btn btn-light btn-sm service-reminders-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><button  class="dropdown-item btn-add-assignment"> <i class="fas fa-pencil-alt text-muted"></i> Edit assignment</button></li>
+                                                    <li><a href="" class="dropdown-item"><i class="fas fa-minus text-muted"></i> Unassign</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table> -->
+                            </div>
+                        </div>
+
+                        <div class="card mt-3 shadow-sm bg-body rounded">
+                            <div class="card-header bg-white">
+                                <b>Renewal Reminders</b>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <center>
+                                            <span class="fs-2">0</span><br>
+                                            <span>Overdue</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <center>
+                                            <span class="fs-2 text-warning">0</span><br>
+                                            <span>Due Soon</span>
+                                        </center>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CR AND OR TAB -->
+            <div class="tab-pane fade" id="nav-cr-or" role="tabpanel" aria-labelledby="nav-cr-or-tab">
+                <div class="accordion accordion-flush mt-4 px-5" id="accordionFlushExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+                          <b>OFFICIAL RECEIPTS</b>
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body p-5">
+                            <table class="table">
+                                        {% for data in data.fk_or_rn.all %}
+                                        <tr>
+                                            <td><b>{{ data.date|date:'Y' }}</b></td>
+                                            <td><button class="btn btn-outline-primary btn-sm" onclick="initializeOrPk('{% url "apps:vehicle:vehicleOrDetailsCreateUpdate" pk=data.pk %}', '{% url "apps:vehicle:vehiclePrint" print_for='or' pk=data.pk %}'); fetchVehicleOr('{% url 'apps:vehicle:api:vehicleOrDetail' id=data.pk %}');" data-bs-toggle="modal" data-bs-target="#or-modal-content"> <i class="fa fa-binoculars"></i> {{ data.or_no }}</button></td>
+                                            <td style="text-align: right;">
+                                                <div class="btn-group dropstart">
+                                                    <button type="button" class="btn btn-sm" data-bs-toggle="del-or-dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="" class="dropdown-item"><i class="fas fa-trash text-muted"></i> Delete</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        <script>
+                                        </script>
+                            </table>
+                            <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" data-bs-target="#add-or-modal"><i class="fas fa-plus"></i> Add OR</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            <b>CERTIFICATE OF REGISTRATION</b>
+                        </button>
+                      </h2>
+                      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body p-5">
+                            {% if data.fk_cr_rn.all|length > 0 %}
+                            <center>
+                                <small>Republic of the Philippines</small><br>
+                                <span>DEPARTMENT OF TRANSPORTATION</span><br>
+                                <span><b>LAND TRANSPORTATION OFFICE</b></span><br>
+                                <small>East Avenue, Quezon City</small><br>
+
+                                <div class="mt-3">
+                                    <label for="">Field Office: </label>
+                                    <span><b> {{ data.fk_cr_rn.field_office|upper }}</b></span>
+                                </div>
+                            </center>
+                            <table class="table mt-4">
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-dark text-white p-2">CERTIFICATE OF REGISTRATION</span>
+                                    </td>
+                                    <td>
+                                        <label for="">CR NO. </label>
+                                        <span class="fs-4 text-danger"> {{ data.fk_cr_rn.cr_no|upper }}</span>
+                                    </td>
+                                    <td>
+                                        <label>Date:</label></td>
+                                    <td>
+                                        <center>
+                                            <span class="border-bottom"> {{ data.fk_cr_rn.date }}</span><br>
+                                            <small>(MM-DD-YYYY)</small>
+                                        </center>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div style="background-color: #F6FBC3;">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <small>MV FILE NO.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.mvfile_no|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>PLATE NO.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.plate_no|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>ENGINE NO.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.engine_no|upper }}</b></h6>
+                                            </td>
+                                            <td colspan="2">
+                                                <small>CHASSIS NO.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.chasis_no|upper }}</b></h6>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <small>DENOMINATION</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.denomination|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>PISTON DISPLACEMENT</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.piston_displacement|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>NO. OF CYLINDERS</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.no_cyclender|upper }}</b></h6>
+                                            </td>
+                                            <td colspan="2">
+                                                <small>FUEL</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.fuel_type|upper }}</b></h6>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <small>MAKE</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.make|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>SERIES</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.series|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>BODY TYPE</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.body_type|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>BODY NO.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.body_no|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>YEAR MODEL</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.year_model|upper }}</b></h6>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <small>GROSS WT.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.gross_weight|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>NET WT.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.net_weight|upper }}</b></h6>
+                                            </td>
+                                            <td>
+                                                <small>SHIPPING WT.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.shipping_weight|upper }}</b></h6>
+                                            </td>
+                                            <td colspan="2">
+                                                <small>NET CAPACITY.</small><br>
+                                                <h6 class="ms-4"><b>{{ data.fk_cr_rn.net_capacity|intcomma }}</b></h6>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td colspan="1">
+                                            <small>COMPLETE OWNERS NAME</small><br>
+                                            <h6><b>{{ data.fk_cr_rn.owner|upper }}.</b></h6>
+                                        </td>
+                                        <td colspan="3">
+                                            <small>TELEPHONE NO. / CONTACT DETAILS</small><br>
+                                            <h6><b>{{ data.fk_cr_rn.contact_no|upper }}</b></h6>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <small>COMPLETE ADDRESS (No., Street, City, Municipality, Province)</small><br>
+                                            <h6><b>{{ data.fk_cr_rn.address|upper }}</b></h6>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="4">
+                                            <small>ENCUMBERED TO</small><br>
+                                            <h6><b>{{ data.fk_cr_rn.encumbered|upper }}</b></h6>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <small>DETAILS OF FIRST REGISTRATION</small><br>
+                                            <h6><b>{{ data.fk_cr_rn.details_f_registration|upper }}</b></h6>
+                                        </td>
+                                        <td>
+                                            <small>O.R. No.</small><br>
+                                            <h6><b>002020297202951</b></h6>
+                                        </td>
+                                        <td>
+                                            <small>O.R. Date</small><br>
+                                            <h6><b>10/22/2020</b></h6>
+                                        </td>
+                                        <td>
+                                            <small>AMT.</small><br>
+                                            <h6><b>&#x20B1; {{ data.fk_cr_rn.amount|intcomma }}</b></h6>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="float: right;">
+                                <a href="{% url 'apps:vehicle:vehiclePrint' print_for='cr' pk=data.fk_cr_rn.pk %}" target="_blank" class="m-1 btn btn-sm btn-default" data-load-modal-or-print><i class="fa fa-print"></i> Print</a>
+                                <a href="{% url 'apps:vehicle:vehicleCrUpdate' fk=data.pk pk=data.fk_cr_rn.pk %}" class="m-1 btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                            </div>
+                            {% else %}
+                            <center class="m-1">
+                                <small class="text-muted">NO CR ADDEDD YET.</small>
+                                <a href="{% url 'apps:vehicle:vehicleCrCreate' new_for='cr' fk=pk %}" class="m-1 btn btn-sm btn-primary"><i class="fa fa-plus"></i> ADD CR</a>
+                            </center>
+                            {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="nav-unassigned" role="tabpanel" aria-labelledby="nav-unassigned-tab">
+                MAINTENANCE
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTOS TAB -->
+    <div class="col-sm-10 vehicle-photos-content">
+        <section class="mb-4">
+            <form action="{% url 'apps:media:updateMedia' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="vehicle">
+                <input type="hidden" name="object_id" value="{{ pk }}">
+                <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label mt-5">
+                          <h5>Upload new Profile Picture</h5>
+                      </label>
+                      <div class="preview-zone hidden">
+                        <div class="box box-solid">
+                          <div class="box-header with-border">
+                            <div><b>Preview</b></div>
+                            <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-danger btn-xs remove-preview">
+                                <i class="fa fa-times"></i> Reset The Field
+                              </button>
+                            </div>
+                          </div>
+                          <div class="box-body"></div>
+                        </div>
+                      </div>
+                      <div class="dropzone-wrapper">
+                        <div class="dropzone-desc">
+                          <i class="glyphicon glyphicon-download-alt"></i>
+                          <p>Choose an image file or drag it here.</p>
+                        </div>
+                        {{ media_form.media_file }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+           
+                <div class="row">
+                  <div class="col-md-12">
+                    <center>
+                        <button type="submit" class="btn btn-primary pull-right mt-4" data-bs-toggle="modal" data-bs-target="#loaderModal">Upload</button>
+                    </center>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </section>
+
+        <div class="row">
+            {% for media in data.media.all %}
+            <div class="col-sm-3">
+                <div class="card" style="width: 18rem;">
+                    <img src="/media/{{ media.media_file }}" class="card-img-top rounded" width="50" height="200" alt="...">
+                    <div class="card-body">
+                        <small class="card-text text-muted"><i class="fas fa-image"></i> {{ media.media_file }}</small>
+                    </div>
+                    <ul class="list-group list-group-flush mx-3">
+                    </ul>
+                    <div class="card-body">
+                        <small class="bg-primary p-1 text-white">Vehicle</small>
+                        <div class="btn-group dropstart" style="float: right;">
+                            <button type="button" class="btn btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <button type="button" onclick="func_data_remove('{% url "apps:media:vehicleImageDelete" return_pk=pk pk=media.pk %}');" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- DOCUMENTS TAB -->
+    <div class="col-sm-10 vehicle-documents-content px-5">
+        <form action="{% url 'apps:document:uploadDocument' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="vehicle">
+            <input type="hidden" name="object_id" value="{{ pk }}">
+            <div class="row mt-5">
+                <h5 class="mb-3">Upload Document</h5>
+                <div class="col-sm-3">
+                    <label for="{{ document_form.document_name.id_for_label }}" class="form-label">{{ document_form.document_name.label }}</label>
+                    {{ document_form.document_name }}
+
+                    {% if document_form.document_name.help_text %}
+                        <small class="text-muted">{{ document_form.document_name.help_text }}</small>
+                    {% endif %}
+                </div>
+                <div class="col-sm-3">
+                    <label for="{{ document_form.media_file.id_for_label }}" class="form-label">{{ document_form.media_file.label }}</label>
+                    {{ document_form.media_file }}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <button type="submit" class="mt-3 btn btn-primary btn-lg">Upload File</button>
+            </div>
+        </form>
+
+        <select onchange="triggerDocumentFilter(this);" class="form-select form-control mt-5" name="filter" aria-label="" style="width: 200px;">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="name">Document Name</option>
+        </select>
+
+        <script>
+            function convertDate(d) {
+                    var p = d.split("/");
+                    return new Date(p[2]+ "/" + p[0] + "/" +p[1]);
+            }
+
+            function sortDocs(filter) {
+                var table, rows, switching, i, x, y, shouldSwitch;
+                table = document.querySelector("#docs-filter tbody");
+                switching = true;
+
+                while (switching) {
+                    switching = false;
+                    rows = table.querySelectorAll("TR");
+
+                    for (i = 0; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName("TD")[0].querySelector('.docs-record-created');
+                        y = rows[i + 1].getElementsByTagName("TD")[0].querySelector('.docs-record-created');
+
+                        if (filter == 'newest') {
+                            if (convertDate(x.innerHTML) < convertDate(y.innerHTML)) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (filter == 'oldest') {
+                            if (convertDate(x.innerHTML) > convertDate(y.innerHTML)) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (filter == 'name') {
+                            x = rows[i].getElementsByTagName("TD")[0].querySelector('.docs-name');
+                            y = rows[i + 1].getElementsByTagName("TD")[0].querySelector('.docs-name');
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                    }
+                }
+            }
+
+            let triggerDocumentFilter = (val) => {
+                sortDocs(val.value.toLowerCase());
+            }
+        </script>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <b>Files uploaded</b>
+            </div>
+            <div class="card-body">
+                <table id="docs-filter" class="table">
+                    <tbody>
+                        {% for docs in data.document.all %}
+                        <tr>
+                            <td>
+                                <span class="docs-name">{{ docs.document_name }}</span><br>
+                                <small class="text-muted">
+                                    <span class="docs-record-created">{{ docs.record_created|date:"m/d/Y" }}</span>
+                                    <i class="fa fa-dot-circle"></i>
+                                    <span>{{ docs.media_file }}</span>
+                                </small>
+                            </td>
+                            <td style="text-align: right;">
+                                
+                                <a href="{% url 'apps:media:download' file=docs.media_file %}"><i class="fas fa-download text-primary mx-3"></i></a>
+                                <a href="javascript:void(0);" onclick="func_data_remove('{% url "apps:media:vehicleDocumentDelete" return_pk=pk pk=docs.pk %}');" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                <!-- <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-edit text-muted"></i> Edit</a></li>
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-trash text-muted"></i> Delete</a></li>
+                                    </ul>
+                                </div> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav aria-label="Page navigation example" class="mt-3">
+            <ul class="pagination justify-content-end">
+                <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-chevron-left"></i></a>
+                </li>
+                <li class="page-item disabled">
+                <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- ISSUES TAB -->
+    <div class="col-sm-10 vehicle-issues-content mt-3">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-open-tab" data-bs-toggle="pill" data-bs-target="#pills-open" type="button" role="tab" aria-controls="pills-open" aria-selected="true">Open</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-overdue-tab" data-bs-toggle="pill" data-bs-target="#pills-overdue" type="button" role="tab" aria-controls="pills-overdue" aria-selected="false">Overdue</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-resolved-tab" data-bs-toggle="pill" data-bs-target="#pills-resolved" type="button" role="tab" aria-controls="pills-resolved" aria-selected="false">Resolved</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-closed-tab" data-bs-toggle="pill" data-bs-target="#pills-closed" type="button" role="tab" aria-controls="pills-closed" aria-selected="false">Closed</button>
+            </li>
+        </ul>
+
+        <hr>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-open" role="tabpanel" aria-labelledby="pills-open-tab">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="" class="col-form-label text-muted">0 selected:</label>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#close-issue-modal">Close</button>  
+                    </div>
+                </div>
+
+                <!-- CLOSE MODAL -->
+                <!-- Modal -->
+                <div class="modal fade" id="close-issue-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title">Confirm action</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Are you sure?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary btn-issues-close" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary btn-danger">Ok</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td style="width: 20px;">
+                                    <input class="form-check-input" type="checkbox" value="" id="">
+                                </td>
+                                <td style="text-align: left;">Issue</td>
+                                <td style="text-align: right;"">Assigned</td>
+                            </tr>
+                            <tr>
+                                <td class="align-top">
+                                    <input class="form-check-input" type="checkbox" value="" id="">
+                                </td>
+                                <td>
+                                    <span class="text-danger"><b>#1 <i class="bi bi-dot"></i> Headlight Socket</b></span><br>
+                                    <span>Headlight Socket needs to replace soon</span><br>
+                                    <small class="text-muted">Reported 9 days ago by Andrew Montelibano</small>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><button  class="dropdown-item"> <i class="fas fa-wrench text-muted"></i> Resolve issue</button></li>
+                                            <li class="px-2"><hr class="dropdown-divider"></li>
+                                            <li><a href="" class="dropdown-item"><i class="fas fa-times-circle text-muted"></i> Close issue</a></li>
+                                            <li class="px-2"><hr class="dropdown-divider"></li>
+                                            <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                            <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-top">
+                                    <input class="form-check-input" type="checkbox" value="" id="">
+                                </td>
+                                <td>
+                                    <span class="text-danger"><b>#2 <i class="bi bi-dot"></i> Relay Socket</b></span><br>
+                                    <span>Relay Socket needs to replace soon</span><br>
+                                    <small class="text-muted">Reported 9 days ago by Gem Montelibano</small>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><button  class="dropdown-item"> <i class="fas fa-wrench text-muted"></i> Resolve issue</button></li>
+                                            <li class="px-2"><hr class="dropdown-divider"></li>
+                                            <li><a href="" class="dropdown-item"><i class="fas fa-times-circle text-muted"></i> Close issue</a></li>
+                                            <li class="px-2"><hr class="dropdown-divider"></li>
+                                            <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                            <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <nav class="float-end mt-3" aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="tab-pane fade" id="pills-overdue" role="tabpanel" aria-labelledby="pills-overdue-tab">
+                <center>
+                    <h4 class="mt-5 text-muted">No result found</h4>
+                </center>
+            </div>
+            <div class="tab-pane fade" id="pills-resolved" role="tabpanel" aria-labelledby="pills-resolved-tab">
+                <center>
+                    <h4 class="mt-5 text-muted">No result found</h4>
+                </center>
+            </div>
+            <div class="tab-pane fade" id="pills-closed" role="tabpanel" aria-labelledby="pills-closed-tab">
+                <center>
+                    <h4 class="mt-5 text-muted">No result found</h4>
+                </center>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- REMINDERS TAB -->
+    <div class="col-sm-10 vehicle-reminders-content">
+        <div class="card mt-3">
+            <div class="card-header bg-white">
+                <span><b>Service Reminders</b></span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-sm-8">
+                        <button class="btn btn-primary mx-sm-1"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                </div>
+
+                <table class="table mt-4">
+                    <tr>
+                        <td>Service Tasks & Schedule</td>
+                        <td>Next Due</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-warning text-white">Due Soon</span><br>
+                            <span>Engine Oil & Filter Replacement</span><br>
+                            <span class="text-muted">Every 6 month(s)</span>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span>
+                                        <i class="fas fa-calendar"></i>
+                                        3 months from now
+                                    </span><br>
+                                    <span>Oct 27, 2021</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span>Last completed on Apr 14, 2021</span><br>
+                                    <small class="text-muted">3 months ago</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge bg-warning text-white">Due Soon</span><br>
+                            <span>Tire Rotation</span><br>
+                            <span class="text-muted">Every 6 month(s)</span>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span>
+                                        <i class="fas fa-calendar"></i>
+                                        3 months from now
+                                    </span><br>
+                                    <span>Oct 27, 2021</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span>Last completed on Apr 14, 2021</span><br>
+                                    <small class="text-muted">3 months ago</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <span class="float-end">1-2 of 2</span>
+
+                <script>
+                </script>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header bg-white">
+                <span><b>Vehicle Renewal Reminders</b></span>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <td>Vehicle Renewal Type</td>
+                        <td>Due Date</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Emission Test <span class="badge bg-danger">Overdue</span></td>
+                        <td>
+                            <span>Sun, Jul 25, 2021 <span class="text-danger">(2 days ago)</span></span><br>
+                            <span class="text-muted">Due soon on Sat, Jul 3, 2021</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Inspection</td>
+                        <td>
+                            <span class="text-muted">No reminder set</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Insurance</span></td>
+                        <td>
+                            <span>Wed, Dec 29, 2021 <span class="text-muted">(5 months from now)</span></span><br>
+                            <span class="text-muted">Due soon on Tue, Dec 7, 2021</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-light btn-sm renewal-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Registration</span></td>
+                        <td>
+                            <span>Sun, Nov 25, 2021 <span class="text-danger">(2 days ago)</span></span><br>
+                            <span class="text-muted">Due soon on Sat, Nov 3, 2021</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-light btn-sm renewal-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button  class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</button></li>
+                                    <li><button  class="dropdown-item"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ASSIGNMENT HISTORY TAB -->
+    <div class="col-sm-10 vehicle-assignment-content">
+
+        <div class="history-page">
+            <h5 class="mt-4">Assignment History</h5>
+
+            <div class="card mt-4 shadow bg-body rounded" style="height: 350px;">
+                <div class="card-header">
+                    <span>Assignment History</span>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td><b>Driver</b></td>
+                                <td><b>Status</b></td>
+                                <td><b>Cases</b></td>
+                                <td><b>Accounts</b></td>
+                                <td><b>Date / Duration</b></td>
+                                <td><b>Area of Delivery</b></td>
+                                <td><b>Actions</b></td>
+                            </tr>
+                        </thead>
+                        <tr style="background-color: #F1FEF8;">
+                            <td>
+                                <a href="#" class="btn-history-details text-decoration-none">
+                                    Yves Clarke Sabalilag 
+                                </a>
+                            </td>
+                            <td><span class="badge bg-success">DELIVERED</span></td>
+                            <td>
+                                <span class="badge bg-secondary">239</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">19</span>
+                            </td>
+                            <td>
+                                <i class="fas fa-calendar"></i> Thu, Sep 2, 2021 <small>3:30 AM</small> - Fri, Sep 3, 2021 <small>3:00 PM</small><br>
+                                <small>1 day</small>
+                            </td>
+                            <td>
+                                <i class="fas fa-truck-loading"></i> MELVAS/TORRES/LS SE/LS HIN/HINIGARAN/BOW BAGO
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-light btn-sm history-drpdwn-ellipsis" data-bs-toggle="ellip-dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="background-color: #F1FEF8;">
+                            <td>
+                                <a href="#" class="btn-history-details text-decoration-none">
+                                    Genton Corderoo 
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">DELIVERED</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">75</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">9</span>
+                            </td>
+                            <td>
+                                <i class="fas fa-calendar"></i> Thu, Sep 2, 2021 <small>3:30 AM</small> - Fri, Sep 3, 2021 <small>3:00 PM</small><br>
+                                <small>1 day</small>
+                            </td>
+                            <td>
+                                <i class="fas fa-truck-loading"></i> BAC/ALI/FSS
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-light btn-sm history-drpdwn-ellipsis" data-bs-toggle="ellip-dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><button type="button" class="dropdown-item btn-history-delete"> <i class="fas fa-trash text-muted"></i> Delete</button></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <nav class="float-end mt-3" aria-label=""> 
+                <ul class="pagination">
+                    <span class="mx-4 mt-1">1-2 of 2</span>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="history-details mt-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#" class="back-history">Back</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Assignment details</li>
+                </ol>
+              </nav>
+            <div class="card shadow bg-body rounded">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <i class="fas fa-portrait"></i>
+                            <small class="mx-2">DRIVER</small><br>
+                            <h6 class="mx-3">
+                                <a href="" class="text-decoration-none">Yves Clarke Sabalilag</a><br>
+                                <small class="text-muted">09190719046</small>
+                            </h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <i class="fas fa-calendar"></i>
+                            <small class="mx-2">DURATION</small><br>
+                            <h6 class="mx-3">1 day</h6>
+                        </div>
+                        <div class="col-sm-4">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <small> DISTANCE</small>
+                            <h6 class="mx-3">120,000 mi</h6>
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <nav class="mt-4">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button class="nav-link active" id="nav-details-tab" data-bs-toggle="tab" data-bs-target="#nav-details" type="button" role="tab" aria-controls="nav-details" aria-selected="true"><b>Details</b></button>
+                          <button class="nav-link" id="nav-comments-tab" data-bs-toggle="tab" data-bs-target="#nav-comments" type="button" role="tab" aria-controls="nav-comments" aria-selected="false"><b>Comments </b> <span class="badge bg-secondary">0</span></button>
+                        </div>
+                    </nav>
+                    <div class="tab-content mt-4" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-details" role="tabpanel" aria-labelledby="nav-details-tab">
+                            <div class="mt-3">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <table class="table table-borderless table-hover">
+                                            <tr>
+                                                <td>Helper(s)</td>
+                                                <td>
+                                                    <b>
+                                                        <a href="" class="text-decoration-none">Wendel Li</a>, 
+                                                        <a href="" class="text-decoration-none">George Martinez</a>
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Start Date/Time</td>
+                                                <td><b>Thu, Sep 2, 2021 3:30 AM <small class="text-muted">(10 days from now)</small></b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>End Date/Time</td>
+                                                <td><b>Thu, Sep 23, 2021 3:00 PM <small class="text-muted">(9 days from now)</b></small></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Starting Odometer</td>
+                                                <td><b>103,000 mi</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ending Odometer</td>
+                                                <td><b>120,000</b></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <table class="table table-borderless table-hover">
+                                            <tr>
+                                                <td>Truck Capacity (75%)</td>
+                                                <td class="text-start">
+                                                    <span><b>250</b></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>No. of Cases</td>
+                                                <td><b>239</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>No. of Accounts</td>
+                                                <td><b>9</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Truck Utilization</td>
+                                                <td>
+                                                    <span class="badge bg-success">96%</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                            <center class="my-5">
+                                <h6>No comments yet</h6>
+                            </center>
+                            <hr class="text-muted">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img src="/media/{% if data.media.all|length > 0 %}{% for media_inuse in data.media.all %}{% if media_inuse.status == 'active' %}{{ media_inuse.media_file }}{% endif %}{% endfor %}{% else %}extras/no_image.png{% endif %}" width="50" alt="">
+                                    </td>
+                                    <td style="width: 100%;">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="height: 100px;"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-10 vehicle-location-content">
+        Location History
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.history-drpdwn-ellipsis').dropdown();
+        $('[data-bs-toggle="del-or-dropdown"]').dropdown();
+
+        $('#nav-vehicle-info-tab').click(function() {
+            $('#nav-vehicle-info-tab').tab('show');
+        });
+        $('#nav-cr-or-tab').click(function() {
+            $('#nav-cr-or-tab').tab('show');
+        });
+        $('#nav-unassigned-tab').click(function() {
+            $('#nav-unassigned-tab').tab('show');
+        });
+
+        $('.history-details').hide();
+
+        $('.btn-history-details').click(function(){
+            $('.history-page').hide();
+            $('.history-details').show();
+        });
+
+        $('.back-history').click(function(){
+            $('.history-page').show();
+            $('.history-details').hide();
+        });
+    });
+</script>
+
+{% include 'helpers/vehicle_details_modals.html' %}
+{% include 'helpers/modals.html' %}
+
+{% endblock %}

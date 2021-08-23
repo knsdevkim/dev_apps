@@ -1,6 +1,0 @@
-Django==3.1.1
-Pillow
-djangorestframework
-openpyxl
-mysql
-django-truncate

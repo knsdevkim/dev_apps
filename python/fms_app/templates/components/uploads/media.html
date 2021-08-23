@@ -1,0 +1,55 @@
+{% extends 'base/panel_frame.html' %}
+
+{% block content %}
+
+{% include 'helpers/message.html' %}
+
+<div class="container-fluid">
+    <section class="mb-12">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="type" value="{{ type }}">
+          <input type="hidden" name="object_id" value="{{ object_id }}">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Upload Profile</label>
+                  <div class="preview-zone hidden">
+                    <div class="box box-solid">
+                      <div class="box-header with-border">
+                        <div><b>Preview</b></div>
+                        <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-danger btn-xs remove-preview">
+                            <i class="fa fa-times"></i> Reset The Field
+                          </button>
+                        </div>
+                      </div>
+                      <div class="box-body"></div>
+                    </div>
+                  </div>
+                  <div class="dropzone-wrapper">
+                    <div class="dropzone-desc">
+                      <i class="glyphicon glyphicon-download-alt"></i>
+                      <p>Choose an image file or drag it here.</p>
+                    </div>
+                    {{ form.media_file }}
+                  </div>
+                </div>
+              </div>
+            </div>
+       
+            <div class="row">
+              <div class="col-md-12">
+                <center>
+                    <button type="submit" class="btn btn-primary pull-right mt-4" data-bs-toggle="modal" data-bs-target="#loaderModal">Upload</button>
+                </center>
+              </div>
+            </div>
+          </div>
+        </form>
+    </section>
+</div>
+
+{% include 'helpers/modals.html' %}
+{% endblock %}

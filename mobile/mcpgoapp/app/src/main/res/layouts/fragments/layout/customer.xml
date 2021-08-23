@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorE">
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:drawableLeft="@drawable/search_icon"
+        android:hint="Search . . ."
+        android:textSize="12sp"
+        android:inputType="textFilter"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Day Sort"
+        android:textColor="@color/colorF"
+        android:textStyle="bold"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"/>
+
+    <Spinner
+        android:id="@+id/day"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="CUSTOMERS"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorF"
+            android:textSize="18sp"
+            android:fontFamily="@font/mcpofficialfontbold"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NO. 1 SUPPLIER"
+        android:textStyle="bold"
+        android:textColor="@color/colorF"
+        android:textSize="15sp"
+        android:fontFamily="@font/mcpofficialfont"
+        android:padding="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" />
+
+    <Button
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/colorA"
+        android:text="show customers in map"
+        android:drawableLeft="@drawable/version2_map"
+        android:layout_margin="5dp" />
+
+</LinearLayout>

@@ -1,0 +1,11 @@
+php_flag display_errors On
+php_flag display_startup_errors On
+
+DirectoryIndex index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.+)$ index.php/$1
+</IfModule>

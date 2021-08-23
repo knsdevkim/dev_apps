@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MCPGOAPP" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorA</item>
+        <item name="colorPrimaryVariant">@color/colorB</item>
+        <item name="colorOnPrimary">@color/colorE</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorC</item>
+        <item name="colorSecondaryVariant">@color/colorD</item>
+        <item name="colorOnSecondary">@color/colorF</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:textColorHint">?attr/colorOnSecondary</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+    </style>
+</resources>

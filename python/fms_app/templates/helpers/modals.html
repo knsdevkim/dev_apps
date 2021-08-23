@@ -1,0 +1,34 @@
+<!-- MODALS -->
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel"><i class="bi bi-trash"></i> Delete Record?</h5>
+            </div>
+            <div class="modal-body">
+                This will delete permanently and it can't retrieve anymore, Do you wish to continue?
+            </div>
+            <div class="modal-footer">
+                <form action="" method="post" data-delete-form>
+                    {% csrf_token %}
+                    <button type="button" class="m-1 btn btn-secondary btn-delete-close" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="m-1 btn btn-danger" data-bs-toggle="modal" data-bs-target="#loaderModal">Yes, Permanently Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loader Modal -->
+<div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" data-bs-backdrop='static' data-bs-keyboard='false' aria-labelledby="loaderModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="/media/extras/loader.gif" alt="loader" width="100px" height="100px"> Please wait ...
+            </div>
+        </div>
+    </div>
+</div>
+

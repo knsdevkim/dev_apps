@@ -1,0 +1,629 @@
+{% extends 'base/panel_frame.html' %}
+
+{% block nav_operator %}fms-active{% endblock %}
+
+{% block content %}
+
+<script>
+    let func_data_remove = (val) => {
+        const _d = document;
+
+        _d.querySelector('form[data-delete-form]').action = val;
+    }
+</script>
+
+{% include 'helpers/message.html' %}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'apps:operator:operatorList' %}"><i class="fa fa-arrow-left"></i> Operator List</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ data.firstname|text_capitalize }} {{ data.middlename|text_capitalize|slice:':1' }}. {{ data.lastname|text_capitalize }}</li>
+    </ol>
+</nav>
+
+<div class="mt-4">
+    <table class="table">
+        <tr>
+            <td style="width: 120px;">
+                <img src="/media/{% if data.media.all|length > 0 %}{% for media_inuse in data.media.all %}{% if media_inuse.status == 'active' %}{{ media_inuse.media_file }}{% endif %}{% endfor %}{% else %}extras/no_image.png{% endif %}" width="100" height="100" alt="" style="border-radius: 50%;">
+            </td>
+            <td style="width: 300px;">
+                <h5>{{ data.firstname|text_capitalize }} {{ data.middlename|text_capitalize|slice:':1' }}. {{ data.lastname|text_capitalize }}</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <small class="text-muted">EMPLOYEE NUMBER</small>
+                        <span style="text-decoration-line: underline; text-decoration-style: dotted;">{{ data.employee_id|upper }}</span>
+                    </div>
+                    <div class="col-sm-2">
+                        <small class="text-muted">CLASSIFICATION</small>
+                        <span style="text-decoration-line: underline; text-decoration-style: dotted;">{{ data.operator_type|upper }}</span>
+                    </div>
+                </div>
+            </td>
+            <td style="text-align: right;">
+                <!-- <button class="btn btn-primary"> <i class="bi bi-pencil"></i> Edit Contact</button> -->
+                <div class="btn-group">
+                    <a href="{% url 'apps:operator:operatorUpdate' pk=pk %}" type="button" class="btn btn-primary">Edit driver</a>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#"> <i class="fas fa-file-archive"></i> Archive</a></li>
+                      <li>
+                        <button type="button" onclick="func_data_remove('{% url "apps:operator:operatorDelete" pk=pk %}');" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="fa fa-trash"></i> Delete
+                        </button>
+                      </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-2" >
+            <div class="list-group list-group-flush">
+                <a class="list-group-item-action list-group-item-light driver-a-list btn btn-driver-overview driver-active" href="javascript:void(0);">
+                        <table>
+                            <tr>
+                                <td style="width: 150px;"><i class="fas fa-address-card"></i> Driver Overview</td>
+                            </tr>
+                        </table>
+                </a>
+
+                <a class="list-group-item-action list-group-item-light driver-a-list btn btn-driver-photos" href="#">
+                    <table>
+                        <tr>
+                            <td style="width: 200px;"> <span><i class="fas fa-images"></i> Photos</span></td>
+                            <td><span class="badge bg-light text-dark">{{ data.media.all|length }}</span></td>
+                        </tr>
+                    </table>
+                </a>
+
+                <a class="list-group-item-action list-group-item-light driver-a-list btn btn-driver-documents" href="#">
+                    <table>
+                        <tr>
+                            <td style="width: 200px;"> <i class="fas fa-file-alt"></i> Documents</td>
+                            <td><span class="badge bg-light text-dark">{{ data.document.all|length }}</span></td>
+                        </tr>
+                    </table>
+                </a>
+
+                <hr>
+
+                <a class="list-group-item-action list-group-item-light driver-a-list btn btn-driver-reminders" href="#">
+                    <table>
+                        <tr>
+                            <td style="width: 200px;">Renewal Reminders</td>
+                            <td><span class="badge bg-light text-dark">0</span></td>
+                        </tr>
+                    </table>
+                </a>
+
+                <a class=" list-group-item-action list-group-item-light driver-a-list btn btn-driver-vehicle-history" href="#">
+                    <table>
+                        <tr>
+                            <td style="width: 200px;"> Vehicle Assignment History</td>
+                        </tr>
+                    </table>
+                </a>
+                
+            </div>
+    </div>
+
+    <div class="col-sm-10">
+        <!-- DRIVER OVERVIEW TAB -->
+        <div class="row driver-overview-content">
+            <div class="col-sm-6">
+                <div>
+                    <h5><b>Driver Overview</b></h5>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <span style="vertical-align: middle;"><b>Contact Information</b></span>
+                        <!-- <button class="btn btn-outline-secondary btn-sm" style="float: right;"><i class="bi bi-pencil"></i> Edit</button> -->
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td class="text-muted driver-muted-td">Email</td>
+                                <td><a href="mailto: {{ data.email }}"> {{ data.email }}</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Phone Number</td>
+                                <td><a href="tel:{{ data.contact_no }}"> {{ data.contact_no }}</a> <!--small class="text-muted mx-3">mobile</small--></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Address</td>
+                                <td>{{ data.address|upper }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <span><b>Personal Information</b></span>
+                        <!-- <button class="btn btn-outline-secondary btn-sm" style="float: right;"><i class="bi bi-pencil"></i> Edit</button> -->
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td class="text-muted driver-muted-td">Job Title</td>
+                                <td>{{ data.position|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Date of Birth</td>
+                                <td>
+                                    <span>{{ data.birthdate }}</span><br>
+                                    <small class="text-muted">26 years old</small>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Employee Number</td>
+                                <td>{{ data.employee_id|upper }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Date Employed</td>
+                                <td>{{ data.date_employed }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <span><b>Driver's License</b></span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td class="text-muted driver-muted-td">License Number</td>
+                                <td><b>{{ data.fk_dl_rn.license_no }}</b></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Restrictions</td>
+                                <td><b>{{ data.fk_dl_rn.restriction }}</b></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Agency Code</td>
+                                <td><b>{{ data.fk_dl_rn.agency_code }}</b></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted driver-muted-td">Expiration Date</td>
+                                <td><b>{{ data.fk_dl_rn.expiration_date }}</b></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <span><i class="fas fa-car-alt"></i> Assigned Vehicles</span>
+                        <a href="#" style="float: right; text-decoration: none;">History</a>
+                    </div>
+                    <div class="card-body p-4">
+                        <table class="table">
+                            <!-- <tr>
+                                <td style="width: 60px;">
+                                    <img src="./image/ALUMINUM-VAN.png" width="50" alt="">
+                                </td>
+                                <td>
+                                    <span><a href="">JMC JMK6 W/ ALUMINUM VAN M/T 2018	</a></span><br>
+                                    <small>
+                                        <span><i class="bi bi-circle-fill bi-sm text-warning"></i> In shop <i class="bi bi-dot"></i> 6-Wheeler Truck	</span>
+                                    </small><br>
+                                    <small class="text-muted">
+                                        <span>07/17/2021 10:45 AM</span>
+                                    </small>
+                                </td>  
+                                <td style="text-align: right;">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn-light btn-sm vehicles-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><button  class="dropdown-item btn-add-assignment"> <i class="fas fa-pencil-alt text-muted"></i> Edit assignment</button></li>
+                                            <li><a href="" class="dropdown-item"><i class="fas fa-minus text-muted"></i> Unassign</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <td colspan="3">
+                                    <center>NO VEHICLE ASSIGNED</center>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- MODAL SCRIPT -->
+                        <script>
+                            $(document).ready(function(){
+                                $(".btn-add-assignment").click(function (){
+                                    $("#btn-add-or-modal").modal('show')
+                                });
+                            });
+                        </script>
+
+                         <!-- EDIT ASSIGNMENT MODAL -->
+                        <div class="modal fade" id="btn-add-or-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">EDIT ASSIGNMENT</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <b><label for="vehicle_droplist">VEHICLE TYPE</label></b>
+                                                    <select class="form-control" id="vehicle_droplist">
+                                                    <option>-- Select Vehicle Type --</option>
+                                                    <option>MC JMK6 W/ ALUMINUM VAN M/T 2018</option>
+                                                    <option>2013 JMC JMN900 HD W/ ALUM VAN</option>
+                                                    <option>10 WHEEL FUSO MITSUBISHI WING VAN</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <b><label for="">DATE</label></b>
+                                                <input type="date" class="form-control">    
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <b><label for="">TIME</label></b>
+                                                <input type="time" class="form-control"> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn-close-add-or btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- END OF EDIT ASSIGNMENT MODAL -->
+
+                        <center>
+                            <!-- <p class="text-muted">No vehicles assigned</p> -->
+                            <button class="btn btn-primary">Add assignment</button>
+                        </center>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <span><i class="fas fa-bell"></i> Renewal Reminders</span>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <!-- <tr>
+                                <td>License Renewal</td>
+                                <td>Sun, Aug 1, 2021 <span class="badge bg-warning text-dark">Due soon</span></td>
+                                <td style="text-align: right;">
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="" class="dropdown-item" style="text-decoration: none;"> <i class="fas fa-envelope text-muted"></i> Send Notification(s)</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a href="" class="dropdown-item"><i class="fas fa-edit text-muted"></i> Edit</a></li>
+                                            <li><a href="" class="dropdown-item"><i class="fas fa-trash text-muted"></i> Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr> -->
+                            <td colspan="3">
+                                <center>NO REMINDERS</center>
+                            </td>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <span><i class="fas fa-address-book"></i> Assigned Driver</span>
+                        <a href="#" style="float: right; text-decoration: none;">History</a>
+                    </div>
+                    <div class="card-body">
+                        <center>
+                            <p class="text-muted">No driver assigned</p>
+                            <button class="btn btn-primary">Add driver</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHOTOS TAB -->
+        <div class="driver-photos">
+            <section class="mb-4">
+                <form action="{% url 'apps:media:updateMedia' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="type" value="operator">
+                    <input type="hidden" name="object_id" value="{{ pk }}">
+                    <div class="container">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="control-label">Upload New Profile Picture</label>
+                          <div class="preview-zone hidden">
+                            <div class="box box-solid">
+                              <div class="box-header with-border">
+                                <div><b>Preview</b></div>
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-danger btn-xs remove-preview">
+                                    <i class="fa fa-times"></i> Reset The Field
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="box-body"></div>
+                            </div>
+                          </div>
+                          <div class="dropzone-wrapper">
+                            <div class="dropzone-desc">
+                              <i class="glyphicon glyphicon-download-alt"></i>
+                              <p>Choose an image file or drag it here.</p>
+                            </div>
+                            <input type="file" name="img_logo" class="dropzone">
+                            {{ media_form.media_file }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+               
+                    <div class="row">
+                      <div class="col-md-12">
+                        <center>
+                            <button type="submit" class="btn btn-primary pull-right mt-4" data-bs-toggle="modal" data-bs-target="#loaderModal">Upload</button>
+                        </center>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+            </section>
+
+            <div class="row">
+                {% for media in data.media.all %}
+                <div class="col-sm-2 mt-4">
+                    <div class="card">
+                        <img src="/media/{{ media.media_file }}" alt="" class="card-img-top" width="50" height="200">
+                        <div class="card-body">
+                            <span>{{ media.media_file }}</span>
+                            <div class="btn-group dropstart" style="float: right;">
+                                <button type="button" class="btn btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button type="button" onclick="func_data_remove('{% url "apps:media:operatorImageDelete" return_pk=pk pk=media.pk %}');" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- DOCUMENTS TAB -->
+        <div class="driver-documents">
+            <form action="{% url 'apps:document:uploadDocument' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="operator">
+                <input type="hidden" name="object_id" value="{{ pk }}">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label for="{{ document_form.document_name.id_for_label }}" class="form-label">{{ document_form.document_name.label }}</label>
+                        {{ document_form.document_name }}
+
+                        {% if document_form.document_name.help_text %}
+                        <small class="text-muted">{{ document_form.document_name.help_text }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="{{ document_form.media_file.id_for_label }}" class="form-label">{{ document_form.media_file.label }}</label>
+                        {{ document_form.media_file }}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <button type="submit" class="mt-3 btn btn-primary btn-lg">Upload File</button>
+                </div>
+            </form>
+
+            <select onchange="triggerDocumentFilter(this);" class="form-select form-control mt-5" name="filter" aria-label="" style="width: 200px;">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="name">Document Name</option>
+            </select>
+
+            <script>
+                function convertDate(d) {
+                        var p = d.split("/");
+                        return new Date(p[2]+ "/" + p[0] + "/" +p[1]);
+                }
+
+                function sortDocs(filter) {
+                    var table, rows, switching, i, x, y, shouldSwitch;
+                    table = document.querySelector("#docs-filter tbody");
+                    switching = true;
+
+                    while (switching) {
+                        switching = false;
+                        rows = table.querySelectorAll("TR");
+
+                        for (i = 0; i < (rows.length - 1); i++) {
+                            shouldSwitch = false;
+                            x = rows[i].getElementsByTagName("TD")[0].querySelector('.docs-record-created');
+                            y = rows[i + 1].getElementsByTagName("TD")[0].querySelector('.docs-record-created');
+
+                            if (filter == 'newest') {
+                                if (convertDate(x.innerHTML) < convertDate(y.innerHTML)) {
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            } else if (filter == 'oldest') {
+                                if (convertDate(x.innerHTML) > convertDate(y.innerHTML)) {
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            } else if (filter == 'name') {
+                                x = rows[i].getElementsByTagName("TD")[0].querySelector('.docs-name');
+                                y = rows[i + 1].getElementsByTagName("TD")[0].querySelector('.docs-name');
+                                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (shouldSwitch) {
+                            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                            switching = true;
+                        }
+                    }
+                }
+
+                let triggerDocumentFilter = (val) => {
+                    sortDocs(val.value.toLowerCase());
+                }
+            </script>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <b>Files uploaded</b>
+                </div>
+                <div class="card-body">
+                    <table id="docs-filter" class="table">
+                        <tbody>
+                            {% for docs in data.document.all %}
+                            <tr>
+                                <td>
+                                    <span class="docs-name">{{ docs.document_name }}</span><br>
+                                    <small class="text-muted">
+                                        <span class="docs-record-created">{{ docs.record_created|date:"m/d/Y" }}</span>
+                                        <i class="fa fa-dot-circle"></i>
+                                        <span>{{ docs.media_file }}</span>
+                                    </small>
+                                </td>
+                                <td style="text-align: right;">
+                                    
+                                    <a href="{% url 'apps:media:download' file=docs.media_file %}"><i class="fas fa-download text-primary mx-3"></i></a>
+                                    <a href="javascript:void(0);" onclick="func_data_remove('{% url "apps:media:operatorDocumentDelete" return_pk=pk pk=docs.pk %}');" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <nav aria-label="Page navigation example" class="mt-3">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- RENEWAL REMINDERS TAB -->
+        <div class="driver-reminders">
+            <h5><b>Renewal Reminders</b> <span class="badge rounded-pill bg-secondary">1</span></h5>
+
+            <div class="card mt-3">
+                <div class="card-body">
+                    <table class="table">
+                        <tr class="p-4">
+                            <th scope="col">Renewal Type</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                        <tr class="p-4">
+                            <td>License Renewal <span class="badge bg-warning">DUE SOON</span></td>
+                            <td>Due soon on Mon, Jun 21, 2021</td>
+                            <td style="text-align: right;">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-sm vehicles-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="" class="dropdown-item"> <i class="fas fa-envelope text-muted"></i> Send Notification(s)</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-pencil-alt text-muted"></i> Edit</a></li>
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-trash text-muted"></i> Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VEHICLE ASSIGNMENT HISTORY -->
+        <div class="driver-vehicle-history">
+            <h5><b>Vehicle Assignment History</b></h5>
+
+            <div class="card mt-3" style="background-color: #F1FEF8;">
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>
+                                <img src="./image/ALUMINUM-VAN.png" width="50" alt="">
+                            </td>
+                            <td>
+                                <span>10 WHEEL FUSO MITSUBISHI WING VAN</span><br>
+                                <small class="text-muted">
+                                    <i class="bi bi-circle-fill text-warning"></i> In shop
+                                    <i class="bi bi-dot"></i> 10-Wheeler Truck
+                                </small>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">Current</span>
+                                <span><i class="fas fa-calendar-alt"></i> Tue, June 15, 2021 10:40 AM</span><br>
+                                <span>No End Date</span><br>
+                                <small class="text-muted">5 days</small>
+                            </td>
+                            <td>
+                                <span> <i class="fas fa-user-friends"></i> Helper(s) <br> Angelo Morancil</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-sm vehicles-drpdwn-ellipsis" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="" class="dropdown-item"> <i class="fas fa-pencil-alt text-muted"></i> Edit</a></li>
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-minus text-muted"></i> Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'helpers/modals.html' %}
+
+{% endblock %}

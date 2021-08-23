@@ -1,0 +1,287 @@
+{% extends 'base/panel_frame.html' %}
+
+{% load humanize %}
+
+{% block nav_vehicle %}fms-active{% endblock %}
+{% block sub_nav_vechile_list %}fms-active{% endblock %}
+
+{% block css %}
+<style>
+	.modal.right .dialog1 {     
+        float: right;
+		margin: auto;
+		width: 320px;
+		height: 100%;
+	}
+	.modal.right .content1 {
+		height: 100%;
+    }
+
+    .callout {
+        padding: 10px;
+        margin: 20px 0;
+        border-left: 1px solid #428bca;
+        border-left-width: 5px;
+        border-radius: 3px;
+        background-color: #f1fbfe;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<script>
+    let func_data_remove = (val) => {
+        const _d = document;
+
+        _d.querySelector('form[data-delete-form]').action = val;
+    }
+</script>
+
+{% include 'helpers/message.html' %}
+
+<div class="mt-3">
+    <a class="btn-add-vehicle btn btn-primary" href="{% url 'apps:vehicle:vehicleCreate' new_for='details' %}"> <i class="fa fa-plus"></i> Add Vehicle</a>
+    <h3>All Vehicles</h3>
+</div>
+
+<hr>
+<form action="{% url 'apps:vehicle:vehicleSearch' %}" method="get">
+<div class="row mt-4">
+        <div class="col-sm-4">
+            <input type="text" class="form-control" name="q" autocomplete="off" placeholder="Search Vehicle Name, Area of Coverage ...">
+        </div>
+        <div class="col-sm-8">
+            <button type="button" class="btn-more-modal btn btn-outline-secondary mx-sm-2" data-bs-toggle="modal" data-bs-target="#more-modal"> <i class="fa fa-sliders-h"></i> More</button>
+            <button type="submit" class="btn btn-primary mx-sm-2"><i class="fa fa-search"></i> Search</button>
+            <small class="text-muted">{% if 'q' in request.GET and request.method == 'GET' %}{{ total_data }} filters applied | <a href="{% url 'apps:vehicle:vehicleList' %}"><i class="fa fa-redo"></i> Clear Search</a>{% endif %}</small>
+        </div>
+</div>
+
+<!-- FILTER SEARCH MODAL -->
+<div class="modal right" id="more-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog dialog1" role="document">
+        <div class="modal-content content1">
+        <div class="modal-header">
+            <h5 class="modal-title"><i class="fa fa-sliders-h"></i> Filters</h5>
+            <button class="btn btn-primary" style="margin-right: -70px;"> <i class="fa fa-search"></i> Search</button>
+            <button type="button" class="more-close btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" style="font-size: 1rem;">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="" class="mb-2">Vehicle Type</label>
+                <select class="form-select" name="vehicle_type" aria-label="Default select example">
+                <option value="">----------------</option>
+                {% for key in vehicle_type %}
+                    {% for type in key %}
+                    <option value="{{ type }}">{{ type|text_capitalize }}</option>
+                    {% endfor %}
+                {% endfor %}
+                </select>
+
+                <label for="" class="mt-3">Ownership</label>
+                <select class="form-select" name="ownership" aria-label="Default select example">
+                    <option value="">----------------</option>
+                    {% for field in vehicle_ownership %}
+                    <option value="{{ field.ownership }}">{{ field.ownership|upper }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="" class="mt-3">Case Capacity</label>
+                <input type="number" name="case_capacity" class="form-control">
+
+                <label for="" class="mt-3">Plate Number</label>
+                <input type="text" name="plate_no" class="form-control">
+
+                <label for="" class="mt-3">File Number</label>
+                <input type="text" name="file_no" class="form-control">
+
+                <label for="" class="mt-3">CR Number</label>
+                <input type="text" name="cr_no" class="form-control">
+
+                <label for="" class="mt-3">OR Number</label>
+                <input type="text" name="or_no" class="form-control">
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<div class="mt-4">
+    <span><span class="checkbox-count">0</span> selected:</span>
+    <button class="btn btn-outline-secondary mx-sm-2 text-dark" onclick="form_action('{% url 'apps:vehicle:vehicleUpdateStatus' %}');" data-bs-toggle="modal" data-bs-target="#update-status-modal">Update Status</button>
+    <button class="btn btn-outline-secondary mx-sm-2 text-dark disabled"> <i class="fa fa-archive"></i> Archive</button>
+</div>
+
+<script>
+    function form_action(url) {
+        console.log(url);
+        document.querySelector('#formList').action = url;
+    }
+</script>
+
+<form action="" method="post" id="formList">
+{% csrf_token %}
+
+<!-- UPDATE STATUS MODAL -->
+<div class="modal right" id="update-status-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Update Group</h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" style="font-size: 1rem;">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <div class="callout">
+                <span class="checkbox-count1">0</span> vehicles selected.
+            </div>
+            
+            <div class="mb-4 row">
+                <label for="inputPassword" class="col-sm-3 col-form-label">Update Status</label>
+                <div class="col-sm-9">
+                    <select class="form-select" name="status" aria-label="Default select example">
+                        <option value="" selected>Please select</option>
+                        <option value="Active">Active</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Out of Service">Out of Service</option>
+                        <option value="In Active">In Active</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a class="update-status-close" style="text-decoration: none; cursor: pointer;">Cancel</a>
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loaderModal">Save</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<table class="table table-hover mt-5">
+    <thead>
+        <tr>
+        <th scope="col"><input class="form-check-input" type="checkbox" id="selectall"></th>
+        <th scope="col">Image</th>
+        <th scope="col">Vehicle Name</th>
+        <th scope="col">Chassis No.</th>
+        <th scope="col">Plate No.</th>
+        <th scope="col">Vehicle Type</th>
+        <th scope="col">Ownership</th>
+        <th scope="col">Area of Coverage</th>
+        <th scope="col">Case Capacity</th>
+        <th scope="col">Status</th>
+        <th scope="col" style="width: 150px; text-align: center;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for field in data %}
+        
+        <tr>
+            <th scope="col"><input class="form-check-input" name="object_id" value="{{ field.pk }}" type="checkbox"></th>
+            <td><img src="/media/{% if field.media.all|length > 0 %}{% for media_inuse in field.media.all %}{% if media_inuse.status == 'active' %}{{ media_inuse.media_file }}{% endif %}{% endfor %}{% else %}extras/no_image.png{% endif %}" width="50" height="50" alt=""></td>
+            <td>{{ field.vehicle_name|upper }}</td>
+            <td>{{ field.fk_cr_rn.chasis_no|upper }}</td>
+            <td>{{ field.fk_cr_rn.plate_no|upper }}</td>
+            <td>{{ field.vehicle_type|upper }}</td>
+            <td>{{ field.ownership|upper }}</td>
+            <td>{{ field.area_coverage|upper }}</td>
+            <td>{{ field.case_capacity|intcomma }}</td>
+            <td> 
+                {% if field.status == 'active' %}
+                <i class="fa fa-circle text-success"></i> Active
+                {% elif field.status == 'in active' %}
+                <i class="fa fa-circle text-grey"></i> In Active
+                {% elif field.status == 'maintenance' %}
+                <i class="fa fa-circle text-warning"></i> Maintenance
+                {% elif field.status == 'out of service' %}
+                <i class="fa fa-circle text-danger"></i> Out of Service
+                {% endif %}
+            </td>
+            <td style="text-align: center;">
+                <a href="{% url 'apps:vehicle:vehicleDetails' pk=field.pk %}" class="btn btn-light"><i class="fa fa-eye"></i></a>
+                <a href="{% url 'apps:vehicle:vehicleDetailsUpdate' pk=field.pk %}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                <button type="button" onclick="func_data_remove('{% url "apps:vehicle:vehicleDelete" pk=field.pk %}');" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+
+        {% empty %}
+        
+        <tr>
+            <td colspan="11" align="center">NO DATA</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function(){
+        $('#selectall').click(function() {
+            if ($(this).is(':checked')) {
+                $('th input').attr('checked', true);
+            } else {
+                $('th input').attr('checked', false);
+            }   
+        });
+
+        let is_checked = false;
+
+        $('th input').click(function(){
+            is_checked = !is_checked;
+            total_check = $('input:checkbox:checked').length;
+
+            if(is_checked) {
+                total_check = total_check - 1;
+            }
+  
+            document.querySelector('.checkbox-count').innerHTML = total_check;
+        });
+
+        $('.btn-update-status').click(function(){
+            total_check = $('input:checkbox:checked').length;
+
+            if(is_checked) {
+                total_check = total_check - 1;
+            }
+ 
+            document.querySelector('.checkbox-count1').innerHTML = total_check;
+        });
+    });
+</script>
+
+<nav>
+    <ul class="pagination" style="float: right;">
+        {% if data.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ data.previous_page_number }}" tabindex="-1">Previous</a>
+        </li>
+        {% endif %}
+
+        {% for total_pages in data.paginator.page_range %}
+        <li class="page-item active">
+            <a class="page-link" href="?page={{ total_pages }}">{{ total_pages }}</a>
+        </li>
+        {% endfor %}
+        
+        {% if data.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ data.next_page_number }}">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ data.paginator.num_pages }}">Last</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
+</form>
+
+{% include 'helpers/modals.html' %}
+
+{% endblock %}

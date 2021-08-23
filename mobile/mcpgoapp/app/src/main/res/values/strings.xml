@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MCP GO</string>
+    <string-array name="account_type">
+        <item>GTM</item>
+        <item>SALESPERSON</item>
+    </string-array>
+
+    <string name="drawer_navigation_open">navigation_open</string>
+    <string name="drawer_navigation_close">navigation_close</string>
+</resources>

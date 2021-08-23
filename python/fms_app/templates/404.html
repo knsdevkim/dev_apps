@@ -1,0 +1,14 @@
+{% extends 'base/panel_frame.html' %}
+
+{% block content %}
+<div class="d-flex flex-column">
+    <div class="d-flex justify-content-center">
+        <h1 class="text-muted" style="font-size: 200px;">404</h1>
+    </div>
+    <div class="d-flex justify-content-center">
+        <h5 class="text-muted">
+            This is not you it's us. We apologize but there is something went wrong, meanwhile we will redirect you by <a href="{% url 'apps:dashboard' %}"><strong>clicking me</strong></a>.
+        </h5>
+    </div>
+</div>
+{% endblock %}

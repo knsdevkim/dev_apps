@@ -1,0 +1,133 @@
+<!DOCTYPE html>{% load static %}{% load humanize %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>OFFICAIL RECEIPT</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'icons/css/all.min.css' %}">
+    </head>
+    <style>
+        .td-vehicle-label{
+            width: 160px;
+        }
+    
+        @page{
+            size: auto;
+            margin: 10px;
+        }
+        .print-logo{
+            width: 50%;
+        }
+    </style>
+    <body onload="window.print();">
+        <center><img class="print-logo" src="{% static 'image/brandlogo.png' %}"></center>
+        <hr>
+
+        <!-- TOP TABLE -->
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="5"><h4><b><center>Official Receipt</center></b></h4></th>
+                </tr>
+
+                <tr>
+                    <th scope="col" colspan="5">OR NO. <b class="text-danger">{{ data.or_no }}</b></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th scope="row">FIELD OFFICE</th>
+                    <td>{{ data.field_office|text_capitalize }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">FIELD OFFICE CODE</th>
+                    <td>{{ data.field_office_code|text_capitalize }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">DATE</th>
+                    <td>{{ data.date }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">RECEIVED FROM</th>
+                    <td>{{ data.receive_from|text_capitalize }}</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">ADDRESS</th>
+                    <td>{{ data.address|text_capitalize }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- END OF TOP TABLE -->
+
+        <!-- PAYMENT DETAILS TABLE -->
+        <table class="table table-bordered mt-3">
+            <thead>
+                <th scope="col" colspan="5" class="text-danger"><h5>Payment Details</h5></th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="">Transaction</label><br>
+                        <span><b>{{ data.transaction_no|upper }}</b></span>
+                    </td>
+
+                    <td>
+                        <label for="">Posted</label><br>
+                        <span><b>{{ data.posted_date }}</b></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="">PRIVATE</label><br>
+                        <span><b>{{ data.private|upper }}</b></span>
+                    </td>
+
+                    <td>
+                        <label for="">File No.</label><br>
+                        <span><b>{{ data.file_no|upper }}</b></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END OF PAYEMENT DETAILS TABLE -->
+
+        <!-- BREAKDOWN OF PAYMENT TABLE -->
+        <table class="table table-striped table-bordered mt-3">
+            <thead>
+                <th scope="col" colspan="5" class="text-danger"><h5>Breakdown of Payment</h5></th>
+            </thead>
+            <tbody>
+                {% for d in data.fk_orbp_rn.all %}
+                <tr>
+                    <th scope="row">{{ d.description|upper }}</th>
+                    <td>&#8369; {{ d.cost|intcomma }}x{{ d.qty }}</td>
+                    <td>&#8369; {{ d.total|intcomma }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">NO BREAKDOWN PAYMENT</td>
+                </tr>
+                {% endfor %}
+
+                <tr>
+                    <th colspan="2" scope="row">Total Amount</th>
+                    <td><b class="text-danger">&#8369; {% if data.grand_total != None %}{{ data.grand_total|intcomma }}{% else %}0.00{% endif %}</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END OF BREAKDOWN PAYMENT TABLE -->
+    </body>
+</html>

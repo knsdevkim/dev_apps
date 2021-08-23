@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorD">
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/colorE" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:cardCornerRadius="200dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardElevation="1dp">
+
+                <ImageView
+                    android:id="@+id/profile"
+                    android:layout_width="270dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_user_black_foreground"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="FULLNAME"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/fullname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorE"
+                        android:padding="5dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="ADDRESS"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorE"
+                        android:padding="5dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="GENDER"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/gender"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorE"
+                        android:padding="5dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="BIRTHDATE"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/birthdate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorE"
+                        android:padding="5dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="MOBILE"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/mobile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorE"
+                        android:padding="5dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="EMAIL"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorE"
+                        android:padding="5dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorD"
+                        android:background="@color/colorE"
+                        android:textSize="15sp"
+                        android:text="QR CODE"
+                        android:padding="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/qrcode"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_weight="2"
+                        android:src="@drawable/ic_qrcode_black_foreground" />
+
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

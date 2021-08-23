@@ -1,0 +1,146 @@
+{% spaceless %}
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Fleet Management System</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link type="text/css" rel="stylesheet" href="{% static 'icons/css/all.min.css' %}">
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/index.js' %}"></script>
+        {% block top_js %}{% endblock %}
+        {% block css %}{% endblock %}
+        <style>
+            .fms-active{
+                background-color:#023A66 !important;
+            }
+        </style>
+    </head>
+    <style>
+        
+    
+    </style>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end" id="sidebar-wrapper" style="background-color: #01467A;">
+                <div class="list-group list-group-flush">
+                    <a class="index-a-list list-group-item-action list-group-item-light mt-3 fms-user" href="#">
+                        <div class="btn-group">
+                            <button class="btn p-0 fs-6 text-white btn-sm dropdown-toggle dropdown-user" type="button">
+                              No. 1 Supplier Inc.
+                            </button>
+                            <ul class="dropdown-menu" style="width: 250px;">
+                                <div class="p-3">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <img src="{% static 'image/logo.png' %}" width="50" alt="" style="border-radius: 50%;">
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <span>Kim Nicole E. Sabordo</span>
+                                            <small class="text-muted"> n1s.ksabordo@gmail.com</small>
+                                        </div>
+                                    </div>
+    
+                                    <li><button class="dropdown-item p-0 mb-2" href="#">Account Setting</button></li>
+                                    <li><button class="dropdown-item p-0 mb-2" href="#">User Profile</button></li>
+                                    <li><button class="dropdown-item p-0 mb-2" href="#">Login & Password</button></li>
+                                    <li><button class="dropdown-item p-0 mb-2" href="#">Logout</button></li>
+                                </div>
+                            </ul>
+                        </div><br>
+                        <script>
+                            $(document).ready(function(){
+                                $('.dropdown-user').dropdown();
+                            });
+                        </script>
+                        <span>Kim Nicole E. Sabordo</span>
+                    </a>
+                    <a class="index-a-list list-group-item-action list-group-item-light mt-3 {% block nav_dashboard %}{% endblock %}" href="{% url 'apps:dashboard' %}"><i class="fa fa-tachometer-alt"></i> <span class="mx-3">Dashboard</span></a>
+                    <a class="index-a-list dropdown-btn list-group-item-action list-group-item-light {% block nav_vehicle %}{% endblock %}" href="javascript:void(0);"><i class="fa fa-truck"></i> <span class="mx-3">Vehicles</span> <i style="margin-left: 50px;" class="fas fa-sort-down float-right" data-load-switcher></i></a>
+
+                    <div class="dropdown-container">
+                        <a class="index-dropdown-a list-group-item-action list-group-item-light mt-2 {% block sub_nav_vechile_list %}{% endblock %}" href="{% url 'apps:vehicle:vehicleList' %}"> <i class="fas fa-circle text-primary" style="font-size: 5px;"></i> <span class="mx-3" style="margin-left: 17px !important;"> Vehicle List</span></a>
+                        <a class="index-dropdown-a list-group-item-action list-group-item-light" href="#"> <i class="fas fa-circle text-primary" style="font-size: 5px;"></i> <span class="mx-3" style="margin-left: 17px !important;"> Vehicle Assignments</span></a>
+                    </div>
+                    <a class="index-a-list list-group-item-action list-group-item-light {% block nav_operator %}{% endblock %}" href="{% url 'apps:operator:operatorList' %}"><i class="fa fa-users"></i> <span class="mx-3">Drivers & Helpers</span></a>
+                    <a class="index-a-list list-group-item-action list-group-item-light" href="#"><i class="fa fa-archive"></i> <span class="mx-3">Archive</span></a>
+                    <script>
+                        var dropdown = document.getElementsByClassName("dropdown-btn");
+                        var i;
+                        
+                        for (i = 0; i < dropdown.length; i++) {
+                          dropdown[i].addEventListener("click", function() {
+                          this.classList.toggle("active");
+                          var dropdownContent = this.nextElementSibling;
+                          if (dropdownContent.style.display === "block") {
+                          dropdownContent.style.display = "none";
+                          document.querySelector('i[data-load-switcher]').classList.remove("fa-sort-up");
+                          document.querySelector('i[data-load-switcher]').classList.add("fa-sort-down");
+                          } else {
+                          dropdownContent.style.display = "block";
+                          document.querySelector('i[data-load-switcher]').classList.remove("fa-sort-down");
+                          document.querySelector('i[data-load-switcher]').classList.add("fa-sort-up");
+                          }
+                          });
+                        }
+                    </script>
+                        
+                </div>
+            </div>
+            
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-light" id="sidebarToggle">
+                            <img src="{% static 'image/logo.png' %}" width="20">
+                            <span><b>Fleet Management System</b></span>
+                            
+                        </button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Marry Joy Estacio</a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#!">Profile</a>
+                                        <a class="dropdown-item" href="#!">Settings</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#!">Help</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="#!">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+
+
+                <!-- Page content-->
+                <div class="container-fluid vehicle-list-content p-4">
+                    <noscript>
+                        {% include 'noscript.html' %}
+                    </noscript>
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="footer">
+            <p>Copyright: No. 1 Supplier Inc. (DEV TEAM)</p>
+          </div> -->
+
+        {% block bottom_js %}{% endblock %}
+    </body>
+</html>
+{% endspaceless %}

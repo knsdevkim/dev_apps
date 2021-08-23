@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:background="@color/colorE">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/sync"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    app:cardElevation="10dp"
+                    android:backgroundTint="@color/colorE"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:textAlignment="viewStart"
+                            android:drawableLeft="@drawable/version2_download_foreground"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorF"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/mcpofficialfontbold"
+                            android:text="UPDATE MCP"
+                            tools:ignore="RtlCompat" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/masterdata"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    app:cardElevation="10dp"
+                    android:backgroundTint="@color/colorE"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textAlignment="viewStart"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorF"
+                            android:drawableLeft="@drawable/version2_group_foreground"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/mcpofficialfontbold"
+                            android:text="MCP DATA"
+                            tools:ignore="RtlCompat"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/salesperson"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    app:cardElevation="10dp"
+                    android:backgroundTint="@color/colorE"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textAlignment="viewStart"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorF"
+                            android:drawableLeft="@drawable/version2_group_foreground"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/mcpofficialfontbold"
+                            android:text="SALESPERSON"
+                            tools:ignore="RtlCompat"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/customers"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="5dp"
+                    app:cardElevation="10dp"
+                    android:backgroundTint="@color/colorE"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textAlignment="viewStart"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorF"
+                            android:drawableLeft="@drawable/version2_group_foreground"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/mcpofficialfontbold"
+                            android:text="CUSTOMERS"
+                            tools:ignore="RtlCompat"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorF"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:alpha="0.8"
+            android:textSize="10sp"
+            android:text="January 1, 1991 - Monday" />
+
+        <TextView
+            android:id="@+id/tvMedian"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorF"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:alpha="0.8"
+            android:textSize="15sp"
+            android:text="Good afternoon" />
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorF"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:alpha="0.8"
+            android:textSize="5sp"
+            android:text="MCP GO - v2.21.36 - MAJOR RELEASE (ALPHA)" />
+
+    </LinearLayout>
+
+</RelativeLayout>
